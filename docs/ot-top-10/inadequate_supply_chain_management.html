@@ -7,10 +7,12 @@
 <meta name="description" content="Attackers sometimes come in through the people you trust most.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/inadequate_supply_chain_management.html">
+<meta property="og:title" content="OT3. Inadequate Supplier/Supply Chain Management | CyberForte">
+<meta property="og:description" content="Attackers sometimes come in through the people you trust most.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}document.documentElement.classList.add("js")</script>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body data-page="inadequate_supply_chain_management" data-part="ot">
@@ -21,29 +23,47 @@
     <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
     <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html">Secure by Design and Default</a><a href="../ot-top-10/index.html" aria-current="page">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
     <div class="tools">
-      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
-      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="journey-pill" href="../index.html#journey" title="Your progress across both parts"><svg class="ring sm" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="15"/><circle class="ring-fg" cx="20" cy="20" r="15" style="stroke-dasharray:94.2;stroke-dashoffset:94.2"/></svg><span><b data-total-done>0</b>/32</span><span class="sr-only"> guides done, see your progress</span></a>
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <div class="read-progress" aria-hidden="true"><span></span></div>
 </header>
 <main id="main">
 
 <div class="wrap">
-  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">OWASP OT Top 10</a> / Risk 3</p>
-  <header class="article-head rise">
-    <div class="eyebrow">OT Top 10 · Risk 3 of 10</div>
-    <h1>Inadequate Supplier/Supply Chain Management</h1>
-    <p class="tagline">Attackers sometimes come in through the people you trust most.</p>
+  <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">OWASP OT Top 10</a> <span aria-hidden="true">/</span> Risk 3</p>
+  <header class="article-head acc-ot">
+    <div class="ah-text">
+      <div class="eyebrow rise">OT Top 10 · Risk 3 of 10</div>
+      <h1 class="rise d1">Inadequate Supplier/Supply Chain Management</h1>
+      <p class="tagline rise d2">Attackers sometimes come in through the people you trust most.</p>
+      <div class="tags rise d3"><span class="tag acc">Top 4: fundamental</span><span class="tag">In the plant: The supplier&#x27;s van at the gate</span></div>
+    </div>
+    <div class="art acc-ot" aria-hidden="true">
+  <div class="art-grid"></div>
+  <div class="art-num">03</div>
+  <svg class="art-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6h11v10h-11z"/><path d="M13.5 9.5h4l3 3.5v3h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>
+  <div class="art-orbit"></div>
+</div>
   </header>
   <div class="layout">
-    <article class="content">
-      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+    <aside class="rail" aria-label="On this page">
+  <div class="rail-inner">
+    <p class="rail-h">On this page</p>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks">Known Attacks</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
+    <div class="rail-prog"><div class="mini-bar"><span data-part-bar="ot"></span></div><p><b data-part-done="ot">0</b> of 10 risks done</p></div>
+  </div>
+</aside>
+    <article class="content acc-ot">
+      <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
         <h2 id="pw-h">What it is, in plain words</h2>
-        <p>Instead of attacking you directly, an attacker can go after a supplier: the software vendor, the equipment maker, the maintenance contractor. Then they ride in on a relationship you already trust.</p><p>Supply chain risk covers the whole life of a component, from design and delivery to installation, updates and disposal. Managing it means knowing who your critical suppliers are, checking them regularly, and planning for the day one of them has a problem.</p>
+        <p class="first">Instead of attacking you directly, an attacker can go after a supplier: the software vendor, the equipment maker, the maintenance contractor. Then they ride in on a relationship you already trust.</p><p>Supply chain risk covers the whole life of a component, from design and delivery to installation, updates and disposal. Managing it means knowing who your critical suppliers are, checking them regularly, and planning for the day one of them has a problem.</p>
       </section>
-      <section class="panel lists-panel" style="border:1px solid var(--line)" id="why" aria-label="Why it matters and how to reduce the risk">
+      <section class="panel lists-panel reveal" id="why" aria-label="Why it matters and how to reduce the risk">
         <div class="lists">
           <div><h3>Why it matters in OT</h3><p class="note">Factories, utilities, buildings and other sites that run physical processes.</p><ul><li>OT relies on a small number of specialist vendors and integrators, often with privileged access.</li><li>A single bad update or compromised supplier can hit many sites at once.</li><li>Remote maintenance by third parties is routine in plants, utilities and building systems.</li></ul></div>
           <div><h3>How to reduce the risk</h3><p class="note">Drawn from OWASP's mitigations and next steps.</p><ul><li>List your critical suppliers and what access or software each one provides.</li><li>Check their security practices regularly, for example with assessments or recognised standards.</li><li>Set up a notification route for serious incidents or actively exploited vulnerabilities.</li><li>Include supply chain attacks in your incident and crisis exercises.</li><li>Test updates and new equipment in a safe test setup before they reach production.</li></ul></div>
@@ -51,25 +71,29 @@
       </section>
       
       <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
-  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <div class="checklist-head">
+    <div><p class="kicker">Your turn</p><h2 id="checklist-h">Practical checklist</h2></div>
+    <div class="check-meter"><svg class="ring md" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="17"/><circle class="ring-fg" cx="20" cy="20" r="17" style="stroke-dasharray:106.8;stroke-dashoffset:106.8"/></svg><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  </div>
   <p class="note">A short, practical version written by CyberForte from the OWASP text. Your ticks are saved only in this browser.</p>
-  <ul class="check-list"><li><label><input type="checkbox"><span>We have a list of critical suppliers and the access each one has.</span></label></li><li><label><input type="checkbox"><span>We review critical suppliers&#x27; security on a regular basis.</span></label></li><li><label><input type="checkbox"><span>Suppliers know how to tell us about incidents and vulnerabilities, and we know how to reach them.</span></label></li><li><label><input type="checkbox"><span>Our exercises include a supplier being compromised.</span></label></li><li><label><input type="checkbox"><span>New updates and equipment are tested before going live.</span></label></li></ul>
+  <ul class="check-list"><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We have a list of critical suppliers and the access each one has.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We review critical suppliers&#x27; security on a regular basis.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Suppliers know how to tell us about incidents and vulnerabilities, and we know how to reach them.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Our exercises include a supplier being compromised.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">New updates and equipment are tested before going live.</span></label></li></ul>
+  <div class="check-done" aria-hidden="true"><b>Checklist complete.</b> Nice. Mark this risk as done to add it to your journey.</div>
   <div class="actions">
-    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
-    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
-    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+    <button class="btn primary" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn ghost" id="clear-checks" type="button">Clear ticks</button>
   </div>
 </section>
       <section class="panel original" id="original" aria-labelledby="orig-h">
         <div class="original-head">
           <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
-          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full OWASP OT Top 10 entry</h2>
+          <h2 id="orig-h">The full OWASP OT Top 10 entry</h2>
           <p>Source: <a href="https://ot.owasp.org/v/2025/the-top-10/inadequate_supply_chain_management/" rel="noopener">OWASP OT Top 10 2025, “Inadequate Supply Chain Management”</a>, OWASP OT Top 10 project (<a href="https://github.com/OWASP/www-project-operational-technology-top-10" rel="noopener">GitHub</a>), licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>. Reproduced word for word; converted from Markdown, with links to other entries pointed at this site or ot.owasp.org. This page, including CyberForte's summary, is shared under CC BY-SA 4.0.</p>
         </div>
-        <div class="original-body prose"><h2>Inadequate Supply Chain Management</h2>
+        <div class="original-body prose"><h2 id="o-inadequate-supply-chain-management">Inadequate Supply Chain Management</h2>
 <p><a href="https://attack.mitre.org/techniques/T0862/" rel="noopener">Supply Chain Compromise</a> occur when adversaries target weaknesses in an organisation's supply chain - whether it's hardware, software or services provided by third parties. Instead of compromising the target directly, attackers exploit the relationship of trust between the organisation and its vendors or contractors to gain access to sensitive OT systems.</p>
 <p>In the context of OT, the supply chain may involve complex vendor ecosystems, including software providers for SCADA systems, hardware manufacturers for industrial equipment, or maintenance services. An attacker infiltrates these supply chain links to gain access to operational technology, bypassing traditional cybersecurity defences.</p>
-<h3>Description</h3>
+<h3 id="o-description">Description</h3>
 <p>It is vital to protect OT supply chains, given their critical role in enabling modern society to function and generate economic prosperity. These supply chains facilitate the production, distribution, and maintenance of essential OT products, systems, and services that underpin various sectors, including healthcare, finance, transportation, and national security.
 The following phases of the lifecycle of OT components or systems have to be considered when dealing with OT supply chains:</p>
 <ul>
@@ -81,10 +105,10 @@ The following phases of the lifecycle of OT components or systems have to be con
 <li>Maintenance (e.g., use and support, especially provisioning of updates)</li>
 <li>Disposal/decommissioning</li>
 </ul>
-<h3>Rationale</h3>
+<h3 id="o-rationale">Rationale</h3>
 <p>Dragos concluded in their <a href="https://web.archive.org/web/20250401031929/https://www.dragos.com/wp-content/uploads/Dragos-Oil-and-Gas-Threat-Perspective-2019.pdf" rel="noopener">global oil and gas cyber threat perspective</a> in August 2019 that the growing threat of supply chain attacks and vendor compromises allows new avenues for activity groups to compromise IT and OT environments alike.</p>
 <p>Furthermore, examples like SolarWinds Orion and Crowdstrike threat detection software demonstrated the scalability of supply chain issues, affecting numerous victims at the same time by the very same issue.</p>
-<h3>Known Attacks</h3>
+<h3 id="o-known-attacks">Known Attacks</h3>
 <ul>
 <li><a href="https://attack.mitre.org/campaigns/C0024/" rel="noopener">SolarWinds Orion Compromise</a>. The SolarWinds compromise was a sophisticated supply chain cyber operation that was discovered in December 2020. The cyber operation involved the injection of malicious code into the SolarWinds Orion software build process, which was then distributed through a standard software update. The cyber actors also used password spraying, token theft, API abuse, spear phishing and other supply chain attacks to compromise user accounts and leverage their associated access.</li>
 <li><a href="https://www.sygnia.co/blog/crowdstrike-outage-security-vs-operational-stability/" rel="noopener">CrowdStrike Compromise</a>. In 2024, a content update for CrowdStrike's Falcon sensor software caused global system disruptions. The "Blue Screen of Death" (BSOD) was triggered by a "Named Pipes" update intended to improve threat detection. An error in the update file's formatting led to the CrowdStrike driver accessing a non-existent memory address, triggering the BSOD. This affected numerous industries, including airlines, which canceled or delayed flights; healthcare, which experienced issues with medical records; and emergency 911 call centers, of which up to 100 in the US reported downtime. The outage disrupted businesses relying on OT and conventional IT, highlighting the widespread dependency on reliable technological services.</li>
@@ -92,33 +116,33 @@ The following phases of the lifecycle of OT components or systems have to be con
 <li><a href="https://en.wikipedia.org/wiki/Petya_(malware_family)" rel="noopener">NotPetya</a>. It was believed that the software update mechanism of M.E.Doc—a Ukrainian tax preparation program that, according to F-Secure analyst Mikko Hyppönen, "appears to be de facto" among companies doing business in the country—had been compromised to spread the malware. Analysis by ESET found that a backdoor had been present in the update system for at least six weeks prior to the attack, describing it as a "thoroughly well-planned and well-executed operation". The developers of M.E.Doc denied that they were entirely responsible for the cyberattack, stating that they too were victims.</li>
 <li><a href="https://www.bitdefender.com/en-au/blog/hotforsecurity/denmarks-train-network-frozen-due-to-cyberattack-on-subcontractor" rel="noopener">Denmark’s Train Network Frozen Due to Cyberattack on Subcontractor</a>.</li>
 </ul>
-<h3>Mitigation/Countermeasures</h3>
+<h3 id="o-mitigation-countermeasures">Mitigation/Countermeasures</h3>
 <p>Establish a <a href="https://attack.mitre.org/mitigations/M0817/" rel="noopener">Supply Chain Management</a> that includes policies and procedures to ensure all devices and components come from trusted suppliers and are tested to confirm their integrity.</p>
-<h4>Design and Implementation</h4>
+<h4 id="o-design-and-implementation">Design and Implementation</h4>
 <ul>
 <li>It is vital that manufacturers of connectable software and hardware products ensure that such products are developed in line with security-by-default and security-by-design principles, and that their security is maintained during a support period.</li>
 <li>Products should undergo a third-party conformity assessment before they can be placed on the market.</li>
 <li>Consider implementing a multi-vendor strategy.</li>
 </ul>
-<h4>Operational</h4>
+<h4 id="o-operational">Operational</h4>
 <ul>
 <li>A dedicated notification procedure should be established in the event of a severe incident or an actively exploited vulnerability in a product that may affect multiple parties.</li>
 <li>It is imperative to undertake a thorough evaluation of the risk profile exhibited by suppliers on a regularly basis. This evaluation should be used to determine the necessity of reducing the risk posed by suppliers deemed to be high-risk. If the circumstances necessitate, it is also crucial to impose restrictions on or to exclude suppliers considered to be high-risk.</li>
 <li>Promotion of information exchange, awareness and training addressing supply chain risks.</li>
 <li>Include supply chain attacks in the regular incident, emergency, and crisis management plans and exercises.</li>
 </ul>
-<h3>Next Actionable Steps</h3>
+<h3 id="o-next-actionable-steps">Next Actionable Steps</h3>
 <ul>
 <li>Check on a regular basis that critical suppliers have appropriate and proportionate cyber security risk management measures in place to manage identified supply chain security risks. This may be conducted by supplier assessments or requiring relevant certifications (e.g., IEC 62443-4-1, IEC 62443-4-2).</li>
 <li>Ensure that relevant entities are resilient to supply chain threats by conducting preparedness or stress tests.</li>
 <li>Create test platforms or sandbox environments for secure testing.</li>
 </ul>
-<h3>References</h3>
-<h4>Standards</h4>
+<h3 id="o-references">References</h3>
+<h4 id="o-standards">Standards</h4>
 <ul>
 <li>Applicable standard requirements are listed in the <a href="https://ot.owasp.org/v/2025/appendix/mappingTable/" rel="noopener">provided mapping table in the appendix</a>.</li>
 </ul>
-<h4>Background information</h4>
+<h4 id="o-background-information">Background information</h4>
 <ul>
 <li>
 <p><strong><em>Noteable CWSs</em></strong>: the following Common Weakness Enumeration idenifier are highly relevant to this Top 10 item:</p>
@@ -132,21 +156,21 @@ The following phases of the lifecycle of OT components or systems have to be con
 </ul>
 </li>
 </ul>
-<h4>Tooling</h4>
+<h4 id="o-tooling">Tooling</h4>
 <ul>
 <li>N.A.</li>
 </ul></div>
       </section>
-      <nav class="pager" aria-label="Previous and next risk"><a href="accessible-devices-with-known-vulnerabilities.html"><small>Previous, 2 of 10</small>Devices with Known Vulnerabilities/Issues</a><a class="next" href="loss-of-availability.html"><small>Next, 4 of 10</small>Loss of Availability</a></nav>
+      <nav class="pager" aria-label="Previous and next risk"><a href="accessible-devices-with-known-vulnerabilities.html"><span class="pg-ic acc-ot"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 8.5a3.5 3.5 0 0 1 7 0"/><rect x="7" y="8.5" width="10" height="11" rx="5"/><path d="M12 11v8M3 13h4M17 13h4M4 7.5l3.2 2M20 7.5l-3.2 2M4 19l3.2-2M20 19l-3.2-2"/></svg></span><span><small>Previous · 2 of 10</small>Devices with Known Vulnerabilities/Issues</span></a><a class="next" href="loss-of-availability.html"><span><small>Next · 4 of 10</small>Loss of Availability</span><span class="pg-ic acc-ot"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l2.5-6 4 12 3-9 1.5 3H22"/></svg></span></a></nav>
     </article>
-    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original OWASP text</a></li></ol></aside>
   </div>
 </div>
 </main>
 <footer class="credits">
   <div class="wrap">
-    <div>
-      <h2>Brought to you by CyberForte</h2>
+    <div class="foot-lead">
+      <span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112" loading="lazy"></span>
+      <p class="foot-big">Brought to you by CyberForte.</p>
       <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
       <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
     </div>
@@ -163,9 +187,20 @@ The following phases of the lifecycle of OT components or systems have to be con
   </div>
 </footer>
 <dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
-  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search 32 guides: try password, update, supplier" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+  <div class="search-foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> to move</span><span><span class="kbd">Enter</span> to open</span><span><span class="kbd">Esc</span> to close</span></div>
 </dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="celebrate" id="celebrate" hidden>
+  <div class="celebrate-card" role="dialog" aria-modal="true" aria-labelledby="cel-h">
+    <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+    <div class="cel-badge" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+    <h2 id="cel-h">Part complete</h2>
+    <p id="cel-p"></p>
+    <div class="actions"><a class="btn primary" id="cel-next" href="../index.html#journey">See your progress</a><button class="btn" id="cel-close" type="button">Keep reading</button></div>
+  </div>
+</div>
 <script src="../assets/app.js" defer></script>
 </body>
 </html>

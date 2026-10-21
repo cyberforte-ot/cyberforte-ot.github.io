@@ -7,10 +7,12 @@
 <meta name="description" content="You cannot protect what you do not know you have.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/unknown-assets-and-admin-access.html">
+<meta property="og:title" content="OT1. Unknown Assets and Unmanaged External Access | CyberForte">
+<meta property="og:description" content="You cannot protect what you do not know you have.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}document.documentElement.classList.add("js")</script>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body data-page="unknown-assets-and-admin-access" data-part="ot">
@@ -21,75 +23,97 @@
     <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
     <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html">Secure by Design and Default</a><a href="../ot-top-10/index.html" aria-current="page">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
     <div class="tools">
-      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
-      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="journey-pill" href="../index.html#journey" title="Your progress across both parts"><svg class="ring sm" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="15"/><circle class="ring-fg" cx="20" cy="20" r="15" style="stroke-dasharray:94.2;stroke-dashoffset:94.2"/></svg><span><b data-total-done>0</b>/32</span><span class="sr-only"> guides done, see your progress</span></a>
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <div class="read-progress" aria-hidden="true"><span></span></div>
 </header>
 <main id="main">
 
 <div class="wrap">
-  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">OWASP OT Top 10</a> / Risk 1</p>
-  <header class="article-head rise">
-    <div class="eyebrow">OT Top 10 · Risk 1 of 10</div>
-    <h1>Unknown Assets and Unmanaged External Access</h1>
-    <p class="tagline">You cannot protect what you do not know you have.</p>
+  <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">OWASP OT Top 10</a> <span aria-hidden="true">/</span> Risk 1</p>
+  <header class="article-head acc-ot">
+    <div class="ah-text">
+      <div class="eyebrow rise">OT Top 10 · Risk 1 of 10</div>
+      <h1 class="rise d1">Unknown Assets and Unmanaged External Access</h1>
+      <p class="tagline rise d2">You cannot protect what you do not know you have.</p>
+      <div class="tags rise d3"><span class="tag acc">Top 4: fundamental</span><span class="tag">In the plant: The shed with a forgotten PC and a supplier&#x27;s 4G modem</span></div>
+    </div>
+    <div class="art acc-ot" aria-hidden="true">
+  <div class="art-grid"></div>
+  <div class="art-num">01</div>
+  <svg class="art-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/><path d="M10 8.7a2 2 0 1 1 2.8 1.9c-.5.2-.8.6-.8 1.1v.4"/><circle cx="12" cy="13.6" r=".6"/></svg>
+  <div class="art-orbit"></div>
+</div>
   </header>
   <div class="layout">
-    <article class="content">
-      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+    <aside class="rail" aria-label="On this page">
+  <div class="rail-inner">
+    <p class="rail-h">On this page</p>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#example">Real-world example</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
+    <div class="rail-prog"><div class="mini-bar"><span data-part-bar="ot"></span></div><p><b data-part-done="ot">0</b> of 10 risks done</p></div>
+  </div>
+</aside>
+    <article class="content acc-ot">
+      <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
         <h2 id="pw-h">What it is, in plain words</h2>
-        <p>Every site has kit that nobody has written down: an old PC under a desk, a remote-access tool a supplier installed years ago, a maintenance VPN account nobody uses any more. OWASP calls this the biggest threat, because unknown things are never patched, never watched and never locked.</p><p>The cure starts simple. Walk the site with a notebook if you need to, list every device and every way in from outside, and make documenting changes part of how you work.</p>
+        <p class="first">Every site has kit that nobody has written down: an old PC under a desk, a remote-access tool a supplier installed years ago, a maintenance VPN account nobody uses any more. OWASP calls this the biggest threat, because unknown things are never patched, never watched and never locked.</p><p>The cure starts simple. Walk the site with a notebook if you need to, list every device and every way in from outside, and make documenting changes part of how you work.</p>
       </section>
-      <section class="panel lists-panel" style="border:1px solid var(--line)" id="why" aria-label="Why it matters and how to reduce the risk">
+      <section class="panel lists-panel reveal" id="why" aria-label="Why it matters and how to reduce the risk">
         <div class="lists">
           <div><h3>Why it matters in OT</h3><p class="note">Factories, utilities, buildings and other sites that run physical processes.</p><ul><li>OT sites are built to run for years, so forgotten devices and old remote-access routes pile up.</li><li>Third-party maintenance access is common in factories, utilities and buildings, and it is often the least watched door.</li><li>You cannot segment, harden or monitor something that is not on your list.</li></ul></div>
           <div><h3>How to reduce the risk</h3><p class="note">Drawn from OWASP's mitigations and next steps.</p><ul><li>Build a full inventory: devices, software, remote-access tools, accounts and services.</li><li>Find and close (or properly manage) every remote access route, including supplier VPNs and tools like TeamViewer.</li><li>Scan and monitor the network for new or unknown devices.</li><li>Make &quot;update the documentation&quot; a required step in every change.</li></ul></div>
         </div>
       </section>
-      <section class="example" id="example" aria-labelledby="ex-h">
+      <section class="example reveal" id="example" aria-labelledby="ex-h">
   <div class="panel-label"><span class="dot" aria-hidden="true"></span>Real-world example · CyberForte's summary of press reports</div>
-  <p style="margin:0"><span class="reported">Reported</span><span class="note">Investigation ongoing; the attackers have not been publicly identified.</span></p>
+  <p class="ex-status"><span class="reported">Reported</span><span class="note">Investigation ongoing; the attackers have not been publicly identified.</span></p>
   <h3 id="ex-h">French supermarket refrigeration controllers, October 2026</h3>
   <p>Press reports describe an overnight attack on internet-connected refrigeration controllers in hundreds of supermarkets across France. Attackers reportedly switched units into defrost so temperatures rose as high as 50°C, spoiling food, and the Paris prosecutor&#x27;s office said some fires followed. The manufacturer said the affected units were running outdated firmware and that most were legacy products no longer receiving security updates. Ars Technica reports the controllers were reachable from the internet and had known critical vulnerabilities.</p>
   <p class="note" style="margin:0">Sources:</p>
   <ul><li><a href="https://arstechnica.com/security/2026/10/fridge-hack-costing-millions-and-sparking-fires-stemmed-from-poor-security/" rel="noopener">Ars Technica: Fridge hack costing millions and sparking fires stemmed from poor security (14 October 2026)</a></li><li><a href="https://www.sbs.com.au/news/article/hackers-hit-french-store-fridges-sparks-fires/4y35b0buh" rel="noopener">SBS News, with Reuters and AFP: Hackers hit French store fridges (13 October 2026)</a></li></ul>
 </section>
       <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
-  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <div class="checklist-head">
+    <div><p class="kicker">Your turn</p><h2 id="checklist-h">Practical checklist</h2></div>
+    <div class="check-meter"><svg class="ring md" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="17"/><circle class="ring-fg" cx="20" cy="20" r="17" style="stroke-dasharray:106.8;stroke-dashoffset:106.8"/></svg><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  </div>
   <p class="note">A short, practical version written by CyberForte from the OWASP text. Your ticks are saved only in this browser.</p>
-  <ul class="check-list"><li><label><input type="checkbox"><span>We have an asset list for each site, including software versions.</span></label></li><li><label><input type="checkbox"><span>Every remote access route is known, has an owner and is documented.</span></label></li><li><label><input type="checkbox"><span>Unused maintenance and supplier accounts are removed.</span></label></li><li><label><input type="checkbox"><span>We check the network regularly for devices that are not on the list.</span></label></li><li><label><input type="checkbox"><span>Our change process includes updating the inventory.</span></label></li></ul>
+  <ul class="check-list"><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We have an asset list for each site, including software versions.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Every remote access route is known, has an owner and is documented.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Unused maintenance and supplier accounts are removed.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We check the network regularly for devices that are not on the list.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Our change process includes updating the inventory.</span></label></li></ul>
+  <div class="check-done" aria-hidden="true"><b>Checklist complete.</b> Nice. Mark this risk as done to add it to your journey.</div>
   <div class="actions">
-    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
-    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
-    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+    <button class="btn primary" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn ghost" id="clear-checks" type="button">Clear ticks</button>
   </div>
 </section>
       <section class="panel original" id="original" aria-labelledby="orig-h">
         <div class="original-head">
           <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
-          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full OWASP OT Top 10 entry</h2>
+          <h2 id="orig-h">The full OWASP OT Top 10 entry</h2>
           <p>Source: <a href="https://ot.owasp.org/v/2025/the-top-10/unknown-assets-and-admin-access/" rel="noopener">OWASP OT Top 10 2025, “Unknown Assets and Undocumented Services”</a>, OWASP OT Top 10 project (<a href="https://github.com/OWASP/www-project-operational-technology-top-10" rel="noopener">GitHub</a>), licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>. Reproduced word for word; converted from Markdown, with links to other entries pointed at this site or ot.owasp.org. This page, including CyberForte's summary, is shared under CC BY-SA 4.0.</p>
         </div>
-        <div class="original-body prose"><h2>Unknown Assets and Undocumented Services</h2>
+        <div class="original-body prose"><h2 id="o-unknown-assets-and-undocumented-services">Unknown Assets and Undocumented Services</h2>
 <p>Arguably the biggest threat to a network (IT and OT) is unmanaged and unknown assets.  This can either be unknown assets that are plugged into your local OT network, or undocumented services (in the worst-case available from the public internet and <a href="insufficient-access-control.html">without sufficient access control</a>.</p>
 <p>There is an overlap with the <a href="missing-incident-detection-reaction-capabilities.html">Missing Incident Detection/Reaction Capabilities</a> as incident detection depends upon having a complete inventory of the environment. If we do not know what is in our environment, we cannot detect if something is happening to it.</p>
-<h3>Description</h3>
+<h3 id="o-description">Description</h3>
 <p>Unknown assets are devices or systems in an OT environment that are not properly identified or documented. These assets can include legacy systems, unmanaged devices, or unauthorized connections that are not accounted for in the organization's inventory.</p>
 <p>This is your typical "shadow IT" problem, but in the OT world, it can be even more dangerous. Unknown assets can be anything from a rogue device connected to the network to an undocumented service running on a server. These assets can introduce vulnerabilities and weaknesses into the system, making it easier for attackers to gain access and move laterally within the network.</p>
 <p>These assets are mostly already or will become outdated over time and introduce vulnerabilities and weaknesses into the system. Such assets can for example be used as initial access points into the network, for privilege escalation, establishing persistence or lateral movement. Having a full inventory of assets that not only includes devices but also established remote access, deployed privileges and other services is crucial to understanding the environment we are working with.</p>
 <p>Undocumented services can be any service that is not properly documented or managed, such as remote access solutions, cloud services, or third-party applications. These services can introduce vulnerabilities and weaknesses into the system, making it easier for attackers to gain access and move laterally within the network.</p>
 <p>A special case of undocumented services are unmanaged external maintenance accounts. They are often used for increased convienience but offer adversaries ample attack opportunities. This can be seen as a case of <a href="missing-awareness.html">missing awareness</a>.</p>
-<h4>Unmanaged External Access</h4>
+<h4 id="o-unmanaged-external-access">Unmanaged External Access</h4>
 <p>Unmanaged external access refers to connections to the OT environment that are not properly controlled or monitored. This can include remote access solutions, such as TeamViewer or VPNs, that are not documented or managed by the organization. These unmanaged connections can provide attackers with a way to bypass security controls and gain unauthorized access to the OT environment.</p>
-<h4>Unmanaged Access for Maintenance</h4>
+<h4 id="o-unmanaged-access-for-maintenance">Unmanaged Access for Maintenance</h4>
 <p>Unmanaged access for external personnel refers to situations where third-party vendors, contractors, or maintenance personnel have access to from within the OT environment without proper oversight or documentation. This can lead to unauthorized changes, vulnerabilities, and potential security breaches.</p>
 <p>An example would be third-party contractor (that is connected to the internal network through VPN) that has access to the OT environment for maintenance purposes but does not follow proper security protocols or does not have their access documented. This can lead to unauthorized changes, vulnerabilities, and potential security breaches.</p>
-<h3>Rationale</h3>
+<h3 id="o-rationale">Rationale</h3>
 <p>History has shown that undocumented assets can be used by attackers for everything from initial access, via priviledge escalation up to completing the action on objectives. Hardening and segmentation measures can only be complete if all the assets are known and under consideration. Getting an overview of my network is always and therefore the most crucial step when starting with a security program. It is also the fundamental prerequisite for every ISMS, CSMS, and other frameworks.</p>
-<h3>Known Attacks/Examples</h3>
+<h3 id="o-known-attacks-examples">Known Attacks/Examples</h3>
 <ul>
 <li>Stuxnet</li>
 <li>Triton</li>
@@ -98,13 +122,13 @@
 <li><a href="https://www.theregister.com/2021/02/09/florida_water_hacked/" rel="noopener">Someone tried to poison a Florida city by hijacking its water treatment plant via TeamViewer, says sheriff</a></li>
 <li><a href="https://www.bleepingcomputer.com/news/security/cisa-warns-water-facilities-to-secure-hmi-systems-exposed-online/" rel="noopener">CISA and the Environmental Protection Agency (EPA) warned water facilities today to secure Internet-exposed Human Machine Interfaces (HMIs) from cyberattacks.</a></li>
 </ul>
-<h3>Mitigation/Countermeasures</h3>
-<h4>Design and Implementation</h4>
+<h3 id="o-mitigation-countermeasures">Mitigation/Countermeasures</h3>
+<h4 id="o-design-and-implementation">Design and Implementation</h4>
 <ul>
 <li>OT-environemts are static by design. During the building phase, the designer or integrator normally provides a detailed description of the environment. Changes to the environment must be documented. It is crucial to have the documentation process as part of the change process or change management policy.</li>
 <li>If one starts with an already existing environment, the first step to a complete asset inventory can be to take a pen and a piece of paper, go through the location and write down every device that can be seen. This is not only restricted to manufacturing or powerplants, but all types of environments we are working in.</li>
 </ul>
-<h4>Operational</h4>
+<h4 id="o-operational">Operational</h4>
 <ul>
 <li>mitigations for integrators/builders:  Provide the documentation to the customer/asset owner.</li>
 <li>Implement asset discovery and inventory management tools to identify and document all assets in the OT environment.</li>
@@ -112,15 +136,15 @@
 <li>Perform port/traffic monitoring.</li>
 <li>Enforce strict access controls and authentication mechanisms to prevent unauthorized devices from connecting to the network. Also assume rogue devices/services in the network when designing security measures.</li>
 </ul>
-<h3>Next Actionable Steps</h3>
+<h3 id="o-next-actionable-steps">Next Actionable Steps</h3>
 <ul>
 <li>Conduct a thorough inventory of all devices and systems in the OT environment.</li>
 <li>Implement network scanning and discovery tools to identify unknown assets.</li>
 <li>Establish a process for documenting and managing changes to the OT environment.</li>
 <li>Regularly review and update the asset inventory to ensure accuracy and completeness.</li>
 </ul>
-<h3>References</h3>
-<h4>Standards</h4>
+<h3 id="o-references">References</h3>
+<h4 id="o-standards">Standards</h4>
 <ul>
 <li>Applicable standard requirements are listed in the <a href="https://ot.owasp.org/v/2025/appendix/mappingTable/" rel="noopener">provided mapping table in the appendix</a>.</li>
 <li>Following additional standards are relevant:<ul>
@@ -131,11 +155,11 @@
 </ul>
 </li>
 </ul>
-<h4>Background information</h4>
+<h4 id="o-background-information">Background information</h4>
 <ul>
 <li>N.A.</li>
 </ul>
-<h4>Tooling</h4>
+<h4 id="o-tooling">Tooling</h4>
 <ul>
 <li>
 <p><strong><em>Network Scanning and Discovery Tools:</em></strong>: <a href="https://nmap.org/" rel="noopener">Nmap</a> is the standard OSS active network scanning tool. Be aware that it can be intrusive and may disrupt operations in a production environment. <a href="https://www.shodan.io/" rel="noopener">Shodan</a> is a web-based search engine that can help identify devices connected to the internet, including those in OT environments.</p>
@@ -145,16 +169,16 @@
 </li>
 </ul></div>
       </section>
-      <nav class="pager" aria-label="Previous and next risk"><a href="index.html"><small>Back</small>All 10 risks</a><a class="next" href="accessible-devices-with-known-vulnerabilities.html"><small>Next, 2 of 10</small>Devices with Known Vulnerabilities/Issues</a></nav>
+      <nav class="pager" aria-label="Previous and next risk"><a href="index.html"><span><small>Back</small>All 10 risks</span></a><a class="next" href="accessible-devices-with-known-vulnerabilities.html"><span><small>Next · 2 of 10</small>Devices with Known Vulnerabilities/Issues</span><span class="pg-ic acc-ot"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 8.5a3.5 3.5 0 0 1 7 0"/><rect x="7" y="8.5" width="10" height="11" rx="5"/><path d="M12 11v8M3 13h4M17 13h4M4 7.5l3.2 2M20 7.5l-3.2 2M4 19l3.2-2M20 19l-3.2-2"/></svg></span></a></nav>
     </article>
-    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#example">Real-world example</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original OWASP text</a></li></ol></aside>
   </div>
 </div>
 </main>
 <footer class="credits">
   <div class="wrap">
-    <div>
-      <h2>Brought to you by CyberForte</h2>
+    <div class="foot-lead">
+      <span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112" loading="lazy"></span>
+      <p class="foot-big">Brought to you by CyberForte.</p>
       <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
       <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
     </div>
@@ -171,9 +195,20 @@
   </div>
 </footer>
 <dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
-  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search 32 guides: try password, update, supplier" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+  <div class="search-foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> to move</span><span><span class="kbd">Enter</span> to open</span><span><span class="kbd">Esc</span> to close</span></div>
 </dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="celebrate" id="celebrate" hidden>
+  <div class="celebrate-card" role="dialog" aria-modal="true" aria-labelledby="cel-h">
+    <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+    <div class="cel-badge" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+    <h2 id="cel-h">Part complete</h2>
+    <p id="cel-p"></p>
+    <div class="actions"><a class="btn primary" id="cel-next" href="../index.html#journey">See your progress</a><button class="btn" id="cel-close" type="button">Keep reading</button></div>
+  </div>
+</div>
 <script src="../assets/app.js" defer></script>
 </body>
 </html>

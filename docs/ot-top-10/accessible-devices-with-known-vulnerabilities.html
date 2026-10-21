@@ -7,10 +7,12 @@
 <meta name="description" content="A published weakness is an open invitation, especially if it can be reached.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/accessible-devices-with-known-vulnerabilities.html">
+<meta property="og:title" content="OT2. Devices with Known Vulnerabilities/Issues | CyberForte">
+<meta property="og:description" content="A published weakness is an open invitation, especially if it can be reached.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}document.documentElement.classList.add("js")</script>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body data-page="accessible-devices-with-known-vulnerabilities" data-part="ot">
@@ -21,66 +23,88 @@
     <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
     <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html">Secure by Design and Default</a><a href="../ot-top-10/index.html" aria-current="page">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
     <div class="tools">
-      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
-      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="journey-pill" href="../index.html#journey" title="Your progress across both parts"><svg class="ring sm" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="15"/><circle class="ring-fg" cx="20" cy="20" r="15" style="stroke-dasharray:94.2;stroke-dashoffset:94.2"/></svg><span><b data-total-done>0</b>/32</span><span class="sr-only"> guides done, see your progress</span></a>
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <div class="read-progress" aria-hidden="true"><span></span></div>
 </header>
 <main id="main">
 
 <div class="wrap">
-  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">OWASP OT Top 10</a> / Risk 2</p>
-  <header class="article-head rise">
-    <div class="eyebrow">OT Top 10 · Risk 2 of 10</div>
-    <h1>Devices with Known Vulnerabilities/Issues</h1>
-    <p class="tagline">A published weakness is an open invitation, especially if it can be reached.</p>
+  <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">OWASP OT Top 10</a> <span aria-hidden="true">/</span> Risk 2</p>
+  <header class="article-head acc-ot">
+    <div class="ah-text">
+      <div class="eyebrow rise">OT Top 10 · Risk 2 of 10</div>
+      <h1 class="rise d1">Devices with Known Vulnerabilities/Issues</h1>
+      <p class="tagline rise d2">A published weakness is an open invitation, especially if it can be reached.</p>
+      <div class="tags rise d3"><span class="tag acc">Top 4: fundamental</span><span class="tag">In the plant: The PLC cabinet still on old firmware</span></div>
+    </div>
+    <div class="art acc-ot" aria-hidden="true">
+  <div class="art-grid"></div>
+  <div class="art-num">02</div>
+  <svg class="art-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 8.5a3.5 3.5 0 0 1 7 0"/><rect x="7" y="8.5" width="10" height="11" rx="5"/><path d="M12 11v8M3 13h4M17 13h4M4 7.5l3.2 2M20 7.5l-3.2 2M4 19l3.2-2M20 19l-3.2-2"/></svg>
+  <div class="art-orbit"></div>
+</div>
   </header>
   <div class="layout">
-    <article class="content">
-      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+    <aside class="rail" aria-label="On this page">
+  <div class="rail-inner">
+    <p class="rail-h">On this page</p>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#example">Real-world example</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
+    <div class="rail-prog"><div class="mini-bar"><span data-part-bar="ot"></span></div><p><b data-part-done="ot">0</b> of 10 risks done</p></div>
+  </div>
+</aside>
+    <article class="content acc-ot">
+      <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
         <h2 id="pw-h">What it is, in plain words</h2>
-        <p>Once a vulnerability is public, attackers can look it up just like you can. If a device with that weakness is reachable, most other defences stop mattering.</p><p>In OT you often cannot just &quot;click update&quot;: safety, maintenance windows and long equipment lifetimes get in the way. OWASP is clear that this explains the difficulty but is not an excuse. You still need a plan for finding, ranking and dealing with known issues.</p>
+        <p class="first">Once a vulnerability is public, attackers can look it up just like you can. If a device with that weakness is reachable, most other defences stop mattering.</p><p>In OT you often cannot just &quot;click update&quot;: safety, maintenance windows and long equipment lifetimes get in the way. OWASP is clear that this explains the difficulty but is not an excuse. You still need a plan for finding, ranking and dealing with known issues.</p>
       </section>
-      <section class="panel lists-panel" style="border:1px solid var(--line)" id="why" aria-label="Why it matters and how to reduce the risk">
+      <section class="panel lists-panel reveal" id="why" aria-label="Why it matters and how to reduce the risk">
         <div class="lists">
           <div><h3>Why it matters in OT</h3><p class="note">Factories, utilities, buildings and other sites that run physical processes.</p><ul><li>OT equipment can stay in service for decades, long after its vendor stops sending fixes.</li><li>Patching may need a planned shutdown, so issues wait.</li><li>If a vulnerable device can be reached from outside, it can become the attacker&#x27;s first step in.</li></ul></div>
           <div><h3>How to reduce the risk</h3><p class="note">Drawn from OWASP's mitigations and next steps.</p><ul><li>Keep an asset register with hardware and software versions.</li><li>Check those versions against known vulnerabilities, and ask suppliers for SBOMs.</li><li>Run a vulnerability management process: rank, patch when you can, mitigate when you cannot.</li><li>Segment and restrict access so vulnerable devices are hard to reach.</li><li>Make vulnerability notification and fixes part of supplier contracts.</li></ul></div>
         </div>
       </section>
-      <section class="example" id="example" aria-labelledby="ex-h">
+      <section class="example reveal" id="example" aria-labelledby="ex-h">
   <div class="panel-label"><span class="dot" aria-hidden="true"></span>Real-world example · CyberForte's summary of press reports</div>
-  <p style="margin:0"><span class="reported">Reported</span><span class="note">Investigation ongoing; the attackers have not been publicly identified.</span></p>
+  <p class="ex-status"><span class="reported">Reported</span><span class="note">Investigation ongoing; the attackers have not been publicly identified.</span></p>
   <h3 id="ex-h">French supermarket refrigeration controllers, October 2026</h3>
   <p>Press reports describe an overnight attack on internet-connected refrigeration controllers in hundreds of supermarkets across France. Attackers reportedly switched units into defrost so temperatures rose as high as 50°C, spoiling food, and the Paris prosecutor&#x27;s office said some fires followed. The manufacturer said the affected units were running outdated firmware and that most were legacy products no longer receiving security updates. Ars Technica reports the controllers were reachable from the internet and had known critical vulnerabilities.</p>
   <p class="note" style="margin:0">Sources:</p>
   <ul><li><a href="https://arstechnica.com/security/2026/10/fridge-hack-costing-millions-and-sparking-fires-stemmed-from-poor-security/" rel="noopener">Ars Technica: Fridge hack costing millions and sparking fires stemmed from poor security (14 October 2026)</a></li><li><a href="https://www.sbs.com.au/news/article/hackers-hit-french-store-fridges-sparks-fires/4y35b0buh" rel="noopener">SBS News, with Reuters and AFP: Hackers hit French store fridges (13 October 2026)</a></li></ul>
 </section>
       <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
-  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <div class="checklist-head">
+    <div><p class="kicker">Your turn</p><h2 id="checklist-h">Practical checklist</h2></div>
+    <div class="check-meter"><svg class="ring md" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="17"/><circle class="ring-fg" cx="20" cy="20" r="17" style="stroke-dasharray:106.8;stroke-dashoffset:106.8"/></svg><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  </div>
   <p class="note">A short, practical version written by CyberForte from the OWASP text. Your ticks are saved only in this browser.</p>
-  <ul class="check-list"><li><label><input type="checkbox"><span>We know the firmware and software versions of our OT devices.</span></label></li><li><label><input type="checkbox"><span>We check them against published vulnerabilities on a regular basis.</span></label></li><li><label><input type="checkbox"><span>Each known issue has a decision: patch, mitigate or accept for a set time.</span></label></li><li><label><input type="checkbox"><span>Vulnerable devices are not reachable from the internet.</span></label></li><li><label><input type="checkbox"><span>Our supplier contracts cover vulnerability notification and fixes.</span></label></li></ul>
+  <ul class="check-list"><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We know the firmware and software versions of our OT devices.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We check them against published vulnerabilities on a regular basis.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Each known issue has a decision: patch, mitigate or accept for a set time.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Vulnerable devices are not reachable from the internet.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Our supplier contracts cover vulnerability notification and fixes.</span></label></li></ul>
+  <div class="check-done" aria-hidden="true"><b>Checklist complete.</b> Nice. Mark this risk as done to add it to your journey.</div>
   <div class="actions">
-    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
-    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
-    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+    <button class="btn primary" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn ghost" id="clear-checks" type="button">Clear ticks</button>
   </div>
 </section>
       <section class="panel original" id="original" aria-labelledby="orig-h">
         <div class="original-head">
           <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
-          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full OWASP OT Top 10 entry</h2>
+          <h2 id="orig-h">The full OWASP OT Top 10 entry</h2>
           <p>Source: <a href="https://ot.owasp.org/v/2025/the-top-10/accessible-devices-with-known-vulnerabilities/" rel="noopener">OWASP OT Top 10 2025, “(Accessible) Devices with Known Vulnerabilities/Issues”</a>, OWASP OT Top 10 project (<a href="https://github.com/OWASP/www-project-operational-technology-top-10" rel="noopener">GitHub</a>), licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>. Reproduced word for word; converted from Markdown, with links to other entries pointed at this site or ot.owasp.org. This page, including CyberForte's summary, is shared under CC BY-SA 4.0.</p>
         </div>
-        <div class="original-body prose"><h2>(Accessible) Devices with Known Vulnerabilities/Issues</h2>
+        <div class="original-body prose"><h2 id="o-accessible-devices-with-known-vulnerabilities-is">(Accessible) Devices with Known Vulnerabilities/Issues</h2>
 <p>Attackers love to find software/hardware with known vulnerabilities, especially if exploits are already available. Given a sufficiently devastating vulnerability, all other defenses are naught and the attacker can take over the device.</p>
 <p>This can be used for initial access, e.g., when exploiting public facing services such as VPNs, or can be used within the target network for Lateral-Movement or Privilege-Escalation.</p>
-<h3>Description</h3>
+<h3 id="o-description">Description</h3>
 <p>If an attacker is able to access a system with known exploitable vulnerable components, most other defense mechanisms are useless. The attacker will be able to take over the system, the only defenses that remain are those that reduce the pwned device's blast radius, i.e., reduces the systems that an attacker can attack "out-going" from the comproised device.</p>
 <p>In traditional IT, the typical recommendation is to upgrade. This does not work in OT due to safety concerns, mandatory update time-windows, and generally longer lifetimes of used components. Compared to IT, OT works at a glacial pace.</p>
 <p>As updates are sometimes not possible, mitigations such as network segregation are used. This prevents vulnerable systems to become accessible to attackers. Alas, these counter-measures do not solve the problem: if there is a vulnerability within the counter-measure, the original vulnerability can still be exploited. This often makes OT systems <a href="unknown-assets-and-admin-access.html">very vulnerable against unexpected admin access</a> or <a href="broken-zone-and-conduits-design.html">badly designed zones</a>: once the attacker is in the network, they have access to exploitable systems and can commence from there.</p>
-<h4>Why Can’t We Just Upgrade All the Systems?</h4>
+<h4 id="o-why-can-t-we-just-upgrade-all-the-systems">Why Can’t We Just Upgrade All the Systems?</h4>
 <p>To reiterate on the special problems that the OT world faces, we want to give a list of common excuses/reason given that could prevent an easy implementation of a vulnerability management system:</p>
 <p><strong>You don't just upgrade a medical device or power plant</strong>: this is not your typical desktop PC where you are annoyed if an update breaks your system for a couple of days, this is critical infrastructure upon which lifes potentially depend upon. Imagine you are depending upon a digital pace maker or insulin pump: would you just update it (without making sure that it will not negativly impact you)?</p>
 <p><strong><a href="inadequate_supply_chain_management.html">Problems with the supply chain</a></strong>: compared to traditional IT, in the OT world we have fewer vendors. This gives vendors power over customers, which can lead to a lack of motivation to provide security updates or notify if security problems were discovered.</p>
@@ -88,19 +112,19 @@
 <p><strong><a href="missing-awareness.html">Missing Security Awareness on the OT side</a></strong>: while safety is a well understood and implement concept in OT, security is often not. This can lead to a situation where the operators do not understand the importance of security updates and do not prioritize them. This can be due to a lack of knowledge or understanding of the risks involved, or it can be due to a lack of resources or time to implement them.</p>
 <p><strong><a href="unknown-assets-and-admin-access.html">Unknown devices and shadow infrastructure</a></strong>: if you don't even know about a device, how should you know that you need to update it?</p>
 <p>Please note, that this shows (primarily to IT security people) why upgrading is not as simple as in other domains but <strong>does not mean that we (as OT) can use any of this as an excuse for not having update procedures in place</strong>.</p>
-<h4>Vulnerability Mangement?</h4>
+<h4 id="o-vulnerability-mangement">Vulnerability Mangement?</h4>
 <p>Insufficient or missing vulnerability management practices in an OT environment can leave systems exposed to known security vulnerabilities. Not installing security patches eventually, will lead to an amplification effect when (not if) the attacker is within the system.</p>
 <p>Even if all the issues mentioned in the last section do not apply for an OT system, security updates are very often not applied. The reason for that is <strong>missing vulnerability management</strong>.</p>
-<h3>Rationale</h3>
+<h3 id="o-rationale">Rationale</h3>
 <p>Vulnerable devices bad. Especially in critical infrastructure.</p>
-<h3>Known Attacks/Examples</h3>
+<h3 id="o-known-attacks-examples">Known Attacks/Examples</h3>
 <ul>
 <li><a href="https://services.google.com/fh/files/misc/apt44-unearthing-sandworm.pdf" rel="noopener">APT44 is a persistent and operationally mature adversary that uses diverse initial access methods ranging from common vectors such as phishing, credential harvesting, and known vulnerability exploitation to targeted supply chain compromises.</a></li>
 <li><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-038a" rel="noopener">Volt Typhoon typically gains initial access to the IT network by exploiting known or zero-day vulnerabilities in public-facing network appliances</a></li>
 <li><a href="https://www.theguardian.com/business/article/2024/aug/08/sellafield-apologises-guilty-plea-security-failings-nuclear" rel="noopener">Sensitive nuclear information (SNI), the industry’s special classification system, was left vulnerable in part because of the use of “obsolete” technology including Windows 7 and Windows 2008, Lawrence said.</a></li>
 </ul>
-<h3>Mitigation/Countermeasures</h3>
-<h4>Design and Implementation</h4>
+<h3 id="o-mitigation-countermeasures">Mitigation/Countermeasures</h3>
+<h4 id="o-design-and-implementation">Design and Implementation</h4>
 <ul>
 <li>Try to prevent vulnerabilitites from accessing the system (<a href="https://owaspsamm.org/" rel="noopener">OWASP SAMM2</a>)</li>
 <li>Test hardware/software before deploying them in the field (<a href="https://owasp.org/www-project-iot-security-testing-guide/" rel="noopener">OWASP IoT Security Testing Guide</a>, <a href="https://scriptingxss.gitbook.io/firmware-security-testing-methodology" rel="noopener">OWASP Firmware Security Testing Methodology</a>)</li>
@@ -108,7 +132,7 @@
 <li>Don't depend upon security-by-obscurity.</li>
 <li>Use memory-safe programming languages and utilize security-features of frameworks.</li>
 </ul>
-<h4>Operational</h4>
+<h4 id="o-operational">Operational</h4>
 <ul>
 <li>Make mandatory vulnerabilty notifications and remediation part of your supplier contracts.</li>
 <li>Keep an up-to-date asset register with hardware/software versions.</li>
@@ -116,7 +140,7 @@
 <li>Establish a vulnerability management program that includes regular vulnerability scanning, patch management, and remediation processes: Prioritize critical security updates and patches for OT systems to address high-risk vulnerabilities.</li>
 <li>Implement network segmentation and access controls to limit the impact of security vulnerabilities.</li>
 </ul>
-<h3>Next Actionable Steps</h3>
+<h3 id="o-next-actionable-steps">Next Actionable Steps</h3>
 <ul>
 <li><a href="unknown-assets-and-admin-access.html">Inventarize your devices and services</a></li>
 <li>gather SBOMs and check for known vulnerabilities</li>
@@ -124,32 +148,32 @@
 <li>create a risk-based treatment plan, start with mitigations that have the highest impact</li>
 <li>rinse and repeat</li>
 </ul>
-<h3>References</h3>
-<h4>Standards</h4>
+<h3 id="o-references">References</h3>
+<h4 id="o-standards">Standards</h4>
 <ul>
 <li>Applicable standard requirements are listed in the <a href="https://ot.owasp.org/v/2025/appendix/mappingTable/" rel="noopener">provided mapping table in the appendix</a>.</li>
 </ul>
-<h4>Background information</h4>
+<h4 id="o-background-information">Background information</h4>
 <ul>
 <li><strong><em>OWASP</em></strong> maintains the <a href="https://owasp.org/www-project-iot-security-testing-guide/" rel="noopener">OWASP IoT Security Testing Guide</a> as well as the <a href="https://scriptingxss.gitbook.io/firmware-security-testing-methodology" rel="noopener">OWASP Firmware Security Testing Methodology</a>, both of which provide guidance on how to test for vulnerabilities in IoT and firmware systems.</li>
 <li><a href="https://www.cisa.gov/sbom" rel="noopener">Software Bill of Materials (SBOM) - CISA</a> describes a component's dependencies and vulnerabilities in a machine-readable format. This can be used to track known vulnerabilities in your software supply chain.</li>
 </ul>
-<h4>Tooling</h4>
+<h4 id="o-tooling">Tooling</h4>
 <ul>
 <li><a href="https://shodan.io" rel="noopener">shodan.io</a> allows you to search for devices connected to the internet, including those with known vulnerabilities.</li>
 <li><a href="https://owasp.org/www-project-dependency-check/" rel="noopener">OWASP dependency-check</a> allows you to scan you Java projects for known vulnerabilities in dependencies. It is typically called manually during software development, but can also be integrated into CI/CD pipelines. <a href="https://owasp.org/www-project-dependency-track/" rel="noopener">OWASP dependency-track</a> accepts SBOMs and can be used to periodically track known vulnerabilities in your software supply chain. It can notify you when new vulnerabilities are discovered.</li>
 </ul></div>
       </section>
-      <nav class="pager" aria-label="Previous and next risk"><a href="unknown-assets-and-admin-access.html"><small>Previous, 1 of 10</small>Unknown Assets and Unmanaged External Access</a><a class="next" href="inadequate_supply_chain_management.html"><small>Next, 3 of 10</small>Inadequate Supplier/Supply Chain Management</a></nav>
+      <nav class="pager" aria-label="Previous and next risk"><a href="unknown-assets-and-admin-access.html"><span class="pg-ic acc-ot"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/><path d="M10 8.7a2 2 0 1 1 2.8 1.9c-.5.2-.8.6-.8 1.1v.4"/><circle cx="12" cy="13.6" r=".6"/></svg></span><span><small>Previous · 1 of 10</small>Unknown Assets and Unmanaged External Access</span></a><a class="next" href="inadequate_supply_chain_management.html"><span><small>Next · 3 of 10</small>Inadequate Supplier/Supply Chain Management</span><span class="pg-ic acc-ot"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6h11v10h-11z"/><path d="M13.5 9.5h4l3 3.5v3h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span></a></nav>
     </article>
-    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#example">Real-world example</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original OWASP text</a></li></ol></aside>
   </div>
 </div>
 </main>
 <footer class="credits">
   <div class="wrap">
-    <div>
-      <h2>Brought to you by CyberForte</h2>
+    <div class="foot-lead">
+      <span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112" loading="lazy"></span>
+      <p class="foot-big">Brought to you by CyberForte.</p>
       <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
       <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
     </div>
@@ -166,9 +190,20 @@
   </div>
 </footer>
 <dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
-  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search 32 guides: try password, update, supplier" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+  <div class="search-foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> to move</span><span><span class="kbd">Enter</span> to open</span><span><span class="kbd">Esc</span> to close</span></div>
 </dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="celebrate" id="celebrate" hidden>
+  <div class="celebrate-card" role="dialog" aria-modal="true" aria-labelledby="cel-h">
+    <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+    <div class="cel-badge" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+    <h2 id="cel-h">Part complete</h2>
+    <p id="cel-p"></p>
+    <div class="actions"><a class="btn primary" id="cel-next" href="../index.html#journey">See your progress</a><button class="btn" id="cel-close" type="button">Keep reading</button></div>
+  </div>
+</div>
 <script src="../assets/app.js" defer></script>
 </body>
 </html>

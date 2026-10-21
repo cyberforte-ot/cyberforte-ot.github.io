@@ -7,10 +7,12 @@
 <meta name="description" content="Good security still works when the attacker has read the manual.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/06-open-design.html">
+<meta property="og:title" content="6. Open design | CyberForte">
+<meta property="og:description" content="Good security still works when the attacker has read the manual.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}document.documentElement.classList.add("js")</script>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body data-page="06-open-design" data-part="sbd">
@@ -21,79 +23,100 @@
     <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
     <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
     <div class="tools">
-      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
-      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="journey-pill" href="../index.html#journey" title="Your progress across both parts"><svg class="ring sm" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="15"/><circle class="ring-fg" cx="20" cy="20" r="15" style="stroke-dasharray:94.2;stroke-dashoffset:94.2"/></svg><span><b data-total-done>0</b>/32</span><span class="sr-only"> guides done, see your progress</span></a>
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <div class="read-progress" aria-hidden="true"><span></span></div>
 </header>
 <main id="main">
 
 <div class="wrap">
-  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 6</p>
-  <header class="article-head rise">
-    <div class="eyebrow">Playbook 6 of 22 · Secure by Design · Architectural Foundations</div>
-    <h1>Open design</h1>
-    <p class="tagline">Good security still works when the attacker has read the manual.</p>
-    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Design</span><span class="tag">Architectural Foundations</span></div>
+  <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">Secure by Design and Default</a> <span aria-hidden="true">/</span> Playbook 6</p>
+  <header class="article-head acc-a1">
+    <div class="ah-text">
+      <div class="eyebrow rise">Playbook 6 of 22 · Secure by Design · Architectural Foundations</div>
+      <h1 class="rise d1">Open design</h1>
+      <p class="tagline rise d2">Good security still works when the attacker has read the manual.</p>
+      <div class="tags rise d3"><span class="tag acc">Architectural Foundations</span><span class="tag">Secure by Design</span></div>
+    </div>
+    <div class="art acc-a1" aria-hidden="true">
+  <div class="art-grid"></div>
+  <div class="art-num">06</div>
+  <svg class="art-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10 5 6.5 4.5 3 5v13c3.5-.5 7 0 9 1.5 2-1.5 5.5-2 9-1.5V5c-3.5-.5-7 0-9 1.5z"/><path d="M12 6.5v13"/><path d="M5.5 11.5c1-1.2 2.2-1.8 3-1.8s2 .6 3 1.8"/><circle cx="8.5" cy="11.6" r=".7"/></svg>
+  <div class="art-orbit"></div>
+</div>
   </header>
   <div class="layout">
-    <article class="content">
-      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+    <aside class="rail" aria-label="On this page">
+  <div class="rail-inner">
+    <p class="rail-h">On this page</p>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-principle">Principle</a></li><li class="sub"><a href="#o-objective">Objective</a></li><li class="sub"><a href="#o-checklist">Checklist</a></li><li class="sub"><a href="#o-minimum-evidence">Minimum evidence</a></li><li class="sub"><a href="#o-release-gate">Release gate</a></li></ol>
+    <div class="rail-prog"><div class="mini-bar"><span data-part-bar="sbd"></span></div><p><b data-part-done="sbd">0</b> of 22 playbooks done</p></div>
+  </div>
+</aside>
+    <article class="content acc-a1">
+      <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
         <h2 id="pw-h">In plain words</h2>
-        <p>Hiding how something works is not a real lock. Sooner or later, someone reverse-engineers it. Open design means your product stays safe even if an attacker knows exactly how it is built.</p><p>In practice: use well-known, well-tested standards instead of home-made encryption, write down your security design and the reasons behind it, publish a secure set-up guide, give people a way to report weaknesses, and keep a list of the components inside your product (an SBOM).</p>
+        <p class="first">Hiding how something works is not a real lock. Sooner or later, someone reverse-engineers it. Open design means your product stays safe even if an attacker knows exactly how it is built.</p><p>In practice: use well-known, well-tested standards instead of home-made encryption, write down your security design and the reasons behind it, publish a secure set-up guide, give people a way to report weaknesses, and keep a list of the components inside your product (an SBOM).</p>
         <div class="pic"><strong>Picture this:</strong> A home-made &quot;secret&quot; protocol between your device and its app feels clever, until one curious person posts how it works online. Standard TLS does not have that problem.</div>
       </section>
       <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
-  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <div class="checklist-head">
+    <div><p class="kicker">Your turn</p><h2 id="checklist-h">Practical checklist</h2></div>
+    <div class="check-meter"><svg class="ring md" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="17"/><circle class="ring-fg" cx="20" cy="20" r="17" style="stroke-dasharray:106.8;stroke-dashoffset:106.8"/></svg><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  </div>
   <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
-  <ul class="check-list"><li><label><input type="checkbox"><span>We have a short security design note covering login, encryption, updates, logging and defaults.</span></label></li><li><label><input type="checkbox"><span>We use standard, widely reviewed protocols and libraries. No home-made crypto.</span></label></li><li><label><input type="checkbox"><span>Our APIs and their security rules are documented, with a secure configuration guide.</span></label></li><li><label><input type="checkbox"><span>There is a working way for anyone to report a vulnerability to us.</span></label></li><li><label><input type="checkbox"><span>We produce a list of components (SBOM) and a security changelog for releases.</span></label></li></ul>
+  <ul class="check-list"><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We have a short security design note covering login, encryption, updates, logging and defaults.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We use standard, widely reviewed protocols and libraries. No home-made crypto.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Our APIs and their security rules are documented, with a secure configuration guide.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">There is a working way for anyone to report a vulnerability to us.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We produce a list of components (SBOM) and a security changelog for releases.</span></label></li></ul>
+  <div class="check-done" aria-hidden="true"><b>Checklist complete.</b> Nice. Mark this playbook as done to add it to your journey.</div>
   <div class="actions">
-    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
-    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
-    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+    <button class="btn primary" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn ghost" id="clear-checks" type="button">Clear ticks</button>
   </div>
 </section>
       <section class="panel original" id="original" aria-labelledby="orig-h">
         <div class="original-head">
           <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
-          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <h2 id="orig-h">The full ENISA playbook</h2>
           <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/06-open-design.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 06-open-design.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
         </div>
-        <div class="original-body prose"><h2>Open design</h2>
-<h3>Principle</h3>
+        <div class="original-body prose"><h2 id="o-open-design">Open design</h2>
+<h3 id="o-principle">Principle</h3>
 <p><strong>(secure by design)</strong></p>
 <p>Systems should not depend on secrecy of design or hidden behaviour for protection. Security controls should remain effective even if an adversary understands how the system operates.</p>
-<h3>Objective</h3>
+<h3 id="o-objective">Objective</h3>
 <p>Ensure that the product’s security does not depend on the secrecy of its design or implementation details (‘security through obscurity’). Open design makes security properties reviewable, testable and maintainable.</p>
-<h3>Checklist</h3>
-<h4>Document security-relevant design decisions</h4>
+<h3 id="o-checklist">Checklist</h3>
+<h4 id="o-document-security-relevant-design-decisions">Document security-relevant design decisions</h4>
 <ul>
 <li>Keep a short security design note covering trust boundaries, auth model, cryptographic usage, update mechanism, logging/audit approach and secure defaults.</li>
 <li>Record the rationale for ‘why this control/protocol/library’.</li>
 </ul>
-<h4>Prefer open standards and proven building blocks</h4>
+<h4 id="o-prefer-open-standards-and-proven-building-blocks">Prefer open standards and proven building blocks</h4>
 <ul>
 <li>Use standard, widely reviewed protocols and libraries (e.g. TLS, OAuth/OIDC, JWT with clear constraints, signed updates).</li>
 <li>Avoid proprietary crypto, “home-grown” protocols, and undocumented encodings for security-critical flows.</li>
 </ul>
-<h4>Make interfaces and security expectations explicit</h4>
+<h4 id="o-make-interfaces-and-security-expectations-explic">Make interfaces and security expectations explicit</h4>
 <ul>
 <li>Document APIs, authentication/authorisation requirements, error handling, rate limits and supported configurations.</li>
 <li>Provide a secure configuration guide (outlining what must be enabled and disabled in production).</li>
 </ul>
-<h4>Enable review and disclosure</h4>
+<h4 id="o-enable-review-and-disclosure">Enable review and disclosure</h4>
 <ul>
 <li>Establish a vulnerability disclosure channel (security contact, intake process, basic triage/response targets).</li>
 <li>Encourage internal peer review for security-sensitive changes (to auth, updates, crypto, boundary-crossing interfaces).</li>
 </ul>
-<h4>Maintain transparency of components and changes</h4>
+<h4 id="o-maintain-transparency-of-components-and-changes">Maintain transparency of components and changes</h4>
 <ul>
 <li>Maintain, publish and sign an SBOM (at least for customer-facing builds) and track third-party components.</li>
 <li>Keep a security changelog / release notes for security-impacting fixes and default-setting changes.</li>
 </ul>
-<h3>Minimum evidence</h3>
+<h3 id="o-minimum-evidence">Minimum evidence</h3>
 <ul>
 <li>Security design note (1–3 pages), covering boundaries, auth, crypto choices, update path, logging, secure defaults</li>
 <li>API + security requirements documentation (authn/authz, rate limits, data-handling expectations)</li>
@@ -102,7 +125,7 @@
 <li>SBOM (exported file or tool output) + dependency -tracking approach</li>
 <li>Security-sensitive PR review rule (CODEOWNERS file, repo policy or checklist evidence)</li>
 </ul>
-<h3>Release gate</h3>
+<h3 id="o-release-gate">Release gate</h3>
 <ul>
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Security design note updated for any architectural/security-relevant change (auth, crypto, update path, trust boundaries)</li>
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>No custom/proprietary crypto or undocumented security-critical protocols introduced</li>
@@ -112,16 +135,16 @@
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Vulnerability disclosure channel tested (contact works) and ownership/triage defined</li>
 </ul></div>
       </section>
-      <nav class="pager" aria-label="Previous and next playbook"><a href="05-defence-in-depth.html"><small>Previous, 5 of 22</small>Defence in depth</a><a class="next" href="07-life-cycle-management.html"><small>Next, 7 of 22</small>Life-cycle management</a></nav>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="05-defence-in-depth.html"><span class="pg-ic acc-a1"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V9h2v2h2V9h2v2h4V9h2v2h2V9h2v12z"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/><path d="M2 21h20"/><path d="M8 4h8" stroke-dasharray="1.5 2"/></svg></span><span><small>Previous · 5 of 22</small>Defence in depth</span></a><a class="next" href="07-life-cycle-management.html"><span><small>Next · 7 of 22</small>Life-cycle management</span><span class="pg-ic acc-a2"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12A8 8 0 0 1 17.7 6.4"/><path d="M17.5 2.8v3.8h-3.8M6.5 21.2v-3.8h3.8"/><circle cx="12" cy="12" r="2"/></svg></span></a></nav>
     </article>
-    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
   </div>
 </div>
 </main>
 <footer class="credits">
   <div class="wrap">
-    <div>
-      <h2>Brought to you by CyberForte</h2>
+    <div class="foot-lead">
+      <span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112" loading="lazy"></span>
+      <p class="foot-big">Brought to you by CyberForte.</p>
       <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
       <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
     </div>
@@ -138,9 +161,20 @@
   </div>
 </footer>
 <dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
-  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search 32 guides: try password, update, supplier" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+  <div class="search-foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> to move</span><span><span class="kbd">Enter</span> to open</span><span><span class="kbd">Esc</span> to close</span></div>
 </dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="celebrate" id="celebrate" hidden>
+  <div class="celebrate-card" role="dialog" aria-modal="true" aria-labelledby="cel-h">
+    <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+    <div class="cel-badge" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+    <h2 id="cel-h">Part complete</h2>
+    <p id="cel-p"></p>
+    <div class="actions"><a class="btn primary" id="cel-next" href="../index.html#journey">See your progress</a><button class="btn" id="cel-close" type="button">Keep reading</button></div>
+  </div>
+</div>
 <script src="../assets/app.js" defer></script>
 </body>
 </html>

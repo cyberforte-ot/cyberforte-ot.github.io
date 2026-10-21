@@ -7,10 +7,12 @@
 <meta name="description" content="No silent changes. Every setting is written down, reviewed and easy to roll back.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/11-configuration-and-change-management.html">
+<meta property="og:title" content="11. Configuration and change management | CyberForte">
+<meta property="og:description" content="No silent changes. Every setting is written down, reviewed and easy to roll back.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}document.documentElement.classList.add("js")</script>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body data-page="11-configuration-and-change-management" data-part="sbd">
@@ -21,80 +23,101 @@
     <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
     <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
     <div class="tools">
-      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
-      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="journey-pill" href="../index.html#journey" title="Your progress across both parts"><svg class="ring sm" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="15"/><circle class="ring-fg" cx="20" cy="20" r="15" style="stroke-dasharray:94.2;stroke-dashoffset:94.2"/></svg><span><b data-total-done>0</b>/32</span><span class="sr-only"> guides done, see your progress</span></a>
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <div class="read-progress" aria-hidden="true"><span></span></div>
 </header>
 <main id="main">
 
 <div class="wrap">
-  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 11</p>
-  <header class="article-head rise">
-    <div class="eyebrow">Playbook 11 of 22 · Secure by Design · Operational Integrity</div>
-    <h1>Configuration and change management</h1>
-    <p class="tagline">No silent changes. Every setting is written down, reviewed and easy to roll back.</p>
-    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Design</span><span class="tag">Operational Integrity</span></div>
+  <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">Secure by Design and Default</a> <span aria-hidden="true">/</span> Playbook 11</p>
+  <header class="article-head acc-a2">
+    <div class="ah-text">
+      <div class="eyebrow rise">Playbook 11 of 22 · Secure by Design · Operational Integrity</div>
+      <h1 class="rise d1">Configuration and change management</h1>
+      <p class="tagline rise d2">No silent changes. Every setting is written down, reviewed and easy to roll back.</p>
+      <div class="tags rise d3"><span class="tag acc">Operational Integrity</span><span class="tag">Secure by Design</span></div>
+    </div>
+    <div class="art acc-a2" aria-hidden="true">
+  <div class="art-grid"></div>
+  <div class="art-num">11</div>
+  <svg class="art-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+  <div class="art-orbit"></div>
+</div>
   </header>
   <div class="layout">
-    <article class="content">
-      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+    <aside class="rail" aria-label="On this page">
+  <div class="rail-inner">
+    <p class="rail-h">On this page</p>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-principle">Principle</a></li><li class="sub"><a href="#o-objective">Objective</a></li><li class="sub"><a href="#o-checklist">Checklist</a></li><li class="sub"><a href="#o-minimum-evidence">Minimum evidence</a></li><li class="sub"><a href="#o-release-gate">Release gate</a></li></ol>
+    <div class="rail-prog"><div class="mini-bar"><span data-part-bar="sbd"></span></div><p><b data-part-done="sbd">0</b> of 22 playbooks done</p></div>
+  </div>
+</aside>
+    <article class="content acc-a2">
+      <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
         <h2 id="pw-h">In plain words</h2>
-        <p>Many security problems are not bugs but settings: a port opened during a late-night fix and never closed. This playbook asks you to treat configuration like code, kept in version control and reviewed before it goes live.</p><p>Agree a secure baseline, check automatically that reality still matches it (no &quot;silent drift&quot;), keep test and production apart, and make sure every change has a way back. Emergency changes are fine when they are rare, logged and reviewed afterwards.</p>
+        <p class="first">Many security problems are not bugs but settings: a port opened during a late-night fix and never closed. This playbook asks you to treat configuration like code, kept in version control and reviewed before it goes live.</p><p>Agree a secure baseline, check automatically that reality still matches it (no &quot;silent drift&quot;), keep test and production apart, and make sure every change has a way back. Emergency changes are fine when they are rare, logged and reviewed afterwards.</p>
         <div class="pic"><strong>Picture this:</strong> If you cannot answer &quot;who changed this firewall rule, when and why?&quot;, you have drift. Version control answers it in seconds.</div>
       </section>
       <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
-  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <div class="checklist-head">
+    <div><p class="kicker">Your turn</p><h2 id="checklist-h">Practical checklist</h2></div>
+    <div class="check-meter"><svg class="ring md" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="17"/><circle class="ring-fg" cx="20" cy="20" r="17" style="stroke-dasharray:106.8;stroke-dashoffset:106.8"/></svg><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  </div>
   <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
-  <ul class="check-list"><li><label><input type="checkbox"><span>Production configuration and infrastructure settings are in version control and peer reviewed.</span></label></li><li><label><input type="checkbox"><span>We have a written secure baseline and new components start from it.</span></label></li><li><label><input type="checkbox"><span>Development, test and production are separated, and few people can deploy to production.</span></label></li><li><label><input type="checkbox"><span>Each production change has a rollback plan, and rollback has been tested.</span></label></li><li><label><input type="checkbox"><span>Security-affecting changes are tagged and get a quick risk review.</span></label></li><li><label><input type="checkbox"><span>Emergency changes are logged and reviewed afterwards.</span></label></li></ul>
+  <ul class="check-list"><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Production configuration and infrastructure settings are in version control and peer reviewed.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We have a written secure baseline and new components start from it.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Development, test and production are separated, and few people can deploy to production.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Each production change has a rollback plan, and rollback has been tested.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Security-affecting changes are tagged and get a quick risk review.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Emergency changes are logged and reviewed afterwards.</span></label></li></ul>
+  <div class="check-done" aria-hidden="true"><b>Checklist complete.</b> Nice. Mark this playbook as done to add it to your journey.</div>
   <div class="actions">
-    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
-    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
-    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+    <button class="btn primary" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn ghost" id="clear-checks" type="button">Clear ticks</button>
   </div>
 </section>
       <section class="panel original" id="original" aria-labelledby="orig-h">
         <div class="original-head">
           <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
-          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <h2 id="orig-h">The full ENISA playbook</h2>
           <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/11-configuration-and-change-management.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 11-configuration-and-change-management.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
         </div>
-        <div class="original-body prose"><h2>Configuration and change management</h2>
-<h3>Principle</h3>
+        <div class="original-body prose"><h2 id="o-configuration-and-change-management">Configuration and change management</h2>
+<h3 id="o-principle">Principle</h3>
 <p><strong>(secure by design)</strong></p>
 <p>Secure operation requires configurations to be controlled, consistent and auditable. Baseline hardening standards should be defined and applied through repeatable mechanisms such as templates and infrastructure as code to reduce drift.</p>
-<h3>Objective</h3>
+<h3 id="o-objective">Objective</h3>
 <p>Prevent security regressions and outages by ensuring that system configuration is controlled, reviewable and reproducible and that changes are assessed for risk before reaching production. The priority is to eliminate ‘silent drift’, tighten defaults and make rollbacks reliable.</p>
-<h3>Checklist</h3>
-<h4>Version and review configuration (treat it as code)</h4>
+<h3 id="o-checklist">Checklist</h3>
+<h4 id="o-version-and-review-configuration-treat-it-as-cod">Version and review configuration (treat it as code)</h4>
 <ul>
 <li>Store environment config, infrastructure templates and policies in version control.</li>
 <li>Require peer review for changes affecting exposure, identity/access, secrets, networking, logging and updates.</li>
 </ul>
-<h4>Harden defaults and prevent drift</h4>
+<h4 id="o-harden-defaults-and-prevent-drift">Harden defaults and prevent drift</h4>
 <ul>
 <li>Establish secure baseline configurations (deny by default where possible).</li>
 <li>Use automated checks to detect drift between desired and actual config (at least for critical settings).</li>
 </ul>
-<h4>Separate environments and limit privilege</h4>
+<h4 id="o-separate-environments-and-limit-privilege">Separate environments and limit privilege</h4>
 <ul>
 <li>Strict separation for dev/test/prod (accounts, projects, networks, credentials).</li>
 <li>Restrict who can deploy to prod; remove direct manual changes where feasible.</li>
 </ul>
-<h4>Implement change gating and rollback</h4>
+<h4 id="o-implement-change-gating-and-rollback">Implement change gating and rollback</h4>
 <ul>
 <li>Use CI/CD gates for config and infra changes (linting, policy checks, approval).</li>
 <li>Require a rollback plan for each production change (including config-only changes).</li>
 <li>Keep break-glass changes rare, logged and post-reviewed.</li>
 </ul>
-<h4>Track and assess security-impacting changes</h4>
+<h4 id="o-track-and-assess-security-impacting-changes">Track and assess security-impacting changes</h4>
 <ul>
 <li>Tag changes that affect external exposure, authentication/authorisation, crypto, update mechanisms, data classification or third-party integrations.</li>
 <li>Ensure that a lightweight threat/risk review is triggered when these tags apply.</li>
 </ul>
-<h3>Minimum evidence</h3>
+<h3 id="o-minimum-evidence">Minimum evidence</h3>
 <ul>
 <li>Config versioned: repo location(s) for IaC, config, policies; PR review history</li>
 <li>Baseline config: documented secure defaults and key settings (one page)</li>
@@ -103,7 +126,7 @@
 <li>Rollback proof: last rollback test result or documented rollback procedure</li>
 <li>Change log: record of security-impacting changes and associated approvals</li>
 </ul>
-<h3>Release gate</h3>
+<h3 id="o-release-gate">Release gate</h3>
 <ul>
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Production config/IaC changes are versioned and peer-reviewed (no untracked manual edits)</li>
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Secure baseline defaults applied; new components inherit baseline (network, IAM, logging)</li>
@@ -114,16 +137,16 @@
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Exceptions (emergency changes) logged and post-reviewed, with owner and expiry date</li>
 </ul></div>
       </section>
-      <nav class="pager" aria-label="Previous and next playbook"><a href="10-logging-monitoring-and-alerting.html"><small>Previous, 10 of 22</small>Logging, monitoring and alerting</a><a class="next" href="12-incident-response-and-recovery.html"><small>Next, 12 of 22</small>Incident response and recovery</a></nav>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="10-logging-monitoring-and-alerting.html"><span class="pg-ic acc-a2"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h10M3 9h10M3 13h6M3 17h5"/><path d="M14 18.5h7l-1.2-1.6V14a2.8 2.8 0 0 0-5.6 0v2.9z"/><path d="M16.3 20.5a1.2 1.2 0 0 0 2.4 0"/></svg></span><span><small>Previous · 10 of 22</small>Logging, monitoring and alerting</span></a><a class="next" href="12-incident-response-and-recovery.html"><span><small>Next · 12 of 22</small>Incident response and recovery</span><span class="pg-ic acc-a2"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18v-5a6 6 0 0 1 12 0v5"/><path d="M4 18h16v3H4z"/><path d="M12 2v2M4.2 5.2l1.4 1.4M19.8 5.2l-1.4 1.4M12 10v4"/></svg></span></a></nav>
     </article>
-    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
   </div>
 </div>
 </main>
 <footer class="credits">
   <div class="wrap">
-    <div>
-      <h2>Brought to you by CyberForte</h2>
+    <div class="foot-lead">
+      <span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112" loading="lazy"></span>
+      <p class="foot-big">Brought to you by CyberForte.</p>
       <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
       <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
     </div>
@@ -140,9 +163,20 @@
   </div>
 </footer>
 <dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
-  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search 32 guides: try password, update, supplier" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+  <div class="search-foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> to move</span><span><span class="kbd">Enter</span> to open</span><span><span class="kbd">Esc</span> to close</span></div>
 </dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="celebrate" id="celebrate" hidden>
+  <div class="celebrate-card" role="dialog" aria-modal="true" aria-labelledby="cel-h">
+    <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+    <div class="cel-badge" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+    <h2 id="cel-h">Part complete</h2>
+    <p id="cel-p"></p>
+    <div class="actions"><a class="btn primary" id="cel-next" href="../index.html#journey">See your progress</a><button class="btn" id="cel-close" type="button">Keep reading</button></div>
+  </div>
+</div>
 <script src="../assets/app.js" defer></script>
 </body>
 </html>

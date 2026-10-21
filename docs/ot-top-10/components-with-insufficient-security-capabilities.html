@@ -7,10 +7,12 @@
 <meta name="description" content="Do not build tomorrow&#x27;s site on yesterday&#x27;s insecure parts.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/components-with-insufficient-security-capabilities.html">
+<meta property="og:title" content="OT9. Components/Protocols with Insufficient Security Capabilities | CyberForte">
+<meta property="og:description" content="Do not build tomorrow&#x27;s site on yesterday&#x27;s insecure parts.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}document.documentElement.classList.add("js")</script>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body data-page="components-with-insufficient-security-capabilities" data-part="ot">
@@ -21,29 +23,47 @@
     <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
     <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html">Secure by Design and Default</a><a href="../ot-top-10/index.html" aria-current="page">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
     <div class="tools">
-      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
-      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="journey-pill" href="../index.html#journey" title="Your progress across both parts"><svg class="ring sm" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="15"/><circle class="ring-fg" cx="20" cy="20" r="15" style="stroke-dasharray:94.2;stroke-dashoffset:94.2"/></svg><span><b data-total-done>0</b>/32</span><span class="sr-only"> guides done, see your progress</span></a>
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <div class="read-progress" aria-hidden="true"><span></span></div>
 </header>
 <main id="main">
 
 <div class="wrap">
-  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">OWASP OT Top 10</a> / Risk 9</p>
-  <header class="article-head rise">
-    <div class="eyebrow">OT Top 10 · Risk 9 of 10</div>
-    <h1>Components/Protocols with Insufficient Security Capabilities</h1>
-    <p class="tagline">Do not build tomorrow&#x27;s site on yesterday&#x27;s insecure parts.</p>
+  <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">OWASP OT Top 10</a> <span aria-hidden="true">/</span> Risk 9</p>
+  <header class="article-head acc-ot">
+    <div class="ah-text">
+      <div class="eyebrow rise">OT Top 10 · Risk 9 of 10</div>
+      <h1 class="rise d1">Components/Protocols with Insufficient Security Capabilities</h1>
+      <p class="tagline rise d2">Do not build tomorrow&#x27;s site on yesterday&#x27;s insecure parts.</p>
+      <div class="tags rise d3"><span class="tag acc">Similar high importance</span><span class="tag">In the plant: The old radio link on the tanks</span></div>
+    </div>
+    <div class="art acc-ot" aria-hidden="true">
+  <div class="art-grid"></div>
+  <div class="art-num">09</div>
+  <svg class="art-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v5M11 3v5"/><rect x="5" y="8" width="8" height="6" rx="1.5"/><path d="M9 14v2a4 4 0 0 0 4 4h3a3 3 0 0 0 3-3v-1"/><path d="M17 12l4 4M21 12l-4 4"/></svg>
+  <div class="art-orbit"></div>
+</div>
   </header>
   <div class="layout">
-    <article class="content">
-      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+    <aside class="rail" aria-label="On this page">
+  <div class="rail-inner">
+    <p class="rail-h">On this page</p>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
+    <div class="rail-prog"><div class="mini-bar"><span data-part-bar="ot"></span></div><p><b data-part-done="ot">0</b> of 10 risks done</p></div>
+  </div>
+</aside>
+    <article class="content acc-ot">
+      <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
         <h2 id="pw-h">What it is, in plain words</h2>
-        <p>Some equipment and protocols were designed before security was a concern: no proper login, no protection against tampered messages. Over decades, almost every OT site ends up with some of this legacy.</p><p>OWASP&#x27;s advice is to avoid choosing such components and protocols for new work, and to pick parts that can be updated and leave room for future security features. Where you are stuck with legacy, isolate it, watch it and add compensating controls around it.</p>
+        <p class="first">Some equipment and protocols were designed before security was a concern: no proper login, no protection against tampered messages. Over decades, almost every OT site ends up with some of this legacy.</p><p>OWASP&#x27;s advice is to avoid choosing such components and protocols for new work, and to pick parts that can be updated and leave room for future security features. Where you are stuck with legacy, isolate it, watch it and add compensating controls around it.</p>
       </section>
-      <section class="panel lists-panel" style="border:1px solid var(--line)" id="why" aria-label="Why it matters and how to reduce the risk">
+      <section class="panel lists-panel reveal" id="why" aria-label="Why it matters and how to reduce the risk">
         <div class="lists">
           <div><h3>Why it matters in OT</h3><p class="note">Factories, utilities, buildings and other sites that run physical processes.</p><ul><li>OT lifetimes are long, so today&#x27;s purchase is tomorrow&#x27;s legacy.</li><li>Several common industrial protocols accept any well-formed command from anyone who can reach them.</li><li>There is economic pressure to reuse old kit in new projects.</li></ul></div>
           <div><h3>How to reduce the risk</h3><p class="note">Drawn from OWASP's mitigations and next steps.</p><ul><li>Review the components and protocols in use and identify the legacy ones.</li><li>Do not choose legacy systems or protocols for new deployments if you can avoid it.</li><li>Prefer components that can be updated and support modern security features.</li><li>Isolate and monitor legacy systems, and apply compensating controls.</li><li>Plan replacement where possible.</li></ul></div>
@@ -51,31 +71,35 @@
       </section>
       
       <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
-  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <div class="checklist-head">
+    <div><p class="kicker">Your turn</p><h2 id="checklist-h">Practical checklist</h2></div>
+    <div class="check-meter"><svg class="ring md" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="17"/><circle class="ring-fg" cx="20" cy="20" r="17" style="stroke-dasharray:106.8;stroke-dashoffset:106.8"/></svg><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  </div>
   <p class="note">A short, practical version written by CyberForte from the OWASP text. Your ticks are saved only in this browser.</p>
-  <ul class="check-list"><li><label><input type="checkbox"><span>We know which of our components and protocols lack basic security features.</span></label></li><li><label><input type="checkbox"><span>New purchases are checked for updatability and security features.</span></label></li><li><label><input type="checkbox"><span>Legacy systems are isolated from the rest of the network.</span></label></li><li><label><input type="checkbox"><span>Legacy systems are monitored for unusual activity.</span></label></li><li><label><input type="checkbox"><span>There is a replacement or compensating-control plan for each one.</span></label></li></ul>
+  <ul class="check-list"><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We know which of our components and protocols lack basic security features.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">New purchases are checked for updatability and security features.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Legacy systems are isolated from the rest of the network.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Legacy systems are monitored for unusual activity.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">There is a replacement or compensating-control plan for each one.</span></label></li></ul>
+  <div class="check-done" aria-hidden="true"><b>Checklist complete.</b> Nice. Mark this risk as done to add it to your journey.</div>
   <div class="actions">
-    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
-    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
-    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+    <button class="btn primary" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn ghost" id="clear-checks" type="button">Clear ticks</button>
   </div>
 </section>
       <section class="panel original" id="original" aria-labelledby="orig-h">
         <div class="original-head">
           <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
-          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full OWASP OT Top 10 entry</h2>
+          <h2 id="orig-h">The full OWASP OT Top 10 entry</h2>
           <p>Source: <a href="https://ot.owasp.org/v/2025/the-top-10/components-with-insufficient-security-capabilities/" rel="noopener">OWASP OT Top 10 2025, “Selection of Components/Protocols With Insufficient Security Capabilities”</a>, OWASP OT Top 10 project (<a href="https://github.com/OWASP/www-project-operational-technology-top-10" rel="noopener">GitHub</a>), licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>. Reproduced word for word; converted from Markdown, with links to other entries pointed at this site or ot.owasp.org. This page, including CyberForte's summary, is shared under CC BY-SA 4.0.</p>
         </div>
-        <div class="original-body prose"><h2>Selection of Components/Protocols With Insufficient Security Capabilities</h2>
+        <div class="original-body prose"><h2 id="o-selection-of-components-protocols-with-insuffici">Selection of Components/Protocols With Insufficient Security Capabilities</h2>
 <p>Given the long, potentially multi-decades, lifetimes of OT system, it becomes understandable why OT components become legacy systems over time. Many of the mentioned countermeasures try to deal with the existence of legacy systems.</p>
 <p>When designing new systems, however, the best way to deal with legacy systems is to not use them in the first place. If we design new systems there should be slack for future security features.</p>
 <p>This Top 10 items is related to <a href="missing-awareness.html">missing awareness</a>. While missing awareness is about the lack of knowledge about security features, this item is about the lack of security features in the first place.</p>
-<h3>Description</h3>
+<h3 id="o-description">Description</h3>
 <p>We define legacy systems as systems with security and cryptography capabilities that do not conform to current best practices. This includes systems that are not able to be updated or patched, as well as systems that are not able to be replaced.</p>
-<h4>Don’t Use Legacy Systems for New Deployments</h4>
+<h4 id="o-don-t-use-legacy-systems-for-new-deployments">Don’t Use Legacy Systems for New Deployments</h4>
 <p>Obviously, if you are designing a new system, you should not use legacy systems. This is especially true for systems that are not able to be updated or patched. If you are designing a new system, you should use systems that are able to be updated or patched.</p>
 <p>Deployments are seldom new green-field installations. Most of the time, new systems are deployed in existing environments (think about the long lifetimes of OT systems). If new components are added to an existing environment, they often have to conform and interact with the existing environment, often mandating usage of legacy protocols. If this is the case, it would be preferable to use components that (while they provide the legacy feature set) also incorporate capabilities for state-of-the-art security features so that the installation can be updated in the future.</p>
-<h4>Don’t Use Legacy Protocols if Possible</h4>
+<h4 id="o-don-t-use-legacy-protocols-if-possible">Don’t Use Legacy Protocols if Possible</h4>
 <p>Components commonly use standardized protocols to communicate with each other or with other systems. When designing a new system, chosen protocols should heed best security practices and legacy protocols should be avoided if feasible.</p>
 <p>Legacy protocols often have security issues:</p>
 <ul>
@@ -83,25 +107,25 @@
 <li>They do not offer thorough or <a href="insufficient-access-control.html">sufficient authentication mechanisms</a> and thus can lead to unauthorized access to systems and data.</li>
 <li>They have weak built-in security features like basic Bluetooth.</li>
 </ul>
-<h3>Rationale</h3>
+<h3 id="o-rationale">Rationale</h3>
 <ul>
 <li>given the long lifetimes of OT systems, parts of them becoming legacy systems will happen</li>
 <li>there is economic pressure to use existing legacy systems for new deployments:w</li>
 <li>there is a lack of awareness about the security implications of using legacy systems</li>
 </ul>
-<h3>Known Attacks/Examples</h3>
+<h3 id="o-known-attacks-examples">Known Attacks/Examples</h3>
 <ul>
 <li><a href="https://attack.mitre.org/software/S0604/" rel="noopener">Industroyer</a> (also known as CrashOverride) caused the 2016 power outage in Kyiv by speaking the legitimate IEC 60870-5-104, IEC 61850, and OPC DA protocols directly to substation equipment. No vulnerability was needed: IEC 60870-5-104 and IEC 61850 (without the IEC 62351 profiles) provide neither authentication nor integrity protection, so they execute every syntactically valid command from a host that can reach them; OPC DA relies on DCOM authentication, which Industroyer satisfied from an already-compromised host.</li>
 <li><a href="https://attack.mitre.org/software/S1045/" rel="noopener">INCONTROLLER</a> (also known as PIPEDREAM) is an attack toolkit discovered in 2022 that abuses legitimate functions of Modbus, CODESYS, and OPC UA to discover, manipulate, and disable Schneider Electric and OMRON Sysmac PLCs and OPC UA servers. It was developed as an offensive capability and, as of <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-103a" rel="noopener">CISA AA22-103A</a>, had not been observed deployed in attacks.</li>
 </ul>
-<h3>Mitigation/Countermeasures</h3>
-<h4>Design and Implementation</h4>
+<h3 id="o-mitigation-countermeasures">Mitigation/Countermeasures</h3>
+<h4 id="o-design-and-implementation">Design and Implementation</h4>
 <ul>
 <li>don't use legacy systems or protocols for new deployments</li>
 <li>use components that are able to be updated or patched</li>
 <li>incorporate some slack for future security features in new designs</li>
 </ul>
-<h4>Operational</h4>
+<h4 id="o-operational">Operational</h4>
 <p>Sadly, there are no operational countermeasures that can be applied to legacy systems. The best way to deal with legacy systems is to not use them in the first place. If you have to use legacy systems, you can try to mitigate the risks by applying the following countermeasures:</p>
 <ul>
 <li>isolate legacy systems from the rest of the network</li>
@@ -109,7 +133,7 @@
 <li>apply compensating controls to mitigate the risks of legacy systems</li>
 <li>apply compensating controls to mitigate the risks of legacy protocols</li>
 </ul>
-<h3>Next Actionable Steps</h3>
+<h3 id="o-next-actionable-steps">Next Actionable Steps</h3>
 <ul>
 <li>evaluate the components and protocols used in your systems</li>
 <li>identify legacy systems and protocols in your environment</li>
@@ -117,30 +141,30 @@
 <li>if possible, replace legacy systems and protocols with state-of-the-art components and protocols</li>
 <li>if replacement is not possible, apply compensating controls to mitigate the risks of legacy systems and protocols</li>
 </ul>
-<h3>References</h3>
-<h4>Standards</h4>
+<h3 id="o-references">References</h3>
+<h4 id="o-standards">Standards</h4>
 <ul>
 <li>Applicable standard requirements are listed in the <a href="https://ot.owasp.org/v/2025/appendix/mappingTable/" rel="noopener">provided mapping table in the appendix</a>.</li>
 </ul>
-<h4>Background Information</h4>
+<h4 id="o-background-information">Background Information</h4>
 <ul>
 <li>N.A.</li>
 </ul>
-<h4>Tooling</h4>
+<h4 id="o-tooling">Tooling</h4>
 <ul>
 <li>N.A.</li>
 </ul></div>
       </section>
-      <nav class="pager" aria-label="Previous and next risk"><a href="missing-awareness.html"><small>Previous, 8 of 10</small>Missing Awareness</a><a class="next" href="missing-hardening.html"><small>Next, 10 of 10</small>Missing Hardening</a></nav>
+      <nav class="pager" aria-label="Previous and next risk"><a href="missing-awareness.html"><span class="pg-ic acc-ot"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.3 1 2.2h5.2c0-.9.4-1.7 1-2.2A6 6 0 0 0 12 3z"/><path d="M12 7v4M12 13v.2"/></svg></span><span><small>Previous · 8 of 10</small>Missing Awareness</span></a><a class="next" href="missing-hardening.html"><span><small>Next · 10 of 10</small>Missing Hardening</span><span class="pg-ic acc-ot"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.5 8.6-8 10-4.5-1.4-8-5-8-10v-6z"/><path d="M12 8v7M8.5 11.5h7"/></svg></span></a></nav>
     </article>
-    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original OWASP text</a></li></ol></aside>
   </div>
 </div>
 </main>
 <footer class="credits">
   <div class="wrap">
-    <div>
-      <h2>Brought to you by CyberForte</h2>
+    <div class="foot-lead">
+      <span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112" loading="lazy"></span>
+      <p class="foot-big">Brought to you by CyberForte.</p>
       <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
       <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
     </div>
@@ -157,9 +181,20 @@
   </div>
 </footer>
 <dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
-  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search 32 guides: try password, update, supplier" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+  <div class="search-foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> to move</span><span><span class="kbd">Enter</span> to open</span><span><span class="kbd">Esc</span> to close</span></div>
 </dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="celebrate" id="celebrate" hidden>
+  <div class="celebrate-card" role="dialog" aria-modal="true" aria-labelledby="cel-h">
+    <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+    <div class="cel-badge" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+    <h2 id="cel-h">Part complete</h2>
+    <p id="cel-p"></p>
+    <div class="actions"><a class="btn primary" id="cel-next" href="../index.html#journey">See your progress</a><button class="btn" id="cel-close" type="button">Keep reading</button></div>
+  </div>
+</div>
 <script src="../assets/app.js" defer></script>
 </body>
 </html>

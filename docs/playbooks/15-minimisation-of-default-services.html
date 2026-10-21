@@ -7,10 +7,12 @@
 <meta name="description" content="Out of the box, only the essentials are switched on.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/15-minimisation-of-default-services.html">
+<meta property="og:title" content="15. Minimisation of default services | CyberForte">
+<meta property="og:description" content="Out of the box, only the essentials are switched on.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}document.documentElement.classList.add("js")</script>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body data-page="15-minimisation-of-default-services" data-part="sbd">
@@ -21,75 +23,96 @@
     <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
     <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
     <div class="tools">
-      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
-      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="journey-pill" href="../index.html#journey" title="Your progress across both parts"><svg class="ring sm" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="15"/><circle class="ring-fg" cx="20" cy="20" r="15" style="stroke-dasharray:94.2;stroke-dashoffset:94.2"/></svg><span><b data-total-done>0</b>/32</span><span class="sr-only"> guides done, see your progress</span></a>
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <div class="read-progress" aria-hidden="true"><span></span></div>
 </header>
 <main id="main">
 
 <div class="wrap">
-  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 15</p>
-  <header class="article-head rise">
-    <div class="eyebrow">Playbook 15 of 22 · Secure by Default · Default Hardening</div>
-    <h1>Minimisation of default services</h1>
-    <p class="tagline">Out of the box, only the essentials are switched on.</p>
-    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Default</span><span class="tag">Default Hardening</span></div>
+  <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">Secure by Design and Default</a> <span aria-hidden="true">/</span> Playbook 15</p>
+  <header class="article-head acc-a3">
+    <div class="ah-text">
+      <div class="eyebrow rise">Playbook 15 of 22 · Secure by Default · Default Hardening</div>
+      <h1 class="rise d1">Minimisation of default services</h1>
+      <p class="tagline rise d2">Out of the box, only the essentials are switched on.</p>
+      <div class="tags rise d3"><span class="tag acc">Default Hardening</span><span class="tag">Secure by Default</span></div>
+    </div>
+    <div class="art acc-a3" aria-hidden="true">
+  <div class="art-grid"></div>
+  <div class="art-num">15</div>
+  <svg class="art-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="10" height="5" rx="2.5"/><circle cx="5.5" cy="6.5" r="1.4"/><rect x="3" y="11" width="10" height="5" rx="2.5"/><circle cx="5.5" cy="13.5" r="1.4"/><rect x="11" y="17" width="10" height="5" rx="2.5"/><circle cx="18.5" cy="19.5" r="1.4"/><path d="M16 6.5h5M16 13.5h5"/></svg>
+  <div class="art-orbit"></div>
+</div>
   </header>
   <div class="layout">
-    <article class="content">
-      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+    <aside class="rail" aria-label="On this page">
+  <div class="rail-inner">
+    <p class="rail-h">On this page</p>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-principle">Principle</a></li><li class="sub"><a href="#o-objective">Objective</a></li><li class="sub"><a href="#o-checklist">Checklist</a></li><li class="sub"><a href="#o-minimum-evidence">Minimum evidence</a></li><li class="sub"><a href="#o-release-gate">Release gate</a></li></ol>
+    <div class="rail-prog"><div class="mini-bar"><span data-part-bar="sbd"></span></div><p><b data-part-done="sbd">0</b> of 22 playbooks done</p></div>
+  </div>
+</aside>
+    <article class="content acc-a3">
+      <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
         <h2 id="pw-h">In plain words</h2>
-        <p>Every feature that is on by default is one more thing a customer has to know about and secure. This playbook says: ship with only the core functions running, and let people switch extras on deliberately.</p><p>When someone does turn on an optional feature, tell them in plain words what risk comes with it. And each time you add a new feature, check again whether it really needs to be on by default.</p>
+        <p class="first">Every feature that is on by default is one more thing a customer has to know about and secure. This playbook says: ship with only the core functions running, and let people switch extras on deliberately.</p><p>When someone does turn on an optional feature, tell them in plain words what risk comes with it. And each time you add a new feature, check again whether it really needs to be on by default.</p>
         <div class="pic"><strong>Picture this:</strong> A device with a built-in web server, remote access and file sharing all running from day one has three extra doors. If most customers never use them, keep them off until asked.</div>
       </section>
       <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
-  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <div class="checklist-head">
+    <div><p class="kicker">Your turn</p><h2 id="checklist-h">Practical checklist</h2></div>
+    <div class="check-meter"><svg class="ring md" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="17"/><circle class="ring-fg" cx="20" cy="20" r="17" style="stroke-dasharray:106.8;stroke-dashoffset:106.8"/></svg><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  </div>
   <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
-  <ul class="check-list"><li><label><input type="checkbox"><span>We have defined the core functions the product needs to work.</span></label></li><li><label><input type="checkbox"><span>Optional features and services are off by default.</span></label></li><li><label><input type="checkbox"><span>Turning them on needs a deliberate action by the user.</span></label></li><li><label><input type="checkbox"><span>Users are told about the security implications when they enable extras.</span></label></li><li><label><input type="checkbox"><span>Defaults are reviewed whenever we add new features.</span></label></li></ul>
+  <ul class="check-list"><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We have defined the core functions the product needs to work.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Optional features and services are off by default.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Turning them on needs a deliberate action by the user.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Users are told about the security implications when they enable extras.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Defaults are reviewed whenever we add new features.</span></label></li></ul>
+  <div class="check-done" aria-hidden="true"><b>Checklist complete.</b> Nice. Mark this playbook as done to add it to your journey.</div>
   <div class="actions">
-    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
-    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
-    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+    <button class="btn primary" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn ghost" id="clear-checks" type="button">Clear ticks</button>
   </div>
 </section>
       <section class="panel original" id="original" aria-labelledby="orig-h">
         <div class="original-head">
           <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
-          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <h2 id="orig-h">The full ENISA playbook</h2>
           <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/15-minimisation-of-default-services.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 15-minimisation-of-default-services.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
         </div>
-        <div class="original-body prose"><h2>Minimisation of default services</h2>
-<h3>Principle</h3>
+        <div class="original-body prose"><h2 id="o-minimisation-of-default-services">Minimisation of default services</h2>
+<h3 id="o-principle">Principle</h3>
 <p><strong>(secure by default)</strong></p>
 <p>Disable non-essential features and services by default. Only the functionality required for the core operation of the product should be enabled by default.</p>
-<h3>Objective</h3>
+<h3 id="o-objective">Objective</h3>
 <p>Reduce the attack surface and ensure that products start in a hardened state, without relying on users to disable specific functionality.</p>
-<h3>Checklist</h3>
-<h4>Define core functionality</h4>
+<h3 id="o-checklist">Checklist</h3>
+<h4 id="o-define-core-functionality">Define core functionality</h4>
 <ul>
 <li>Identify the minimum set of features and services required for the product to operate.</li>
 </ul>
-<h4>Disable non-essential features and services by default</h4>
+<h4 id="o-disable-non-essential-features-and-services-by-d">Disable non-essential features and services by default</h4>
 <ul>
 <li>Ensure that optional features and services are disabled by default.</li>
 </ul>
-<h4>Require explicit opt-in for additional functionality</h4>
+<h4 id="o-require-explicit-opt-in-for-additional-functiona">Require explicit opt-in for additional functionality</h4>
 <ul>
 <li>Ensure that non-essential features and services can be enabled only through deliberate user action.</li>
 </ul>
-<h4>Explain security implications on enablement</h4>
+<h4 id="o-explain-security-implications-on-enablement">Explain security implications on enablement</h4>
 <ul>
 <li>Inform users of security risks when enabling optional features and services.</li>
 <li>Avoid enabling additional features and services without clear acknowledgement.</li>
 </ul>
-<h4>Review defaults on change</h4>
+<h4 id="o-review-defaults-on-change">Review defaults on change</h4>
 <ul>
 <li>Reassess default-enabled features and services when new features are introduced.</li>
 </ul>
-<h3>Minimum evidence</h3>
+<h3 id="o-minimum-evidence">Minimum evidence</h3>
 <ul>
 <li>Core features and services defined: documentation or configuration identifying which features and services are required by default.</li>
 <li>Non-essential features and services disabled: default configuration or build artefacts show optional features and services and modules are off.</li>
@@ -97,7 +120,7 @@
 <li>Security implications disclosed: documentation, UI text or configuration prompts show that users are informed of security implications when enabling non-essential features and services.</li>
 <li>Defaults reviewed for this release: release notes, checklist or ticket confirms that default settings have been reviewed after changes.</li>
 </ul>
-<h3>Release gate</h3>
+<h3 id="o-release-gate">Release gate</h3>
 <ul>
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Only core functionality is enabled by default</li>
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Optional features and services are disabled unless explicitly enabled by the user</li>
@@ -106,16 +129,16 @@
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Default configuration has been reviewed and confirmed for this release</li>
 </ul></div>
       </section>
-      <nav class="pager" aria-label="Previous and next playbook"><a href="14-supply-chain-controls.html"><small>Previous, 14 of 22</small>Supply-chain controls</a><a class="next" href="16-restrictive-initial-access.html"><small>Next, 16 of 22</small>Restrictive initial access</a></nav>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="14-supply-chain-controls.html"><span class="pg-ic acc-a2"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span><span><small>Previous · 14 of 22</small>Supply-chain controls</span></a><a class="next" href="16-restrictive-initial-access.html"><span><small>Next · 16 of 22</small>Restrictive initial access</span><span class="pg-ic acc-a3"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><path d="M12 14.5v2.5"/><circle cx="12" cy="14.3" r=".8"/></svg></span></a></nav>
     </article>
-    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
   </div>
 </div>
 </main>
 <footer class="credits">
   <div class="wrap">
-    <div>
-      <h2>Brought to you by CyberForte</h2>
+    <div class="foot-lead">
+      <span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112" loading="lazy"></span>
+      <p class="foot-big">Brought to you by CyberForte.</p>
       <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
       <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
     </div>
@@ -132,9 +155,20 @@
   </div>
 </footer>
 <dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
-  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search 32 guides: try password, update, supplier" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+  <div class="search-foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> to move</span><span><span class="kbd">Enter</span> to open</span><span><span class="kbd">Esc</span> to close</span></div>
 </dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="celebrate" id="celebrate" hidden>
+  <div class="celebrate-card" role="dialog" aria-modal="true" aria-labelledby="cel-h">
+    <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+    <div class="cel-badge" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+    <h2 id="cel-h">Part complete</h2>
+    <p id="cel-p"></p>
+    <div class="actions"><a class="btn primary" id="cel-next" href="../index.html#journey">See your progress</a><button class="btn" id="cel-close" type="button">Keep reading</button></div>
+  </div>
+</div>
 <script src="../assets/app.js" defer></script>
 </body>
 </html>

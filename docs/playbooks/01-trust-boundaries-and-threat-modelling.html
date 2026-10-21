@@ -7,10 +7,12 @@
 <meta name="description" content="Draw your product, find the doors, decide which ones need a lock first.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/01-trust-boundaries-and-threat-modelling.html">
+<meta property="og:title" content="1. Trust boundaries and threat modelling | CyberForte">
+<meta property="og:description" content="Draw your product, find the doors, decide which ones need a lock first.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}document.documentElement.classList.add("js")</script>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body data-page="01-trust-boundaries-and-threat-modelling" data-part="sbd">
@@ -21,86 +23,107 @@
     <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
     <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
     <div class="tools">
-      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
-      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="journey-pill" href="../index.html#journey" title="Your progress across both parts"><svg class="ring sm" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="15"/><circle class="ring-fg" cx="20" cy="20" r="15" style="stroke-dasharray:94.2;stroke-dashoffset:94.2"/></svg><span><b data-total-done>0</b>/32</span><span class="sr-only"> guides done, see your progress</span></a>
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
+  <div class="read-progress" aria-hidden="true"><span></span></div>
 </header>
 <main id="main">
 
 <div class="wrap">
-  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 1</p>
-  <header class="article-head rise">
-    <div class="eyebrow">Playbook 1 of 22 · Secure by Design · Architectural Foundations</div>
-    <h1>Trust boundaries and threat modelling</h1>
-    <p class="tagline">Draw your product, find the doors, decide which ones need a lock first.</p>
-    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Design</span><span class="tag">Architectural Foundations</span><span class="tag red">ENISA suggests: start here</span></div>
+  <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">Secure by Design and Default</a> <span aria-hidden="true">/</span> Playbook 1</p>
+  <header class="article-head acc-a1">
+    <div class="ah-text">
+      <div class="eyebrow rise">Playbook 1 of 22 · Secure by Design · Architectural Foundations</div>
+      <h1 class="rise d1">Trust boundaries and threat modelling</h1>
+      <p class="tagline rise d2">Draw your product, find the doors, decide which ones need a lock first.</p>
+      <div class="tags rise d3"><span class="tag acc">Architectural Foundations</span><span class="tag">Secure by Design</span><span class="tag red">ENISA suggests: start here</span></div>
+    </div>
+    <div class="art acc-a1" aria-hidden="true">
+  <div class="art-grid"></div>
+  <div class="art-num">01</div>
+  <svg class="art-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="11" height="17" rx="2" stroke-dasharray="2.2 2.2"/><circle cx="8" cy="8" r="2"/><circle cx="8" cy="16" r="2"/><circle cx="19" cy="12" r="2.5"/><path d="M8 10v4M10 8.6l6.8 2.4M10 15.4l6.8-2.4"/></svg>
+  <div class="art-orbit"></div>
+</div>
   </header>
   <div class="layout">
-    <article class="content">
-      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+    <aside class="rail" aria-label="On this page">
+  <div class="rail-inner">
+    <p class="rail-h">On this page</p>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-principle">Principle</a></li><li class="sub"><a href="#o-objective">Objective</a></li><li class="sub"><a href="#o-checklist">Checklist</a></li><li class="sub"><a href="#o-minimum-evidence">Minimum evidence</a></li><li class="sub"><a href="#o-release-gate">Release gate</a></li></ol>
+    <div class="rail-prog"><div class="mini-bar"><span data-part-bar="sbd"></span></div><p><b data-part-done="sbd">0</b> of 22 playbooks done</p></div>
+  </div>
+</aside>
+    <article class="content acc-a1">
+      <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
         <h2 id="pw-h">In plain words</h2>
-        <p>Before you can protect something, you need to see it. This playbook asks you to draw one simple picture of your product: who uses it, what it talks to, where data goes, and where someone could get in.</p><p>Then you mark the &quot;trust boundaries&quot;. Those are the places where something you control meets something you do not, like the internet meeting your back end, or a normal user meeting admin powers. That is where attackers try their luck, so that is where your best locks go.</p>
+        <p class="first">Before you can protect something, you need to see it. This playbook asks you to draw one simple picture of your product: who uses it, what it talks to, where data goes, and where someone could get in.</p><p>Then you mark the &quot;trust boundaries&quot;. Those are the places where something you control meets something you do not, like the internet meeting your back end, or a normal user meeting admin powers. That is where attackers try their luck, so that is where your best locks go.</p>
         <div class="pic"><strong>Picture this:</strong> Picture a smart thermostat. Its app, its cloud, its update channel and the little local port a technician plugs into are all doors. A one-page drawing shows which doors open onto the street.</div>
       </section>
       <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
-  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <div class="checklist-head">
+    <div><p class="kicker">Your turn</p><h2 id="checklist-h">Practical checklist</h2></div>
+    <div class="check-meter"><svg class="ring md" viewBox="0 0 40 40" aria-hidden="true"><circle class="ring-bg" cx="20" cy="20" r="17"/><circle class="ring-fg" cx="20" cy="20" r="17" style="stroke-dasharray:106.8;stroke-dashoffset:106.8"/></svg><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  </div>
   <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
-  <ul class="check-list"><li><label><input type="checkbox"><span>We have one up-to-date diagram of the product, its users, services and data flows.</span></label></li><li><label><input type="checkbox"><span>The diagram marks where trust changes (internet to back end, user to admin, device to cloud).</span></label></li><li><label><input type="checkbox"><span>We have written down what is most valuable: keys, customer data, control functions, logs.</span></label></li><li><label><input type="checkbox"><span>We have a short list of our top threats, each with a high, medium or low priority and an owner.</span></label></li><li><label><input type="checkbox"><span>Each top threat has a planned control and a way to test that it works.</span></label></li><li><label><input type="checkbox"><span>We know what changes (new interface, new data, new supplier) should make us redo this.</span></label></li></ul>
+  <ul class="check-list"><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We have one up-to-date diagram of the product, its users, services and data flows.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">The diagram marks where trust changes (internet to back end, user to admin, device to cloud).</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We have written down what is most valuable: keys, customer data, control functions, logs.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We have a short list of our top threats, each with a high, medium or low priority and an owner.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">Each top threat has a planned control and a way to test that it works.</span></label></li><li><label><input type="checkbox"><span class="cb" aria-hidden="true"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span><span class="ct">We know what changes (new interface, new data, new supplier) should make us redo this.</span></label></li></ul>
+  <div class="check-done" aria-hidden="true"><b>Checklist complete.</b> Nice. Mark this playbook as done to add it to your journey.</div>
   <div class="actions">
-    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
-    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
-    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+    <button class="btn primary" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn ghost" id="clear-checks" type="button">Clear ticks</button>
   </div>
 </section>
       <section class="panel original" id="original" aria-labelledby="orig-h">
         <div class="original-head">
           <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
-          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <h2 id="orig-h">The full ENISA playbook</h2>
           <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/01-trust-boundaries-and-threat-modelling.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 01-trust-boundaries-and-threat-modelling.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
         </div>
-        <div class="original-body prose"><h2>Trust boundaries and threat modelling</h2>
-<h3>Principle</h3>
+        <div class="original-body prose"><h2 id="o-trust-boundaries-and-threat-modelling">Trust boundaries and threat modelling</h2>
+<h3 id="o-principle">Principle</h3>
 <p><strong>(secure by design)</strong></p>
 <p>Secure architectures make trust explicit rather than assumed. Trust boundaries define where data, identities and execution contexts cross from a more trusted domain to a less trusted one (or vice versa).</p>
-<h3>Objective</h3>
+<h3 id="o-objective">Objective</h3>
 <p>Ensure that the system’s architecture and data flows are understood, trust assumptions are explicit and the highest-risk attack paths are identified early, so that security controls and secure defaults are designed in, not retrofitted.</p>
-<h3>Checklist</h3>
-<h4>Draw the system (one diagram)</h4>
+<h3 id="o-checklist">Checklist</h3>
+<h4 id="o-draw-the-system-one-diagram">Draw the system (one diagram)</h4>
 <ul>
 <li>Include users/admins, device/app, back-end services, APIs, data stores, third parties.</li>
 <li>Show key data flows and entry points (APIs, admin UI, OTA/update channel, local ports).</li>
 </ul>
-<h4>Mark trust boundaries and privileged paths</h4>
+<h4 id="o-mark-trust-boundaries-and-privileged-paths">Mark trust boundaries and privileged paths</h4>
 <ul>
 <li>Identify where trust changes (internet–back end, tenant–tenant, device–cloud, user–admin).</li>
 <li>Highlight high-privilege flows (auth, key management, updates, admin actions).</li>
 </ul>
-<h4>List critical assets</h4>
+<h4 id="o-list-critical-assets">List critical assets</h4>
 <ul>
 <li>For instance, list credentials/keys, customer / personally identifiable information, payment tokens, device control functions, availability, audit logs, data, source code and the IDE.</li>
 </ul>
-<h4>Identify and prioritise top threats</h4>
+<h4 id="o-identify-and-prioritise-top-threats">Identify and prioritise top threats</h4>
 <ul>
 <li>Map threats to the relevant entry/exit points, data flows, assets and trust boundaries, for example account takeover, malicious updates, API authorisation bypass, man-in-the-middle attacks and the tampering with, replay of or injection of fabricated or stale data and commands.</li>
 <li>Assign a high, medium or low priority using a documented method appropriate to the product, such as assessing impact, likelihood, plausibility, exploitability and exposure.</li>
 </ul>
-<h4>Define mitigations, secure defaults and verification</h4>
+<h4 id="o-define-mitigations-secure-defaults-and-verificat">Define mitigations, secure defaults and verification</h4>
 <ul>
 <li>For each top threat: required controls and default configuration (deny by default, authn/authz, segmentation, signed updates, rate limits).</li>
 <li>Map each control to a verification method (tests, CI checks, config validation).</li>
 <li>Define refresh triggers (new interface, auth change, new sensitive data, new critical dependency, major architecture change).</li>
 </ul>
-<h3>Minimum evidence</h3>
+<h3 id="o-minimum-evidence">Minimum evidence</h3>
 <ul>
 <li>One architecture/data-flow diagram with trust boundaries and entry points (stored in repo/wiki)</li>
 <li>Top threats list (e.g. the top 5 to 10 threat scenarios) with H/M/L priority and owners</li>
 <li>Control/default mapping for each top threat (what control, where enforced, how verified)</li>
 <li>Verification evidence: CI outputs or test results for key negative tests (unauthorised calls fail)</li>
 </ul>
-<h3>Release gate</h3>
+<h3 id="o-release-gate">Release gate</h3>
 <ul>
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Diagram updated for this release (components, flows, dependencies reflect reality)</li>
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Trust boundaries and privileged paths clearly marked</li>
@@ -110,16 +133,16 @@
 <li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Threat model refresh triggered if any of the following are relevant: new API/interface, auth model change, new sensitive data, major dependency/supplier change, OTA/update changes, major architecture change.</li>
 </ul></div>
       </section>
-      <nav class="pager" aria-label="Previous and next playbook"><a href="index.html"><small>Back</small>All playbooks</a><a class="next" href="02-least-privilege.html"><small>Next, 2 of 22</small>Least privilege</a></nav>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="index.html"><span><small>Back</small>All playbooks</span></a><a class="next" href="02-least-privilege.html"><span><small>Next · 2 of 22</small>Least privilege</span><span class="pg-ic acc-a1"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v2.5"/><circle cx="8" cy="12" r="1.2"/></svg></span></a></nav>
     </article>
-    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
   </div>
 </div>
 </main>
 <footer class="credits">
   <div class="wrap">
-    <div>
-      <h2>Brought to you by CyberForte</h2>
+    <div class="foot-lead">
+      <span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112" loading="lazy"></span>
+      <p class="foot-big">Brought to you by CyberForte.</p>
       <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
       <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
     </div>
@@ -136,9 +159,20 @@
   </div>
 </footer>
 <dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
-  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search 32 guides: try password, update, supplier" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+  <div class="search-foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> to move</span><span><span class="kbd">Enter</span> to open</span><span><span class="kbd">Esc</span> to close</span></div>
 </dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="celebrate" id="celebrate" hidden>
+  <div class="celebrate-card" role="dialog" aria-modal="true" aria-labelledby="cel-h">
+    <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+    <div class="cel-badge" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+    <h2 id="cel-h">Part complete</h2>
+    <p id="cel-p"></p>
+    <div class="actions"><a class="btn primary" id="cel-next" href="../index.html#journey">See your progress</a><button class="btn" id="cel-close" type="button">Keep reading</button></div>
+  </div>
+</div>
 <script src="../assets/app.js" defer></script>
 </body>
 </html>
