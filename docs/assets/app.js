@@ -276,6 +276,7 @@
         body.classList.remove("swap"); void body.offsetWidth; body.classList.add("swap");
       }
       if (pos) pos.textContent = n + " / 10";
+      if (window.CF3D) window.CF3D.setActive(n);
       var stage = document.getElementById("scene-stage"), sp = spots[n - 1];
       if (stage && sp && stage.scrollWidth > stage.clientWidth + 4) {
         var left = sp.offsetLeft - stage.clientWidth / 2;
@@ -305,6 +306,19 @@
       io.observe(scene);
     }
     void otDone;
+    // Upgrade to the real-time 3D plant when WebGL and ES modules are available (SVG stays as fallback)
+    var gl = false;
+    try { var c = document.createElement("canvas"); var ctx = window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl")); gl = !!ctx; var lose = ctx && ctx.getExtension("WEBGL_lose_context"); if (lose) lose.loseContext(); } catch (e) { gl = false; }
+    if (gl && location.protocol !== "file:" && "noModule" in document.createElement("script")) {
+      var load3d = function () {
+        if (load3d.done) return; load3d.done = true;
+        var m = document.createElement("script"); m.type = "module"; m.src = base + "assets/plant3d.js"; document.head.appendChild(m);
+      };
+      if ("IntersectionObserver" in window) {
+        var lo = new IntersectionObserver(function (ents) { if (ents[0].isIntersecting) { load3d(); lo.disconnect(); } }, { rootMargin: "300px" });
+        lo.observe(scene);
+      } else load3d();
+    }
   }
 
   /* ---------- Story */

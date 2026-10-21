@@ -51,6 +51,7 @@ Attribution used on every OT Top 10 page:
 
 - `docs/assets/img/enisa-figure-1.png` comes from the ENISA repository (CC BY 4.0), shown with its original caption and credit.
 - The CyberForte logo belongs to CyberForte.
+- `docs/assets/vendor/three.module.min.js` is three.js r160 (MIT licence, copy in `docs/assets/vendor/three-LICENSE.txt`), taken from the official npm package with its integrity hash checked. It renders the 3D plant, which is modelled in our own code (`docs/assets/plant3d.js`).
 - The real-world example of the October 2026 French supermarket refrigeration attack is our own short description, linked to the press reports (Ars Technica, SBS News with Reuters and AFP). It is labelled "reported" because the investigation is ongoing.
 
 ## Result
