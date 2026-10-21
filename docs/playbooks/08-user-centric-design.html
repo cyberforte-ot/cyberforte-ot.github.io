@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8. User-centric design | CyberForte</title>
+<meta name="description" content="If the safe way is the easy way, people will take it.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/08-user-centric-design.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="08-user-centric-design" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 8</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 8 of 22 · Secure by Design · Operational Integrity</div>
+    <h1>User-centric design</h1>
+    <p class="tagline">If the safe way is the easy way, people will take it.</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Design</span><span class="tag">Operational Integrity</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>Security that is confusing gets switched off or worked around. User-centric design means making the secure path the default and the simplest one, so good outcomes do not depend on the user being an expert.</p><p>Ship with safe settings on, guide people through a short first-run set-up, write warnings that say what happened and what to do next, and keep roles simple, such as admin, operator and viewer. Then watch real people use it and fix whatever trips them up.</p>
+        <div class="pic"><strong>Picture this:</strong> &quot;Error 0x80&quot; helps nobody. &quot;Your password was used from a new location. If this was not you, reset it here&quot; does.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We have a list of what ships switched on and off, and why.</span></label></li><li><label><input type="checkbox"><span>First-time set-up is guided and forces safe steps, such as changing initial credentials.</span></label></li><li><label><input type="checkbox"><span>Warnings and errors explain what happened, the impact and how to fix it.</span></label></li><li><label><input type="checkbox"><span>Roles and permissions match how people really work.</span></label></li><li><label><input type="checkbox"><span>We have tested key security steps with a few real or proxy users and fixed what confused them.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/08-user-centric-design.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 08-user-centric-design.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>User-centric design</h2>
+<h3>Principle</h3>
+<p><strong>(secure by design)</strong></p>
+<p>Security mechanisms must be usable and understandable even for everyday users.</p>
+<h3>Objective</h3>
+<p>Ensure that security controls and secure defaults are usable, understandable and aligned with real user workflows, so that security outcomes do not depend on expert behaviour.</p>
+<h3>Checklist</h3>
+<h4>Design secure defaults that require minimal user action</h4>
+<ul>
+<li>Ship with the safest practical settings enabled (e.g. least exposure, secure communications, logging enabled).</li>
+<li>Avoid optional security for critical protections; make insecure modes explicit and gated.</li>
+</ul>
+<h4>Make set-up and onboarding safe and simple</h4>
+<ul>
+<li>Provide a guided first-run experience with clear security steps (e.g. change initial credentials, pair securely, enable updates).</li>
+<li>Minimise manual configuration for sensitive settings; prefer automated secure provisioning.</li>
+</ul>
+<h4>Use clear, actionable security messaging</h4>
+<ul>
+<li>Write user-facing warnings and error messages that explain what happened, the impact and what to do next.</li>
+<li>Avoid vague messages (‘failed’) or blame-the-user language; include remediation steps.</li>
+</ul>
+<h4>Provide least-friction access management</h4>
+<ul>
+<li>Prefer role-based access and simple permission models that match user roles (e.g. admin, operator, viewer).</li>
+<li>Support safer auth options where feasible (e.g. MFA for admins, device identity, short-lived tokens).</li>
+<li>Remove/limit insecure recovery paths; make account recovery robust.</li>
+</ul>
+<h4>Validate usability to prevent insecure workarounds</h4>
+<ul>
+<li>Run quick usability checks on key security flows (onboarding, password reset, admin tasks, updates).</li>
+<li>Use support tickets and pseudonymised telemetry (where appropriate) to detect confusion and misconfiguration trends.</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>Secure defaults list (what ships enabled and disabled, with rationale)</li>
+<li>Onboarding / security set-up guide (short, step-by-step, including credentials and update steps)</li>
+<li>Roles/permissions model (roles defined + what each can do)</li>
+<li>User-facing security message catalogue (examples of warnings / error messages and text outlining required remediation measures)</li>
+<li>Usability validation notes (at least three to five users or internal proxies) covering the top security flows, plus resulting fixes</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Secure defaults reviewed and validated (no critical protections disabled by default)</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>No default admin credentials active; onboarding enforces safe initial set-up</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Admin/security-critical actions have clear UX (confirmations, guidance and safe recovery paths)</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Roles and permissions match real user workflows; privilege escalation is explicit and auditable</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Security warnings / error messages are actionable (what, why, how to fix) and documented</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Basic usability check completed for key security flows (onboarding, admin tasks, recovery, updates); issues tracked/fixed or accepted with owner + date</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="07-life-cycle-management.html"><small>Previous, 7 of 22</small>Life-cycle management</a><a class="next" href="09-secure-coding-and-verification-practices.html"><small>Next, 9 of 22</small>Secure coding and verification practices</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

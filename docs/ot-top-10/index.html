@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OWASP OT Top 10 in plain words | CyberForte</title>
+<meta name="description" content="The 10 biggest OT security risks from OWASP, explained in plain words with checklists and the full original text.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/index.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="" data-part="ot">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html">Secure by Design and Default</a><a href="../ot-top-10/index.html" aria-current="page">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow rise">Part 2 · 10 risks</div>
+    <h1 class="rise d1">OWASP OT Top 10</h1>
+    <p class="lead rise d2">The ten biggest security risks for operational technology: the systems that run factories, utilities, buildings and other physical processes. Each risk in plain words, why it matters, how to reduce it, and the full original text.</p>
+    <p class="byline rise d3">Based on the <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a> (<a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>). Brought to you by <strong>CyberForte</strong>.</p>
+  </section>
+  <div class="progress" data-progress>
+    <div class="progress-row"><span><strong><span data-done>0</span> of 10</strong> risks marked as done</span><button class="link-btn" id="reset-progress" type="button">Reset progress</button></div>
+    <div class="bar" role="progressbar" aria-label="Risks done" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><span></span></div>
+  </div>
+  <section class="block" aria-labelledby="list-h">
+    <div class="section-head"><div><h2 id="list-h">The 10 risks</h2><p>OWASP says items 1 to 4 are fundamental, 5 to 9 are of similar high importance, and item 10 is not a security issue by itself but would have prevented many incidents.</p></div></div>
+    <div class="grid three"><a class="card rise" href="unknown-assets-and-admin-access.html" data-slug="unknown-assets-and-admin-access" data-part="ot">
+  <span class="card-num">OT 01</span>
+  <span class="card-title">Unknown Assets and Unmanaged External Access</span>
+  <p>You cannot protect what you do not know you have.</p>
+  <span class="meta"><span class="tag">Top 4: fundamental</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="accessible-devices-with-known-vulnerabilities.html" data-slug="accessible-devices-with-known-vulnerabilities" data-part="ot">
+  <span class="card-num">OT 02</span>
+  <span class="card-title">Devices with Known Vulnerabilities/Issues</span>
+  <p>A published weakness is an open invitation, especially if it can be reached.</p>
+  <span class="meta"><span class="tag">Top 4: fundamental</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="inadequate_supply_chain_management.html" data-slug="inadequate_supply_chain_management" data-part="ot">
+  <span class="card-num">OT 03</span>
+  <span class="card-title">Inadequate Supplier/Supply Chain Management</span>
+  <p>Attackers sometimes come in through the people you trust most.</p>
+  <span class="meta"><span class="tag">Top 4: fundamental</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="loss-of-availability.html" data-slug="loss-of-availability" data-part="ot">
+  <span class="card-num">OT 04</span>
+  <span class="card-title">Loss of Availability</span>
+  <p>In OT, if it stops (or lies), people can get hurt.</p>
+  <span class="meta"><span class="tag">Top 4: fundamental</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="insufficient-access-control.html" data-slug="insufficient-access-control" data-part="ot">
+  <span class="card-num">OT 05</span>
+  <span class="card-title">Insufficient Access Control</span>
+  <p>Shared passwords on a sticky note are not access control.</p>
+  <span class="meta"><span class="tag">Similar high importance</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="missing-incident-detection-reaction-capabilities.html" data-slug="missing-incident-detection-reaction-capabilities" data-part="ot">
+  <span class="card-num">OT 06</span>
+  <span class="card-title">Missing Incident Detection/Reaction Capabilities</span>
+  <p>The longer an intruder goes unnoticed, the worse it gets.</p>
+  <span class="meta"><span class="tag">Similar high importance</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="broken-zone-and-conduits-design.html" data-slug="broken-zone-and-conduits-design" data-part="ot">
+  <span class="card-num">OT 07</span>
+  <span class="card-title">Broken Zones and Conduits Design</span>
+  <p>Split the site into rooms with controlled doorways, not one big open hall.</p>
+  <span class="meta"><span class="tag">Similar high importance</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="missing-awareness.html" data-slug="missing-awareness" data-part="ot">
+  <span class="card-num">OT 08</span>
+  <span class="card-title">Missing Awareness</span>
+  <p>The best lock is useless if nobody knows it is there, or why to use it.</p>
+  <span class="meta"><span class="tag">Similar high importance</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="components-with-insufficient-security-capabilities.html" data-slug="components-with-insufficient-security-capabilities" data-part="ot">
+  <span class="card-num">OT 09</span>
+  <span class="card-title">Components/Protocols with Insufficient Security Capabilities</span>
+  <p>Do not build tomorrow&#x27;s site on yesterday&#x27;s insecure parts.</p>
+  <span class="meta"><span class="tag">Similar high importance</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="missing-hardening.html" data-slug="missing-hardening" data-part="ot">
+  <span class="card-num">OT 10</span>
+  <span class="card-title">Missing Hardening</span>
+  <p>Switch off what you do not need, and add a few extra locks.</p>
+  <span class="meta"><span class="tag">Would have prevented many incidents</span><span class="done-badge">✓ Done</span></span>
+</a></div>
+  </section>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

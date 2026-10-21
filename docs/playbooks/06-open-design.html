@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6. Open design | CyberForte</title>
+<meta name="description" content="Good security still works when the attacker has read the manual.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/06-open-design.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="06-open-design" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 6</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 6 of 22 · Secure by Design · Architectural Foundations</div>
+    <h1>Open design</h1>
+    <p class="tagline">Good security still works when the attacker has read the manual.</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Design</span><span class="tag">Architectural Foundations</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>Hiding how something works is not a real lock. Sooner or later, someone reverse-engineers it. Open design means your product stays safe even if an attacker knows exactly how it is built.</p><p>In practice: use well-known, well-tested standards instead of home-made encryption, write down your security design and the reasons behind it, publish a secure set-up guide, give people a way to report weaknesses, and keep a list of the components inside your product (an SBOM).</p>
+        <div class="pic"><strong>Picture this:</strong> A home-made &quot;secret&quot; protocol between your device and its app feels clever, until one curious person posts how it works online. Standard TLS does not have that problem.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We have a short security design note covering login, encryption, updates, logging and defaults.</span></label></li><li><label><input type="checkbox"><span>We use standard, widely reviewed protocols and libraries. No home-made crypto.</span></label></li><li><label><input type="checkbox"><span>Our APIs and their security rules are documented, with a secure configuration guide.</span></label></li><li><label><input type="checkbox"><span>There is a working way for anyone to report a vulnerability to us.</span></label></li><li><label><input type="checkbox"><span>We produce a list of components (SBOM) and a security changelog for releases.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/06-open-design.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 06-open-design.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>Open design</h2>
+<h3>Principle</h3>
+<p><strong>(secure by design)</strong></p>
+<p>Systems should not depend on secrecy of design or hidden behaviour for protection. Security controls should remain effective even if an adversary understands how the system operates.</p>
+<h3>Objective</h3>
+<p>Ensure that the product’s security does not depend on the secrecy of its design or implementation details (‘security through obscurity’). Open design makes security properties reviewable, testable and maintainable.</p>
+<h3>Checklist</h3>
+<h4>Document security-relevant design decisions</h4>
+<ul>
+<li>Keep a short security design note covering trust boundaries, auth model, cryptographic usage, update mechanism, logging/audit approach and secure defaults.</li>
+<li>Record the rationale for ‘why this control/protocol/library’.</li>
+</ul>
+<h4>Prefer open standards and proven building blocks</h4>
+<ul>
+<li>Use standard, widely reviewed protocols and libraries (e.g. TLS, OAuth/OIDC, JWT with clear constraints, signed updates).</li>
+<li>Avoid proprietary crypto, “home-grown” protocols, and undocumented encodings for security-critical flows.</li>
+</ul>
+<h4>Make interfaces and security expectations explicit</h4>
+<ul>
+<li>Document APIs, authentication/authorisation requirements, error handling, rate limits and supported configurations.</li>
+<li>Provide a secure configuration guide (outlining what must be enabled and disabled in production).</li>
+</ul>
+<h4>Enable review and disclosure</h4>
+<ul>
+<li>Establish a vulnerability disclosure channel (security contact, intake process, basic triage/response targets).</li>
+<li>Encourage internal peer review for security-sensitive changes (to auth, updates, crypto, boundary-crossing interfaces).</li>
+</ul>
+<h4>Maintain transparency of components and changes</h4>
+<ul>
+<li>Maintain, publish and sign an SBOM (at least for customer-facing builds) and track third-party components.</li>
+<li>Keep a security changelog / release notes for security-impacting fixes and default-setting changes.</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>Security design note (1–3 pages), covering boundaries, auth, crypto choices, update path, logging, secure defaults</li>
+<li>API + security requirements documentation (authn/authz, rate limits, data-handling expectations)</li>
+<li>Secure configuration guide (production hardening defaults, required settings)</li>
+<li>Vulnerability disclosure process (public email / web page or customer-facing channel; triage ownership defined)</li>
+<li>SBOM (exported file or tool output) + dependency -tracking approach</li>
+<li>Security-sensitive PR review rule (CODEOWNERS file, repo policy or checklist evidence)</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Security design note updated for any architectural/security-relevant change (auth, crypto, update path, trust boundaries)</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>No custom/proprietary crypto or undocumented security-critical protocols introduced</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>API/security documentation updated (auth requirements, scopes/roles, rate limits, secure defaults)</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Secure configuration guide updated; defaults validated for new/exposed interfaces</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>SBOM generated for the release and stored/published per policy</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Vulnerability disclosure channel tested (contact works) and ownership/triage defined</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="05-defence-in-depth.html"><small>Previous, 5 of 22</small>Defence in depth</a><a class="next" href="07-life-cycle-management.html"><small>Next, 7 of 22</small>Life-cycle management</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

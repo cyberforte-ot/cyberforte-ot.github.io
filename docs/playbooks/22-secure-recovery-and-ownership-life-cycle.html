@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>22. Secure recovery and ownership life cycle | CyberForte</title>
+<meta name="description" content="Resets, recoveries and handovers that help the owner, not the intruder.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/22-secure-recovery-and-ownership-life-cycle.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="22-secure-recovery-and-ownership-life-cycle" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 22</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 22 of 22 · Secure by Default · Guided Protection</div>
+    <h1>Secure recovery and ownership life cycle</h1>
+    <p class="tagline">Resets, recoveries and handovers that help the owner, not the intruder.</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Default</span><span class="tag">Guided Protection</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>Password resets, factory resets and selling or handing over a device are all moments when control changes hands. They are also favourite targets for attackers and social engineers.</p><p>Decide which recovery and transfer actions you support and who may start them, check identity properly before allowing them, watch and rate-limit those workflows, and make sure a reset or handover really removes the previous owner&#x27;s access, credentials and secrets.</p>
+        <div class="pic"><strong>Picture this:</strong> A second-hand device that still lets its first owner log in remotely has not really been handed over. A proper reset wipes the old keys and accounts.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We have listed the supported recovery, reset and transfer actions and who may start each.</span></label></li><li><label><input type="checkbox"><span>Strong identity checks come before recovery, reset or transfer.</span></label></li><li><label><input type="checkbox"><span>Recovery paths cannot be used to skip normal login, and they are monitored and rate-limited.</span></label></li><li><label><input type="checkbox"><span>Factory reset and ownership transfer fully remove previous access and secrets.</span></label></li><li><label><input type="checkbox"><span>Recovery and transfer steps are guided to reduce user error.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/22-secure-recovery-and-ownership-life-cycle.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 22-secure-recovery-and-ownership-life-cycle.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>Secure recovery and ownership life cycle</h2>
+<h3>Principle</h3>
+<p><strong>(secure by default)</strong></p>
+<p>Provide secure, guided recovery and ownership transfer mechanisms by default. Recovery, reset and transfer processes must be easy for users, operators and administrators to follow, while remaining resistant to abuse, account takeover and social engineering.</p>
+<h3>Objective</h3>
+<p>To enable users and administrators to recover access, reset systems or transfer ownership safely.</p>
+<h3>Checklist</h3>
+<h4>Define supported recovery and transfer actions</h4>
+<ul>
+<li>Identify supported recovery actions such as credential reset, account recovery, secure factory reset and ownership transfer, clearly defining who is allowed to initiate each action and under what conditions</li>
+</ul>
+<h4>Verify identity before recovery or transfer</h4>
+<ul>
+<li>Require strong identity verification before allowing recovery, reset or ownership transfer actions.</li>
+</ul>
+<h4>Protect recovery paths from abuse</h4>
+<ul>
+<li>Ensure that recovery mechanisms cannot be used to bypass normal authentication or authorisation controls.</li>
+<li>Apply monitoring and rate limiting to recovery and reset workflows.</li>
+</ul>
+<h4>Ensure secure reset and ownership transfer</h4>
+<ul>
+<li>Ensure that factory reset and ownership transfer fully remove previous user access, credentials and secrets.</li>
+</ul>
+<h4>Provide guided, secure workflows</h4>
+<ul>
+<li>Offer clear recovery and transfer processes that reduce user error</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>Recovery and transfer actions are defined: documentation identifies supported recovery, reset and ownership transfer processes.</li>
+<li>Strong verification is enforced: configuration or test evidence shows that recovery and transfer actions require a verified identity.</li>
+<li>Abuse protections are applied: configuration, logs or test evidence shows that rate limiting and monitoring of recovery workflows are in place.</li>
+<li>Secure reset and transfer is verified: test evidence confirms that factory reset and ownership transfer remove prior credentials and access.</li>
+<li>Guided workflows are available: screenshots, CLI commands or documentation demonstrates that recovery and transfer processes are guided.</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Supported recovery and ownership transfer actions are defined</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Recovery and transfer actions require strong identity verification</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Recovery mechanisms cannot bypass normal access controls</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Factory reset and ownership transfer fully remove prior access</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Clear guidance is provided on recovery and transfer workflows</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="21-transparent-security-posture.html"><small>Previous, 21 of 22</small>Transparent security posture</a><a class="next" href="../ot-top-10/index.html"><small>Next part</small>OWASP OT Top 10</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+ENISA repo: https://github.com/enisaeu/enisa-sbd-playbook commit 5f92ea196db8f529f19a6b7b06bb22bb365a5de0 (31 Jul 2026)
+OWASP OT Top 10 repo: https://github.com/OWASP/www-project-operational-technology-top-10 commit 3616452ac6666ad6e358c04ba8311e45e5fb4457 (20 Oct 2026), files from docs/v/2025/
+Copied unchanged on 21 Oct 2026.

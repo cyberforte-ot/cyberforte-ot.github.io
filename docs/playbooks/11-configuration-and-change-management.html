@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11. Configuration and change management | CyberForte</title>
+<meta name="description" content="No silent changes. Every setting is written down, reviewed and easy to roll back.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/11-configuration-and-change-management.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="11-configuration-and-change-management" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 11</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 11 of 22 · Secure by Design · Operational Integrity</div>
+    <h1>Configuration and change management</h1>
+    <p class="tagline">No silent changes. Every setting is written down, reviewed and easy to roll back.</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Design</span><span class="tag">Operational Integrity</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>Many security problems are not bugs but settings: a port opened during a late-night fix and never closed. This playbook asks you to treat configuration like code, kept in version control and reviewed before it goes live.</p><p>Agree a secure baseline, check automatically that reality still matches it (no &quot;silent drift&quot;), keep test and production apart, and make sure every change has a way back. Emergency changes are fine when they are rare, logged and reviewed afterwards.</p>
+        <div class="pic"><strong>Picture this:</strong> If you cannot answer &quot;who changed this firewall rule, when and why?&quot;, you have drift. Version control answers it in seconds.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>Production configuration and infrastructure settings are in version control and peer reviewed.</span></label></li><li><label><input type="checkbox"><span>We have a written secure baseline and new components start from it.</span></label></li><li><label><input type="checkbox"><span>Development, test and production are separated, and few people can deploy to production.</span></label></li><li><label><input type="checkbox"><span>Each production change has a rollback plan, and rollback has been tested.</span></label></li><li><label><input type="checkbox"><span>Security-affecting changes are tagged and get a quick risk review.</span></label></li><li><label><input type="checkbox"><span>Emergency changes are logged and reviewed afterwards.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/11-configuration-and-change-management.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 11-configuration-and-change-management.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>Configuration and change management</h2>
+<h3>Principle</h3>
+<p><strong>(secure by design)</strong></p>
+<p>Secure operation requires configurations to be controlled, consistent and auditable. Baseline hardening standards should be defined and applied through repeatable mechanisms such as templates and infrastructure as code to reduce drift.</p>
+<h3>Objective</h3>
+<p>Prevent security regressions and outages by ensuring that system configuration is controlled, reviewable and reproducible and that changes are assessed for risk before reaching production. The priority is to eliminate ‘silent drift’, tighten defaults and make rollbacks reliable.</p>
+<h3>Checklist</h3>
+<h4>Version and review configuration (treat it as code)</h4>
+<ul>
+<li>Store environment config, infrastructure templates and policies in version control.</li>
+<li>Require peer review for changes affecting exposure, identity/access, secrets, networking, logging and updates.</li>
+</ul>
+<h4>Harden defaults and prevent drift</h4>
+<ul>
+<li>Establish secure baseline configurations (deny by default where possible).</li>
+<li>Use automated checks to detect drift between desired and actual config (at least for critical settings).</li>
+</ul>
+<h4>Separate environments and limit privilege</h4>
+<ul>
+<li>Strict separation for dev/test/prod (accounts, projects, networks, credentials).</li>
+<li>Restrict who can deploy to prod; remove direct manual changes where feasible.</li>
+</ul>
+<h4>Implement change gating and rollback</h4>
+<ul>
+<li>Use CI/CD gates for config and infra changes (linting, policy checks, approval).</li>
+<li>Require a rollback plan for each production change (including config-only changes).</li>
+<li>Keep break-glass changes rare, logged and post-reviewed.</li>
+</ul>
+<h4>Track and assess security-impacting changes</h4>
+<ul>
+<li>Tag changes that affect external exposure, authentication/authorisation, crypto, update mechanisms, data classification or third-party integrations.</li>
+<li>Ensure that a lightweight threat/risk review is triggered when these tags apply.</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>Config versioned: repo location(s) for IaC, config, policies; PR review history</li>
+<li>Baseline config: documented secure defaults and key settings (one page)</li>
+<li>Drift detection: a scheduled job/report or tool output for critical config items</li>
+<li>Deployment controls: proof that prod changes go through CI/CD (or change tickets) and are attributable</li>
+<li>Rollback proof: last rollback test result or documented rollback procedure</li>
+<li>Change log: record of security-impacting changes and associated approvals</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Production config/IaC changes are versioned and peer-reviewed (no untracked manual edits)</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Secure baseline defaults applied; new components inherit baseline (network, IAM, logging)</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Dev/test/prod separated (accounts, projects, credentials); least privilege enforced for deployers</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>CI/CD gates applied to config changes (policy checks, linting); approvals recorded</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Rollback plan exists for this release; rollback procedure tested recently or validated</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Security-impacting changes tagged and reviewed (exposure, IAM, secrets, crypto, updates, integrations)</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Exceptions (emergency changes) logged and post-reviewed, with owner and expiry date</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="10-logging-monitoring-and-alerting.html"><small>Previous, 10 of 22</small>Logging, monitoring and alerting</a><a class="next" href="12-incident-response-and-recovery.html"><small>Next, 12 of 22</small>Incident response and recovery</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

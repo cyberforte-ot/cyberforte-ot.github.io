@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>15. Minimisation of default services | CyberForte</title>
+<meta name="description" content="Out of the box, only the essentials are switched on.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/15-minimisation-of-default-services.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="15-minimisation-of-default-services" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 15</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 15 of 22 · Secure by Default · Default Hardening</div>
+    <h1>Minimisation of default services</h1>
+    <p class="tagline">Out of the box, only the essentials are switched on.</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Default</span><span class="tag">Default Hardening</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>Every feature that is on by default is one more thing a customer has to know about and secure. This playbook says: ship with only the core functions running, and let people switch extras on deliberately.</p><p>When someone does turn on an optional feature, tell them in plain words what risk comes with it. And each time you add a new feature, check again whether it really needs to be on by default.</p>
+        <div class="pic"><strong>Picture this:</strong> A device with a built-in web server, remote access and file sharing all running from day one has three extra doors. If most customers never use them, keep them off until asked.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We have defined the core functions the product needs to work.</span></label></li><li><label><input type="checkbox"><span>Optional features and services are off by default.</span></label></li><li><label><input type="checkbox"><span>Turning them on needs a deliberate action by the user.</span></label></li><li><label><input type="checkbox"><span>Users are told about the security implications when they enable extras.</span></label></li><li><label><input type="checkbox"><span>Defaults are reviewed whenever we add new features.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/15-minimisation-of-default-services.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 15-minimisation-of-default-services.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>Minimisation of default services</h2>
+<h3>Principle</h3>
+<p><strong>(secure by default)</strong></p>
+<p>Disable non-essential features and services by default. Only the functionality required for the core operation of the product should be enabled by default.</p>
+<h3>Objective</h3>
+<p>Reduce the attack surface and ensure that products start in a hardened state, without relying on users to disable specific functionality.</p>
+<h3>Checklist</h3>
+<h4>Define core functionality</h4>
+<ul>
+<li>Identify the minimum set of features and services required for the product to operate.</li>
+</ul>
+<h4>Disable non-essential features and services by default</h4>
+<ul>
+<li>Ensure that optional features and services are disabled by default.</li>
+</ul>
+<h4>Require explicit opt-in for additional functionality</h4>
+<ul>
+<li>Ensure that non-essential features and services can be enabled only through deliberate user action.</li>
+</ul>
+<h4>Explain security implications on enablement</h4>
+<ul>
+<li>Inform users of security risks when enabling optional features and services.</li>
+<li>Avoid enabling additional features and services without clear acknowledgement.</li>
+</ul>
+<h4>Review defaults on change</h4>
+<ul>
+<li>Reassess default-enabled features and services when new features are introduced.</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>Core features and services defined: documentation or configuration identifying which features and services are required by default.</li>
+<li>Non-essential features and services disabled: default configuration or build artefacts show optional features and services and modules are off.</li>
+<li>Explicit opt-in required: configuration or documentation shows how additional features and services must be manually enabled.</li>
+<li>Security implications disclosed: documentation, UI text or configuration prompts show that users are informed of security implications when enabling non-essential features and services.</li>
+<li>Defaults reviewed for this release: release notes, checklist or ticket confirms that default settings have been reviewed after changes.</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Only core functionality is enabled by default</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Optional features and services are disabled unless explicitly enabled by the user</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Users are informed of security implications when enabling non-essential features and services</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>No new features or services are enabled by default without review</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Default configuration has been reviewed and confirmed for this release</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="14-supply-chain-controls.html"><small>Previous, 14 of 22</small>Supply-chain controls</a><a class="next" href="16-restrictive-initial-access.html"><small>Next, 16 of 22</small>Restrictive initial access</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

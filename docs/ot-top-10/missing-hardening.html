@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OT10. Missing Hardening | CyberForte</title>
+<meta name="description" content="Switch off what you do not need, and add a few extra locks.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/missing-hardening.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="missing-hardening" data-part="ot">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html">Secure by Design and Default</a><a href="../ot-top-10/index.html" aria-current="page">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">OWASP OT Top 10</a> / Risk 10</p>
+  <header class="article-head rise">
+    <div class="eyebrow">OT Top 10 · Risk 10 of 10</div>
+    <h1>Missing Hardening</h1>
+    <p class="tagline">Switch off what you do not need, and add a few extra locks.</p>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
+        <h2 id="pw-h">What it is, in plain words</h2>
+        <p>Hardening does not fix a specific bug. It makes the attacker&#x27;s job much harder: remove unused services, close unused ports, disable default accounts, and add extra layers like firewalls and allow-listing.</p><p>OWASP included it because the data they gathered showed missing hardening was a common part of successful attacks. In OT, where you cannot always patch quickly, hardening buys you safe time.</p>
+      </section>
+      <section class="panel lists-panel" style="border:1px solid var(--line)" id="why" aria-label="Why it matters and how to reduce the risk">
+        <div class="lists">
+          <div><h3>Why it matters in OT</h3><p class="note">Factories, utilities, buildings and other sites that run physical processes.</p><ul><li>OT systems often cannot be patched without downtime, so extra layers matter more.</li><li>Maintenance work can quietly undo hardening if nobody checks afterwards.</li><li>Default accounts and open interfaces (USB, Telnet, debug ports) are easy wins for attackers.</li></ul></div>
+          <div><h3>How to reduce the risk</h3><p class="note">Drawn from OWASP's mitigations and next steps.</p><ul><li>Use an established hardening guide (such as CIS Benchmarks or the vendor&#x27;s own guide).</li><li>Disable unused services and interfaces, and default accounts and passwords.</li><li>Use application allow-listing where possible.</li><li>Ask integrators for a hardening concept in the tender and check it at acceptance.</li><li>Reapply and verify hardening after maintenance.</li></ul></div>
+        </div>
+      </section>
+      
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version written by CyberForte from the OWASP text. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We follow a named hardening guide for our main systems.</span></label></li><li><label><input type="checkbox"><span>Unused services, ports and interfaces (including USB and debug) are disabled.</span></label></li><li><label><input type="checkbox"><span>Default accounts and passwords are disabled or changed.</span></label></li><li><label><input type="checkbox"><span>Hardening is checked again after every maintenance visit.</span></label></li><li><label><input type="checkbox"><span>Our tenders ask for documented hardening, tested at acceptance.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full OWASP OT Top 10 entry</h2>
+          <p>Source: <a href="https://ot.owasp.org/v/2025/the-top-10/missing-hardening/" rel="noopener">OWASP OT Top 10 2025, “Missing Hardening”</a>, OWASP OT Top 10 project (<a href="https://github.com/OWASP/www-project-operational-technology-top-10" rel="noopener">GitHub</a>), licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>. Reproduced word for word; converted from Markdown, with links to other entries pointed at this site or ot.owasp.org. This page, including CyberForte's summary, is shared under CC BY-SA 4.0.</p>
+        </div>
+        <div class="original-body prose"><h2>Missing Hardening</h2>
+<p>Hardening is usually done to make a system more secure, typically by reducing or restricting features which inherently reduces a system's attack surface. Another form of hardening is enabling additional layers of security so that an attacker has to overcome multiple hurdles to gain access to a system.</p>
+<h3>Description</h3>
+<p>Hardening is the process of securing a system by reducing its surface of vulnerability. This can be achieved by removing unnecessary services, closing unused ports, and applying security patches. Hardening is an essential step in securing any system, as it reduces the number of potential entry points for attackers.</p>
+<p>Another way of hardening is to apply additional layers of security, such as firewalls, intrusion detection systems, and encryption. These additional layers can help protect against attacks even if the underlying system is compromised. In the context of OT, hardening is particularly important due to the unique challenges and requirements of these systems. OT systems are often designed to operate continuously and cannot be easily patched or updated without causing downtime.</p>
+<h4>Apply Established Hardening Guidelines</h4>
+<p>Hardening guidelines are established best practices for securing systems and networks. These guidelines provide a framework for identifying and mitigating vulnerabilities, and they can help organizations implement effective security measures.</p>
+<p>Some well-known hardening guidelines include the Center for Internet Security (CIS) benchmarks or the Defense Information Systems Agency (DISA) Security Technical Implementation Guides (STIGs).</p>
+<h4>Disable Default Accounts and Passwords</h4>
+<p>Default accounts and passwords are often used in OT systems, and they can pose a significant security risk if not properly managed. Attackers can easily exploit these default credentials to gain unauthorized access to systems and networks. It is essential to disable or change default accounts and passwords during the hardening process to reduce the risk of unauthorized access.</p>
+<h3>Rationale</h3>
+<p>Inclusion of hardening in the OWASP OT Top 10 was a point of serious discussion.</p>
+<p>Hardening itself does not reduce a concrete vulnerability but makes meaningful exploitation of vulnerabilities harder for attackers.</p>
+<p>Empirical data, gathered during the development of the OWASP OT Top 10, showed that missing hardening was a common part of successful exploits and comprehensive hardening would have prevented successful exploitation.</p>
+<p>Given the requirement of non-stop operation of many OT systems, hardening is crucial as it allows for controlled updates after a security issue has been identified (as the additional security layers uphold the security of the overall system).</p>
+<h3>Known Attacks/Examples</h3>
+<ul>
+<li><a href="https://de.wikipedia.org/wiki/Stuxnet" rel="noopener">Stuxnet</a>: Disabling USB ports could have avoided initial compromise.</li>
+<li><a href="https://en.wikipedia.org/wiki/NotPetya" rel="noopener">NotPetya</a>: Proper network segmentation and hardening could have limited the spread of the malware.</li>
+</ul>
+<h3>Mitigation/Countermeasures</h3>
+<p>Mitigation and countermeasures can be applied along the supply chain. Starting from the vendor over the integrator to the asset owner.</p>
+<h4>Design and Implementation</h4>
+<p>To ensure robust software security across the development lifecycle, component suppliers, and integrators—must adopt proactive countermeasures:</p>
+<ul>
+<li>Disable unnecessary services and interfaces (e.g. USB ports, insecure protocols like Telnet, web server, JTAG/SWD interfaces)</li>
+<li>Start with established hardening benchmarks and gradually relax controls only as necessary to ensure your component or system functions properly</li>
+<li>Include Application allow-listing if possible</li>
+<li>Provide your component or system with a secure default configuration</li>
+<li>Provide a hardening guideline for your component or system to customers</li>
+</ul>
+<h4>Operational</h4>
+<p>Operators play a critical role in maintaining the security and resilience of deployed systems. To reduce risk and ensure operational integrity, the following countermeasures are essential:</p>
+<ul>
+<li>Make sure hardening is reapplied after maintenance</li>
+<li>Request documentation of hardening measures</li>
+<li>Include hardening requirements in the tender, ideally with the integrator providing their own hardening concept</li>
+<li>Make sure hardening is actually implemented with a Pentest or some kind of Cybersecurity Acceptance Test (during SAT/FAT)</li>
+</ul>
+<h3>Next Actionable Steps</h3>
+<p>To be able to implement sensible measures one could follow these steps:</p>
+<ul>
+<li>identify applicable hardening guidelines for your environment: Every environment is different and therefore has different needs and priotitizes different topics. Finding the right measures for the system under consideration is the first and most crucial step when trying to improve the security posture of a system.</li>
+<li>implement hardening guidelines: After identifying the shortcomings, hardening guidelines for the insecure systems can help to provide a good baseline to improve from.</li>
+<li>disable default accounts and passwords: Default credentials are commonly used and misused way of getting access to permissions that should normally be behind proper safeguards.</li>
+</ul>
+<h3>References</h3>
+<h4>Standards</h4>
+<ul>
+<li>Applicable standard requirements are listed in the <a href="https://ot.owasp.org/v/2025/appendix/mappingTable/" rel="noopener">provided mapping table in the appendix</a>.</li>
+<li>OT-specific hardening guides are often provided by the system integrator or product supplier, for example:<ul>
+<li><em>"System Hardening for Substation Automation and Protection"</em> for SICAM/SIPROTEC, which includes hardening measures at the solution level as well as for individual components.</li>
+</ul>
+</li>
+<li>Several organizations provide configuration baselines and benchmarks for common systems:<ul>
+<li>The <strong>Center for Internet Security (CIS)</strong> offers <strong>Benchmarks</strong> for various systems, including operating systems, network devices, and commonly used applications. In OT environments, relevant benchmarks cover operating systems, network infrastructure, and supporting applications.  </li>
+<li>The <strong>Defense Information Systems Agency (DISA)</strong> publishes <strong>Security Technical Implementation Guides (STIGs)</strong>, which define configuration standards for securing Department of Defense (DoD) IT systems and are also widely adopted in other sectors.  </li>
+<li><strong>Microsoft Security Baselines</strong> recommend security settings for Windows operating systems and Microsoft applications.</li>
+</ul>
+</li>
+</ul>
+<h4>Background information</h4>
+<ul>
+<li><a href="https://www.plattform-i40.de/IP/Redaktion/DE/Downloads/Publikation/leitfaden-it-security-i40.pdf?__blob=publicationFile&amp;v=1" rel="noopener">BSI IT-Security in der Industrie (german)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Hardening_(computing)" rel="noopener">https://en.wikipedia.org/wiki/Hardening_(computing)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Defense_in_depth_(computing)" rel="noopener">https://en.wikipedia.org/wiki/Defense_in_depth_(computing)</a></li>
+</ul>
+<h4>Tooling</h4>
+<ul>
+<li>Tenable Nessus / OpenVAS, with compliance Scanning</li>
+<li>Microsoft Security Compliance Toolkit</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next risk"><a href="components-with-insufficient-security-capabilities.html"><small>Previous, 9 of 10</small>Components/Protocols with Insufficient Security Capabilities</a><a class="next" href="../playbooks/index.html"><small>Other part</small>Secure by Design and Default</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original OWASP text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

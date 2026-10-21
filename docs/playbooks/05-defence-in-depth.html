@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5. Defence in depth | CyberForte</title>
+<meta name="description" content="Layers, like a castle: wall, moat, gate and guards, so one failure is not the end.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/05-defence-in-depth.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="05-defence-in-depth" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 5</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 5 of 22 · Secure by Design · Architectural Foundations</div>
+    <h1>Defence in depth</h1>
+    <p class="tagline">Layers, like a castle: wall, moat, gate and guards, so one failure is not the end.</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Design</span><span class="tag">Architectural Foundations</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>No single lock is perfect. Defence in depth means you put several independent protections around the things that matter most, so if one fails or is bypassed, the next one still holds.</p><p>The layers should not all share the same weak spot. Two locks that open with the same key are really one lock. Add logging and alerts at each layer too, so you notice when someone is testing the gates, and have a way to isolate a part that has been compromised.</p>
+        <div class="pic"><strong>Picture this:</strong> A device might check a signed update file, run it only after login, and log the change. Three layers, three chances to stop or spot a bad update.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>Our most important assets are each protected by more than one control.</span></label></li><li><label><input type="checkbox"><span>Those controls do not depend on the same login system or the same single point.</span></label></li><li><label><input type="checkbox"><span>Security events are logged at several layers (login, network, application, data).</span></label></li><li><label><input type="checkbox"><span>Suspicious activity raises an alert and someone knows what to do about it.</span></label></li><li><label><input type="checkbox"><span>We can slow attackers down (rate limits, step-up login) and isolate a compromised part.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/05-defence-in-depth.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 05-defence-in-depth.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>Defence in depth</h2>
+<h3>Principle</h3>
+<p><strong>(secure by design)</strong></p>
+<p>Apply multiple layers of security so that the failure or bypass of a single control does not result in full compromise.</p>
+<h3>Objective</h3>
+<p>Reduce the impact of security failures by layering independent controls that slow attackers, increase detection and prevent single points of compromise.</p>
+<h3>Checklist</h3>
+<h4>Layer controls around critical assets</h4>
+<ul>
+<li>Identify the most sensitive assets (e.g. credentials, control functions, customer data).</li>
+<li>Ensure that more than one independent control protects each asset.</li>
+<li>Where critical data or commands cross trust boundaries, consider integrity and freshness controls that remain effective if another protection layer, such as transport security, is bypassed.</li>
+</ul>
+<h4>Assume control failure and design for containment</h4>
+<ul>
+<li>Design systems so that bypass of one control does not grant unrestricted access.</li>
+</ul>
+<h4>Enable detection at multiple layers</h4>
+<ul>
+<li>Generate security-relevant logs at key layers (identity, network, application, data).</li>
+<li>Ensure that failed and suspicious actions raise alerts and are not silently blocked.</li>
+</ul>
+<h4>Use diverse and independent controls</h4>
+<ul>
+<li>Avoid relying on multiple controls that share the same technology, identity source or trust assumption.</li>
+</ul>
+<h4>Slow attackers and enable response</h4>
+<ul>
+<li>Apply controls that increase attacker effort and time (rate limits, step-up authentication, staged access).</li>
+<li>Ensure that response mechanisms exist to contain or isolate compromised components when alerts are triggered.</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>Layered protection mapped: a simple table or diagram showing critical assets and the multiple security controls protecting each (stored in repo/wiki).</li>
+<li>Independent controls confirmed: configuration or design notes showing that layered controls do not rely on the same identity source or enforcement point.</li>
+<li>Multilayer logging enabled: log configuration or sample logs showing security events recorded across controls.</li>
+<li>Alerts and response defined: alert rules or playbook reference showing how suspicious activity is detected and the associated containment or response action.</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Critical assets have more than one security control applied and the layering is documented.</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Layered controls are independent; no single identity source or enforcement point is a single point of failure.</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Security-relevant events are logged at multiple layers</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Alerts are in place for suspicious activity and a response action exists</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="04-attack-surface-minimisation.html"><small>Previous, 4 of 22</small>Attack surface minimisation</a><a class="next" href="06-open-design.html"><small>Next, 6 of 22</small>Open design</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

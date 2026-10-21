@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1. Trust boundaries and threat modelling | CyberForte</title>
+<meta name="description" content="Draw your product, find the doors, decide which ones need a lock first.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/01-trust-boundaries-and-threat-modelling.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="01-trust-boundaries-and-threat-modelling" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 1</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 1 of 22 · Secure by Design · Architectural Foundations</div>
+    <h1>Trust boundaries and threat modelling</h1>
+    <p class="tagline">Draw your product, find the doors, decide which ones need a lock first.</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Design</span><span class="tag">Architectural Foundations</span><span class="tag red">ENISA suggests: start here</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>Before you can protect something, you need to see it. This playbook asks you to draw one simple picture of your product: who uses it, what it talks to, where data goes, and where someone could get in.</p><p>Then you mark the &quot;trust boundaries&quot;. Those are the places where something you control meets something you do not, like the internet meeting your back end, or a normal user meeting admin powers. That is where attackers try their luck, so that is where your best locks go.</p>
+        <div class="pic"><strong>Picture this:</strong> Picture a smart thermostat. Its app, its cloud, its update channel and the little local port a technician plugs into are all doors. A one-page drawing shows which doors open onto the street.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We have one up-to-date diagram of the product, its users, services and data flows.</span></label></li><li><label><input type="checkbox"><span>The diagram marks where trust changes (internet to back end, user to admin, device to cloud).</span></label></li><li><label><input type="checkbox"><span>We have written down what is most valuable: keys, customer data, control functions, logs.</span></label></li><li><label><input type="checkbox"><span>We have a short list of our top threats, each with a high, medium or low priority and an owner.</span></label></li><li><label><input type="checkbox"><span>Each top threat has a planned control and a way to test that it works.</span></label></li><li><label><input type="checkbox"><span>We know what changes (new interface, new data, new supplier) should make us redo this.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/01-trust-boundaries-and-threat-modelling.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 01-trust-boundaries-and-threat-modelling.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>Trust boundaries and threat modelling</h2>
+<h3>Principle</h3>
+<p><strong>(secure by design)</strong></p>
+<p>Secure architectures make trust explicit rather than assumed. Trust boundaries define where data, identities and execution contexts cross from a more trusted domain to a less trusted one (or vice versa).</p>
+<h3>Objective</h3>
+<p>Ensure that the system’s architecture and data flows are understood, trust assumptions are explicit and the highest-risk attack paths are identified early, so that security controls and secure defaults are designed in, not retrofitted.</p>
+<h3>Checklist</h3>
+<h4>Draw the system (one diagram)</h4>
+<ul>
+<li>Include users/admins, device/app, back-end services, APIs, data stores, third parties.</li>
+<li>Show key data flows and entry points (APIs, admin UI, OTA/update channel, local ports).</li>
+</ul>
+<h4>Mark trust boundaries and privileged paths</h4>
+<ul>
+<li>Identify where trust changes (internet–back end, tenant–tenant, device–cloud, user–admin).</li>
+<li>Highlight high-privilege flows (auth, key management, updates, admin actions).</li>
+</ul>
+<h4>List critical assets</h4>
+<ul>
+<li>For instance, list credentials/keys, customer / personally identifiable information, payment tokens, device control functions, availability, audit logs, data, source code and the IDE.</li>
+</ul>
+<h4>Identify and prioritise top threats</h4>
+<ul>
+<li>Map threats to the relevant entry/exit points, data flows, assets and trust boundaries, for example account takeover, malicious updates, API authorisation bypass, man-in-the-middle attacks and the tampering with, replay of or injection of fabricated or stale data and commands.</li>
+<li>Assign a high, medium or low priority using a documented method appropriate to the product, such as assessing impact, likelihood, plausibility, exploitability and exposure.</li>
+</ul>
+<h4>Define mitigations, secure defaults and verification</h4>
+<ul>
+<li>For each top threat: required controls and default configuration (deny by default, authn/authz, segmentation, signed updates, rate limits).</li>
+<li>Map each control to a verification method (tests, CI checks, config validation).</li>
+<li>Define refresh triggers (new interface, auth change, new sensitive data, new critical dependency, major architecture change).</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>One architecture/data-flow diagram with trust boundaries and entry points (stored in repo/wiki)</li>
+<li>Top threats list (e.g. the top 5 to 10 threat scenarios) with H/M/L priority and owners</li>
+<li>Control/default mapping for each top threat (what control, where enforced, how verified)</li>
+<li>Verification evidence: CI outputs or test results for key negative tests (unauthorised calls fail)</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Diagram updated for this release (components, flows, dependencies reflect reality)</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Trust boundaries and privileged paths clearly marked</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Top threat scenarios reviewed; high risks have mitigations or documented exceptions</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Secure defaults confirmed for new/exposed interfaces (deny by default, least privilege)</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Verification in place: at least one negative test per critical boundary / privileged path (unauthorised access is denied)</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Threat model refresh triggered if any of the following are relevant: new API/interface, auth model change, new sensitive data, major dependency/supplier change, OTA/update changes, major architecture change.</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="index.html"><small>Back</small>All playbooks</a><a class="next" href="02-least-privilege.html"><small>Next, 2 of 22</small>Least privilege</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

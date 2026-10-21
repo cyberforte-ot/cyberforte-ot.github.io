@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OT1. Unknown Assets and Unmanaged External Access | CyberForte</title>
+<meta name="description" content="You cannot protect what you do not know you have.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/unknown-assets-and-admin-access.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="unknown-assets-and-admin-access" data-part="ot">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html">Secure by Design and Default</a><a href="../ot-top-10/index.html" aria-current="page">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">OWASP OT Top 10</a> / Risk 1</p>
+  <header class="article-head rise">
+    <div class="eyebrow">OT Top 10 · Risk 1 of 10</div>
+    <h1>Unknown Assets and Unmanaged External Access</h1>
+    <p class="tagline">You cannot protect what you do not know you have.</p>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
+        <h2 id="pw-h">What it is, in plain words</h2>
+        <p>Every site has kit that nobody has written down: an old PC under a desk, a remote-access tool a supplier installed years ago, a maintenance VPN account nobody uses any more. OWASP calls this the biggest threat, because unknown things are never patched, never watched and never locked.</p><p>The cure starts simple. Walk the site with a notebook if you need to, list every device and every way in from outside, and make documenting changes part of how you work.</p>
+      </section>
+      <section class="panel lists-panel" style="border:1px solid var(--line)" id="why" aria-label="Why it matters and how to reduce the risk">
+        <div class="lists">
+          <div><h3>Why it matters in OT</h3><p class="note">Factories, utilities, buildings and other sites that run physical processes.</p><ul><li>OT sites are built to run for years, so forgotten devices and old remote-access routes pile up.</li><li>Third-party maintenance access is common in factories, utilities and buildings, and it is often the least watched door.</li><li>You cannot segment, harden or monitor something that is not on your list.</li></ul></div>
+          <div><h3>How to reduce the risk</h3><p class="note">Drawn from OWASP's mitigations and next steps.</p><ul><li>Build a full inventory: devices, software, remote-access tools, accounts and services.</li><li>Find and close (or properly manage) every remote access route, including supplier VPNs and tools like TeamViewer.</li><li>Scan and monitor the network for new or unknown devices.</li><li>Make &quot;update the documentation&quot; a required step in every change.</li></ul></div>
+        </div>
+      </section>
+      <section class="example" id="example" aria-labelledby="ex-h">
+  <div class="panel-label"><span class="dot" aria-hidden="true"></span>Real-world example · CyberForte's summary of press reports</div>
+  <p style="margin:0"><span class="reported">Reported</span><span class="note">Investigation ongoing; the attackers have not been publicly identified.</span></p>
+  <h3 id="ex-h">French supermarket refrigeration controllers, October 2026</h3>
+  <p>Press reports describe an overnight attack on internet-connected refrigeration controllers in hundreds of supermarkets across France. Attackers reportedly switched units into defrost so temperatures rose as high as 50°C, spoiling food, and the Paris prosecutor&#x27;s office said some fires followed. The manufacturer said the affected units were running outdated firmware and that most were legacy products no longer receiving security updates. Ars Technica reports the controllers were reachable from the internet and had known critical vulnerabilities.</p>
+  <p class="note" style="margin:0">Sources:</p>
+  <ul><li><a href="https://arstechnica.com/security/2026/10/fridge-hack-costing-millions-and-sparking-fires-stemmed-from-poor-security/" rel="noopener">Ars Technica: Fridge hack costing millions and sparking fires stemmed from poor security (14 October 2026)</a></li><li><a href="https://www.sbs.com.au/news/article/hackers-hit-french-store-fridges-sparks-fires/4y35b0buh" rel="noopener">SBS News, with Reuters and AFP: Hackers hit French store fridges (13 October 2026)</a></li></ul>
+</section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version written by CyberForte from the OWASP text. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We have an asset list for each site, including software versions.</span></label></li><li><label><input type="checkbox"><span>Every remote access route is known, has an owner and is documented.</span></label></li><li><label><input type="checkbox"><span>Unused maintenance and supplier accounts are removed.</span></label></li><li><label><input type="checkbox"><span>We check the network regularly for devices that are not on the list.</span></label></li><li><label><input type="checkbox"><span>Our change process includes updating the inventory.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full OWASP OT Top 10 entry</h2>
+          <p>Source: <a href="https://ot.owasp.org/v/2025/the-top-10/unknown-assets-and-admin-access/" rel="noopener">OWASP OT Top 10 2025, “Unknown Assets and Undocumented Services”</a>, OWASP OT Top 10 project (<a href="https://github.com/OWASP/www-project-operational-technology-top-10" rel="noopener">GitHub</a>), licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>. Reproduced word for word; converted from Markdown, with links to other entries pointed at this site or ot.owasp.org. This page, including CyberForte's summary, is shared under CC BY-SA 4.0.</p>
+        </div>
+        <div class="original-body prose"><h2>Unknown Assets and Undocumented Services</h2>
+<p>Arguably the biggest threat to a network (IT and OT) is unmanaged and unknown assets.  This can either be unknown assets that are plugged into your local OT network, or undocumented services (in the worst-case available from the public internet and <a href="insufficient-access-control.html">without sufficient access control</a>.</p>
+<p>There is an overlap with the <a href="missing-incident-detection-reaction-capabilities.html">Missing Incident Detection/Reaction Capabilities</a> as incident detection depends upon having a complete inventory of the environment. If we do not know what is in our environment, we cannot detect if something is happening to it.</p>
+<h3>Description</h3>
+<p>Unknown assets are devices or systems in an OT environment that are not properly identified or documented. These assets can include legacy systems, unmanaged devices, or unauthorized connections that are not accounted for in the organization's inventory.</p>
+<p>This is your typical "shadow IT" problem, but in the OT world, it can be even more dangerous. Unknown assets can be anything from a rogue device connected to the network to an undocumented service running on a server. These assets can introduce vulnerabilities and weaknesses into the system, making it easier for attackers to gain access and move laterally within the network.</p>
+<p>These assets are mostly already or will become outdated over time and introduce vulnerabilities and weaknesses into the system. Such assets can for example be used as initial access points into the network, for privilege escalation, establishing persistence or lateral movement. Having a full inventory of assets that not only includes devices but also established remote access, deployed privileges and other services is crucial to understanding the environment we are working with.</p>
+<p>Undocumented services can be any service that is not properly documented or managed, such as remote access solutions, cloud services, or third-party applications. These services can introduce vulnerabilities and weaknesses into the system, making it easier for attackers to gain access and move laterally within the network.</p>
+<p>A special case of undocumented services are unmanaged external maintenance accounts. They are often used for increased convienience but offer adversaries ample attack opportunities. This can be seen as a case of <a href="missing-awareness.html">missing awareness</a>.</p>
+<h4>Unmanaged External Access</h4>
+<p>Unmanaged external access refers to connections to the OT environment that are not properly controlled or monitored. This can include remote access solutions, such as TeamViewer or VPNs, that are not documented or managed by the organization. These unmanaged connections can provide attackers with a way to bypass security controls and gain unauthorized access to the OT environment.</p>
+<h4>Unmanaged Access for Maintenance</h4>
+<p>Unmanaged access for external personnel refers to situations where third-party vendors, contractors, or maintenance personnel have access to from within the OT environment without proper oversight or documentation. This can lead to unauthorized changes, vulnerabilities, and potential security breaches.</p>
+<p>An example would be third-party contractor (that is connected to the internal network through VPN) that has access to the OT environment for maintenance purposes but does not follow proper security protocols or does not have their access documented. This can lead to unauthorized changes, vulnerabilities, and potential security breaches.</p>
+<h3>Rationale</h3>
+<p>History has shown that undocumented assets can be used by attackers for everything from initial access, via priviledge escalation up to completing the action on objectives. Hardening and segmentation measures can only be complete if all the assets are known and under consideration. Getting an overview of my network is always and therefore the most crucial step when starting with a security program. It is also the fundamental prerequisite for every ISMS, CSMS, and other frameworks.</p>
+<h3>Known Attacks/Examples</h3>
+<ul>
+<li>Stuxnet</li>
+<li>Triton</li>
+<li>WannaCry</li>
+<li><a href="https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack" rel="noopener">Colonial Pipeline Hack</a>: The attackers gained access to the system by means of a compromised password for a disused VPN account.</li>
+<li><a href="https://www.theregister.com/2021/02/09/florida_water_hacked/" rel="noopener">Someone tried to poison a Florida city by hijacking its water treatment plant via TeamViewer, says sheriff</a></li>
+<li><a href="https://www.bleepingcomputer.com/news/security/cisa-warns-water-facilities-to-secure-hmi-systems-exposed-online/" rel="noopener">CISA and the Environmental Protection Agency (EPA) warned water facilities today to secure Internet-exposed Human Machine Interfaces (HMIs) from cyberattacks.</a></li>
+</ul>
+<h3>Mitigation/Countermeasures</h3>
+<h4>Design and Implementation</h4>
+<ul>
+<li>OT-environemts are static by design. During the building phase, the designer or integrator normally provides a detailed description of the environment. Changes to the environment must be documented. It is crucial to have the documentation process as part of the change process or change management policy.</li>
+<li>If one starts with an already existing environment, the first step to a complete asset inventory can be to take a pen and a piece of paper, go through the location and write down every device that can be seen. This is not only restricted to manufacturing or powerplants, but all types of environments we are working in.</li>
+</ul>
+<h4>Operational</h4>
+<ul>
+<li>mitigations for integrators/builders:  Provide the documentation to the customer/asset owner.</li>
+<li>Implement asset discovery and inventory management tools to identify and document all assets in the OT environment.</li>
+<li>Regularly scan and monitor the network for new or unknown devices.</li>
+<li>Perform port/traffic monitoring.</li>
+<li>Enforce strict access controls and authentication mechanisms to prevent unauthorized devices from connecting to the network. Also assume rogue devices/services in the network when designing security measures.</li>
+</ul>
+<h3>Next Actionable Steps</h3>
+<ul>
+<li>Conduct a thorough inventory of all devices and systems in the OT environment.</li>
+<li>Implement network scanning and discovery tools to identify unknown assets.</li>
+<li>Establish a process for documenting and managing changes to the OT environment.</li>
+<li>Regularly review and update the asset inventory to ensure accuracy and completeness.</li>
+</ul>
+<h3>References</h3>
+<h4>Standards</h4>
+<ul>
+<li>Applicable standard requirements are listed in the <a href="https://ot.owasp.org/v/2025/appendix/mappingTable/" rel="noopener">provided mapping table in the appendix</a>.</li>
+<li>Following additional standards are relevant:<ul>
+<li>NERC CIP ID.AM Asset Management</li>
+<li>NERC CIP PR.AC Identity Management and Access Control</li>
+<li>NIST 1800-23 Energy Sector Asset Management: For Electric Utilities, Oil &amp; Gas Industry</li>
+<li>NIST 1800-5 IT Asset Management</li>
+</ul>
+</li>
+</ul>
+<h4>Background information</h4>
+<ul>
+<li>N.A.</li>
+</ul>
+<h4>Tooling</h4>
+<ul>
+<li>
+<p><strong><em>Network Scanning and Discovery Tools:</em></strong>: <a href="https://nmap.org/" rel="noopener">Nmap</a> is the standard OSS active network scanning tool. Be aware that it can be intrusive and may disrupt operations in a production environment. <a href="https://www.shodan.io/" rel="noopener">Shodan</a> is a web-based search engine that can help identify devices connected to the internet, including those in OT environments.</p>
+</li>
+<li>
+<p><strong><em>Network Monitoring Tools:</em></strong>: <a href="https://www.wireshark.org/" rel="noopener">Wireshark</a> is an OSS network protocol analyzer that can capture and analyze network traffic, helping to identify unknown devices and services.</p>
+</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next risk"><a href="index.html"><small>Back</small>All 10 risks</a><a class="next" href="accessible-devices-with-known-vulnerabilities.html"><small>Next, 2 of 10</small>Devices with Known Vulnerabilities/Issues</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#example">Real-world example</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original OWASP text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

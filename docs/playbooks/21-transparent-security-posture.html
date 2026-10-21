@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>21. Transparent security posture | CyberForte</title>
+<meta name="description" content="A clear dashboard light: are we in a safe state, and how do we get back if not?">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/21-transparent-security-posture.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="21-transparent-security-posture" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 21</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 21 of 22 · Secure by Default · Guided Protection</div>
+    <h1>Transparent security posture</h1>
+    <p class="tagline">A clear dashboard light: are we in a safe state, and how do we get back if not?</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Default</span><span class="tag">Guided Protection</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>People weaken security by accident all the time, usually without knowing. This playbook asks you to make the security state of your product visible, like a warning light on a car dashboard.</p><p>Define what &quot;secure&quot; looks like, show clearly when the product drifts into a weaker state, warn in plain language when someone switches a protection off, and give them a simple button or path to return to the safe baseline.</p>
+        <div class="pic"><strong>Picture this:</strong> &quot;Remote access is open to the internet. This lets anyone try to log in. Turn it off?&quot; is far more useful than a tiny toggle buried in a settings page.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We have defined the secure baseline and the weaker states.</span></label></li><li><label><input type="checkbox"><span>The product clearly shows whether it is in a secure or degraded state.</span></label></li><li><label><input type="checkbox"><span>Users see a warning when they switch off security features.</span></label></li><li><label><input type="checkbox"><span>The impact is explained in non-technical words.</span></label></li><li><label><input type="checkbox"><span>There is a simple way back to the secure baseline.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/21-transparent-security-posture.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 21-transparent-security-posture.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>Transparent security posture</h2>
+<h3>Principle</h3>
+<p><strong>(secure by default)</strong></p>
+<p>Make the system’s security posture visible and understandable. Clearly inform users when security protections are weakened and provide a simple path to return to a secure baseline.</p>
+<h3>Objective</h3>
+<p>Reduce risk arising from accidental or uninformed misconfiguration by ensuring that users understand the security state of the system and can easily correct insecure settings.</p>
+<h3>Checklist</h3>
+<h4>Define security states and baseline</h4>
+<ul>
+<li>Define the secure baseline and any degraded or unsupported security states.</li>
+<li>Document which configurations cause a transition between states.</li>
+</ul>
+<h4>Expose current security status</h4>
+<ul>
+<li>Indicate clearly whether the system is operating in a secure or degraded security state.</li>
+</ul>
+<h4>Warn on changes that reduce security</h4>
+<ul>
+<li>Show clear warnings when users disable security features or apply configurations that increase risk.</li>
+</ul>
+<h4>Explain impact in plain language</h4>
+<ul>
+<li>Explain to the user the security implications of a change in non-technical terms.</li>
+</ul>
+<h4>Provide a simple path to recovery</h4>
+<ul>
+<li>Offer the user a simple interaction path to return to the secure baseline.</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>Security states defined: documentation identifies the secure baseline and degraded or insecure states, including the configuration changes that trigger such states.</li>
+<li>Security status visible: screenshot, CLI output or documentation clearly shows the current security state.</li>
+<li>Warnings triggered on risk increase: screenshots, prompts or test evidence shows warnings when users apply security-reducing changes.</li>
+<li>Impact explained clearly: warning messages, screenshots or documentation demonstrates that security implications are described in plain, non-technical language.</li>
+<li>Baseline restore available: screenshots, commands or configuration shows a simple action exists to return to the secure baseline.</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Secure baseline and degraded security states are defined and documented</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Current security state is clearly visible to the user</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Users are warned when security protections are reduced</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Security impact is explained in clear, non-technical language</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>A simple action can be taken to restore the secure baseline</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="20-automated-maintenance-and-updates.html"><small>Previous, 20 of 22</small>Automated maintenance and updates</a><a class="next" href="22-secure-recovery-and-ownership-life-cycle.html"><small>Next, 22 of 22</small>Secure recovery and ownership life cycle</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

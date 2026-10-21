@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>17. Secure communication by default | CyberForte</title>
+<meta name="description" content="Everything that leaves the box is encrypted and checked, from day one.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/17-secure-communication-by-default.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="17-secure-communication-by-default" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 17</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 17 of 22 · Secure by Default · Default Hardening</div>
+    <h1>Secure communication by default</h1>
+    <p class="tagline">Everything that leaves the box is encrypted and checked, from day one.</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Default</span><span class="tag">Default Hardening</span><span class="tag red">ENISA suggests: early baseline</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>Data travelling over a network can be read or changed on the way unless it is protected. This playbook says all external communication should be encrypted and authenticated by default, with no plain-text fallback &quot;for convenience&quot;.</p><p>Use modern protocol versions, switch off weak ciphers, make both ends prove who they are where it matters, and refuse the connection rather than quietly downgrading when something fails. Also design so you can swap algorithms and certificates later, including planning ahead for post-quantum cryptography where your product lives a long time.</p>
+        <div class="pic"><strong>Picture this:</strong> If the secure connection fails and your device silently falls back to plain HTTP, an attacker only needs to break the secure one to get the easy one.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>All external interfaces use encrypted communication from first use.</span></label></li><li><label><input type="checkbox"><span>Plain-text and weak protocols (such as HTTP or Telnet) are not allowed, not even as a fallback.</span></label></li><li><label><input type="checkbox"><span>Endpoints authenticate each other where appropriate.</span></label></li><li><label><input type="checkbox"><span>Modern protocol versions are used and weak ciphers are disabled.</span></label></li><li><label><input type="checkbox"><span>Connection failures are denied, not downgraded.</span></label></li><li><label><input type="checkbox"><span>Keys, certificates and algorithms can be replaced without redesigning the product.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/17-secure-communication-by-default.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 17-secure-communication-by-default.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>Secure communication by default</h2>
+<h3>Principle</h3>
+<p><strong>(secure by default)</strong></p>
+<p>Enforce secure communication from the start. All external communications must be encrypted and authenticated by default, with no support for insecure or plain-text protocols for convenience.</p>
+<h3>Objective</h3>
+<p>Protect data in transit and prevent interception, tampering or impersonation by ensuring that communications are always secure, without relying on user configuration or later hardening.</p>
+<h3>Checklist</h3>
+<h4>Protect external communications by default</h4>
+<ul>
+<li>Require encrypted communication for all external interfaces from first use.</li>
+<li>Where data or commands pass through intermediaries, assess whether transport protection alone is sufficient or whether additional end-to-end authenticity, integrity and freshness controls are required.</li>
+</ul>
+<h4>Disable insecure and plain-text protocols</h4>
+<ul>
+<li>Do not allow unencrypted or weak protocols (e.g. HTTP or Telnet) to be used by default or even as fallbacks.</li>
+</ul>
+<h4>Authenticate communicating endpoints</h4>
+<ul>
+<li>Ensure that external endpoints authenticate each other where appropriate, for example for device-to-cloud, service-to-service and administrative access.</li>
+</ul>
+<h4>Enforce secure protocol versions and configurations</h4>
+<ul>
+<li>Use modern, secure protocol versions and configurations by default.</li>
+<li>Explicitly disable weak ciphers, legacy versions and insecure negotiation modes.</li>
+</ul>
+<h4>Fail securely on connection errors</h4>
+<ul>
+<li>Ensure that communication failures result in denied connections rather than downgrading to insecure protocols or configurations.</li>
+</ul>
+<h4>Plan for cryptographic change</h4>
+<ul>
+<li>Design cryptographic mechanisms so that algorithms, keys, certificates and trust anchors can be replaced or migrated without substantially redesigning the product, where feasible.</li>
+<li>Assess whether the product’s support lifetime, data confidentiality requirements and deployment constraints require preparation for migration to post-quantum cryptography.</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>Secure protocols enforced by default: configuration or test evidence shows that encrypted and authenticated communication is required from first connection.</li>
+<li>Insecure protocols disabled: configuration confirms that plain-text or legacy protocols are not enabled or available.</li>
+<li>Endpoint authentication in place: configuration or test evidence shows that mutual or appropriate endpoint authentication takes place for external communications.</li>
+<li>Strong protocol configuration applied: configuration shows that only approved protocol versions and cryptographic settings are enabled.</li>
+<li>No insecure fallback: test evidence shows that connection attempts fail securely rather than downgrading security.</li>
+<li>Cryptographic migration note: identification of critical cryptographic mechanisms and how algorithms, keys, certificates and trust anchors are to be updated or replaced.</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>External communications are encrypted and authenticated from first connection</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Insecure or plain-text protocols are disabled and unavailable</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Only approved secure protocol versions and configurations are enabled</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Endpoint authentication enforced where required</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Connection failures do not result in insecure fallback</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Cryptographic mechanisms can be replaced or migrated where required by the product’s risk assessment and support lifetime.</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="16-restrictive-initial-access.html"><small>Previous, 16 of 22</small>Restrictive initial access</a><a class="next" href="18-unique-device-identity-and-secrets-by-default.html"><small>Next, 18 of 22</small>Unique device identity and secrets by default</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

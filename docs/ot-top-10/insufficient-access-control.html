@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OT5. Insufficient Access Control | CyberForte</title>
+<meta name="description" content="Shared passwords on a sticky note are not access control.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/insufficient-access-control.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="insufficient-access-control" data-part="ot">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html">Secure by Design and Default</a><a href="../ot-top-10/index.html" aria-current="page">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">OWASP OT Top 10</a> / Risk 5</p>
+  <header class="article-head rise">
+    <div class="eyebrow">OT Top 10 · Risk 5 of 10</div>
+    <h1>Insufficient Access Control</h1>
+    <p class="tagline">Shared passwords on a sticky note are not access control.</p>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
+        <h2 id="pw-h">What it is, in plain words</h2>
+        <p>Access control decides who can do what. In OT it has three layers: organisational (a written list of who may operate what), technical (logins and permissions in the equipment) and physical (locks and guards). Weakness in any one undermines the others.</p><p>OWASP highlights shared password lists, too much trust in physical security, and remote access without multi-factor login as common problems. Its words on that last one: not state-of-the-art in 2025, nor in 2024, nor before.</p>
+      </section>
+      <section class="panel lists-panel" style="border:1px solid var(--line)" id="why" aria-label="Why it matters and how to reduce the risk">
+        <div class="lists">
+          <div><h3>Why it matters in OT</h3><p class="note">Factories, utilities, buildings and other sites that run physical processes.</p><ul><li>Safety can clash with security: you do not want a password prompt on an emergency stop.</li><li>Legacy devices may have no real login or no link to central account management.</li><li>Shared accounts on the shop floor mean nobody can prove who did what.</li></ul></div>
+          <div><h3>How to reduce the risk</h3><p class="note">Drawn from OWASP's mitigations and next steps.</p><ul><li>Write down who is allowed to operate what (an access matrix).</li><li>Use roles and least privilege, and separation of duties for critical tasks.</li><li>Require multi-factor login for all remote access.</li><li>Change default passwords and disable default accounts.</li><li>Review accounts regularly and remove leavers quickly.</li></ul></div>
+        </div>
+      </section>
+      
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version written by CyberForte from the OWASP text. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We have a written access matrix for our OT systems.</span></label></li><li><label><input type="checkbox"><span>All remote access uses multi-factor login.</span></label></li><li><label><input type="checkbox"><span>Default passwords are changed and default accounts disabled.</span></label></li><li><label><input type="checkbox"><span>Shared logins are replaced with personal accounts wherever the equipment allows.</span></label></li><li><label><input type="checkbox"><span>Leavers&#x27; accounts are disabled, and we review permissions regularly.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full OWASP OT Top 10 entry</h2>
+          <p>Source: <a href="https://ot.owasp.org/v/2025/the-top-10/insufficient-access-control/" rel="noopener">OWASP OT Top 10 2025, “Insufficient Access Control”</a>, OWASP OT Top 10 project (<a href="https://github.com/OWASP/www-project-operational-technology-top-10" rel="noopener">GitHub</a>), licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>. Reproduced word for word; converted from Markdown, with links to other entries pointed at this site or ot.owasp.org. This page, including CyberForte's summary, is shared under CC BY-SA 4.0.</p>
+        </div>
+        <div class="original-body prose"><h2>Insufficient Access Control</h2>
+<p>Access Control is a critical aspect of security in any system, but it is especially important in Operational Technology (OT) environments. Insufficient access control can lead to unauthorized access to sensitive systems and data, producing serious consequences for safety and security.</p>
+<p>This is an intricate problem that touches on multiple levels of security, including physical, organizational, and technical measures.</p>
+<h3>Description</h3>
+<p>Access Control is the process of restricting access to systems and data to authorized users. Access Control is performed on multiple levels:</p>
+<ul>
+<li><strong>Organizational</strong>: Organizational access control measures, such as policies and procedures, are designed to ensure that only authorized personnel have access to sensitive systems and data. If an organisation has no written down access matrix (<code>which employee is allowed to operate what?</code>), implementing the respective technical access control system is not possible.</li>
+<li><strong>Technical</strong>: Technical access control measures, such as authentication and authorization mechanisms must be implemented within the used components. This is mostly a topic for system designers and implementors. During operation, these available technical access control measures must be used and enforced by the operators and employees.</li>
+<li><strong>Physical</strong>: Physical access control measures, such as locks and security guards, are often the first line of defense against unauthorized access in OT environments. However, they are often over-relied upon, leading to a false sense of security.</li>
+</ul>
+<h4>Particularities of OT</h4>
+<h5>Emergency Situations</h5>
+<p>Access Control and Safety can be conflicting. A good example is the use of emergency stop buttons. In an emergency situation, it is critical that the emergency stop button can be activated quickly and easily. However, this can lead to a situation where unauthorized personnel can also activate the emergency stop button, leading to potential safety hazards.</p>
+<p>Another good example are medical devices in hospitals: you do not want to have a password prompt when a doctor wants to use a defibrillator</p>
+<h5>Legacy Systems</h5>
+<p>Old systems often have only <a href="components-with-insufficient-security-capabilities.html">limited security functions</a>. Many (legacy) devices do not support authentication or authorization. As a result, unauthorized access is possible.</p>
+<p>Legacy devices often also offer no connection to a central identity management system. This makes it difficult to maintain and respond to changes in the organization's responsibilities on an ongoing basis</p>
+<h4>Organizational Level</h4>
+<p>On an organizational level, poorly defined access control can result in "privilege creep," where users accumulate more access than necessary for their job, potentially granting them access to systems and data they should not have.</p>
+<p>A well designed access control system should incorporate the following principles:</p>
+<ul>
+<li><strong>Role-Based Access Control</strong>: Users should be assigned roles based on their job responsibilities. This can help to ensure that users only have access to the systems and data that they need to perform their job and prevents privilege creep, where users accumulate access rights over time.</li>
+<li><strong>Least Privilege</strong>: Users/roles should only have access to the functions and data they need to perform their job.</li>
+<li><strong>Separation of Duties</strong>: More than one person is required to perform a task. This should be implemented for critical tasks.</li>
+<li><strong>Clear Trust Boundaries</strong>: To allow for analysis, <a href="broken-zone-and-conduits-design.html">trust boundaries</a> have to be defined. This is especially important in the OT world, where the Purdue Model is often used to define trust boundaries.</li>
+<li><strong>Ongoing Employee Training</strong>: Very often, <a href="missing-awareness.html">OT personnel are not aware of the security implications of their actions</a>. This can lead to a situation where a system is not properly secured because the operators do not know how to do it.</li>
+<li><strong>Deactivating Accounts</strong>: When a user leaves the company, their account should be deactivated.</li>
+</ul>
+<h4>Implementation Level</h4>
+<ul>
+<li>
+<p>are controls in place? are they well implemented and configured according to best practices?</p>
+</li>
+<li>
+<p>given that we want to control access for, e.g., externally reachable adminitrative interfaces (VPN servers, web-panels), are implemented controls sufficient? Having a remote management solution without mandatory and enforced multi-factor authenticator is not state-of-the-art in 2025. Nor was it in 2024. Nor before.</p>
+</li>
+<li>
+<p>have default passwords been changed? are there any default accounts that have not been disabled?</p>
+</li>
+<li>
+<p>have controls be tested? are they working as intended?</p>
+</li>
+<li>
+<p>have physical access control assumptions been documented and tested? It is easier than some people think to get on a factory floor.</p>
+</li>
+<li>
+<p><strong>non-repudiation</strong>: the system should be able to prove who did what. This principle is broken if there's a shared user/password list for devices on the factory floor.</p>
+</li>
+</ul>
+<h3>Rationale</h3>
+<p>The prevalence of:</p>
+<ul>
+<li>shared password lists</li>
+<li>over-dependency on physical security</li>
+<li>initial attack vector: remote access without multi-factor authentication</li>
+</ul>
+<h3>Known Attacks/Examples</h3>
+<ul>
+<li><a href="https://www.ksnt.com/news/local-news/kansas-hacker-pleads-guilty-to-shutting-down-drinking-water-plant-with-phone/" rel="noopener">After quitting his job at the plant at the beginning of 2019, he then used the remote login system again on March 27, 2019, to shut down the plant and one of its treatment filters..</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack" rel="noopener">Colonial Pipeline Hack</a>: The attackers gained access to the system by means of a compromised password for a disused VPN account.</li>
+</ul>
+<h3>Mitigation/Countermeasures</h3>
+<h4>Design and Implementation</h4>
+<ul>
+<li>think about applying zero-trust principles</li>
+<li>define the different systems, how they interacts, and the resulting interfaces (trust boundaries)</li>
+<li>define the roles that are needed to interact with the systems<ul>
+<li>Define a minimal role concept.  </li>
+<li>e.g. on a sensor<ul>
+<li>administrator -&gt; configuration</li>
+<li>simple user -&gt; only read only access to measuring data</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Implement a role-based access control (RBAC) system</li>
+<li>Implement multi-factor authentication</li>
+</ul>
+<h4>Operational</h4>
+<ul>
+<li>Use the provided features implemented by the vendors</li>
+<li>Change password and default user.</li>
+<li>perform periodic account reviews to counter permission creep</li>
+<li>Implement a process for deactivating accounts when a user leaves the company</li>
+</ul>
+<h3>Next Actionable Steps</h3>
+<ul>
+<li>Is sensitive information accessible via the available interfaces?</li>
+<li>Is there a role concept for the devices/systems and has this been implemented?</li>
+</ul>
+<h3>References</h3>
+<h4>Standards</h4>
+<ul>
+<li>Applicable standard requirements are listed in the <a href="https://ot.owasp.org/v/2025/appendix/mappingTable/" rel="noopener">provided mapping table in the appendix</a>.</li>
+</ul>
+<h4>Background Information</h4>
+<ul>
+<li><strong><em>Physical Access Control</em></strong>
+        - <a href="https://web.archive.org/web/20250224015400/https://www.cert.govt.nz/information-and-advice/guides/unused-services-and-protocols/disabling-unnecessary-services-and-protocols/" rel="noopener">Disabling unnecessary services and protocols</a>
+        - <a href="https://www.mangancyber.com/why-is-it-essential-to-disable-or-safeguard-inactive-ports-in-ot-environments/" rel="noopener">Why Disabling unused network ports is crucial in OT environents</a></li>
+</ul>
+<h4>Tooling</h4>
+<ul>
+<li>N.A.</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next risk"><a href="loss-of-availability.html"><small>Previous, 4 of 10</small>Loss of Availability</a><a class="next" href="missing-incident-detection-reaction-capabilities.html"><small>Next, 6 of 10</small>Missing Incident Detection/Reaction Capabilities</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original OWASP text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

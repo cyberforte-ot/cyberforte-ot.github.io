@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2. Least privilege | CyberForte</title>
+<meta name="description" content="Give every person and program only the keys they need, only for as long as they need them.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/02-least-privilege.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="02-least-privilege" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 2</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 2 of 22 · Secure by Design · Architectural Foundations</div>
+    <h1>Least privilege</h1>
+    <p class="tagline">Give every person and program only the keys they need, only for as long as they need them.</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Design</span><span class="tag">Architectural Foundations</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>Least privilege is the hotel key card idea. Guests open their own room, cleaners open the floors they clean, and only the manager has the master key. Nobody gets the master key &quot;just in case&quot;.</p><p>In your product this means each user role and each service gets the smallest set of permissions that still lets it do its job. Admin rights are personal, protected with multi-factor login, and handed out for a short time when needed. If something is broken into, the damage stays small.</p>
+        <div class="pic"><strong>Picture this:</strong> A support engineer needs to read a customer&#x27;s settings, not delete their account. Give them read access, and make delete a separate, logged, time-limited step.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We have a simple table of roles and services and what each one is allowed to do.</span></label></li><li><label><input type="checkbox"><span>Every service has its own identity. No shared admin accounts or shared admin keys.</span></label></li><li><label><input type="checkbox"><span>Access is denied by default and only the needed paths are opened.</span></label></li><li><label><input type="checkbox"><span>Admins use named accounts with multi-factor login, and extra rights expire on their own.</span></label></li><li><label><input type="checkbox"><span>We review broad or unused permissions regularly and remove them.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/02-least-privilege.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 02-least-privilege.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>Least privilege</h2>
+<h3>Principle</h3>
+<p><strong>(secure by design)</strong></p>
+<p>Every user, service and process operates with the feasible minimum permissions needed to do its job – no more and for no longer than necessary.</p>
+<h3>Objective</h3>
+<p>Reduces unauthorised access, limits blast radius, blocks lateral movement and prevents permission creep.</p>
+<h3>Checklist</h3>
+<h4>Define minimum viable permissions for each role/service</h4>
+<ul>
+<li>List key roles (user, support, admin) and key services (API, provisioning, updates).</li>
+<li>For each, define allowed actions (read/write/admin) and resources (APIs, tables, buckets).</li>
+</ul>
+<h4>Use unique identities (no shared admin)</h4>
+<ul>
+<li>One identity per service (service account/workload identity) , applicable to both web services and services running on a device.</li>
+<li>No shared admin users/keys; separate dev/test/prod identities.</li>
+</ul>
+<h4>Default-deny and explicit allow lists</h4>
+<ul>
+<li>Deny by default; allow only required API methods, data access and network paths.</li>
+<li>Restrict service-to-service access to specific interfaces.</li>
+</ul>
+<h4>Time-bound admin access (JIT) + attribution</h4>
+<ul>
+<li>Named accounts + MFA for admins (all human users if possible).</li>
+<li>Temporary elevation for privileged actions; break-glass is separate and monitored.</li>
+</ul>
+<h4>Automate privilege hygiene</h4>
+<ul>
+<li>Monthly (or at each release), flag broad privileges and unused permissions/tokens; remove or time-limit exceptions.</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>Access model exists: for example, a short table “Role/Service, allowed actions, resources” stored in repo/wiki and kept current.</li>
+<li>No shared admin:  IAM inventory shows unique service identities; no reused production admin keys.</li>
+<li>Deny works: automated negative tests prove unauthorised API/data access is blocked for each critical service.</li>
+<li>Admins are accountable: logs show who performed privileged actions; elevation expires automatically.</li>
+<li>Creep is controlled: recurring report flags unused/broad permissions; removals/exceptions are tracked, with owner and expiry.</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Unique service identities; no shared production admin keys</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Default-deny posture; only required paths enabled</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Admin access uses MFA and is time bound and logged</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Automated authorisation tests run verifying correct access restrictions for critical privileged functions</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Privilege review run; exceptions owned and time limited</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="01-trust-boundaries-and-threat-modelling.html"><small>Previous, 1 of 22</small>Trust boundaries and threat modelling</a><a class="next" href="03-strong-identity-and-authentication-architecture.html"><small>Next, 3 of 22</small>Strong identity and authentication architecture</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

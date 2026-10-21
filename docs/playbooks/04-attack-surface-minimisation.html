@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4. Attack surface minimisation | CyberForte</title>
+<meta name="description" content="Fewer doors means fewer break-ins. Close everything you do not need.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/04-attack-surface-minimisation.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="04-attack-surface-minimisation" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <p class="crumbs"><a href="../index.html">Home</a> / <a href="index.html">Secure by Design and Default</a> / Playbook 4</p>
+  <header class="article-head rise">
+    <div class="eyebrow">Playbook 4 of 22 · Secure by Design · Architectural Foundations</div>
+    <h1>Attack surface minimisation</h1>
+    <p class="tagline">Fewer doors means fewer break-ins. Close everything you do not need.</p>
+    <div class="meta" style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag">Secure by Design</span><span class="tag">Architectural Foundations</span></div>
+  </header>
+  <div class="layout">
+    <article class="content">
+      <section class="panel summary rise d1" id="plain-words" aria-labelledby="pw-h">
+        <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · not ENISA text</div>
+        <h2 id="pw-h">In plain words</h2>
+        <p>Every open port, API, debug tool and extra library is one more place an attacker can try. This playbook says: list everything that is reachable, and switch off anything without a clear reason to exist today.</p><p>Ship a lean product. Remove test endpoints and debug modes from production builds, drop libraries you do not use, and keep only the data you really need. Then keep checking, because old features have a habit of hanging around.</p>
+        <div class="pic"><strong>Picture this:</strong> A forgotten Telnet service or a debug page left on from testing is a classic way in. If nobody needs it in the field, it should not be in the field.</div>
+      </section>
+      <section class="panel checklist" id="checklist" aria-labelledby="checklist-h">
+  <div class="checklist-head"><h2 id="checklist-h">Practical checklist</h2><span class="check-count" id="check-count" aria-live="polite"></span></div>
+  <p class="note">A short, practical version for small teams, written by CyberForte from the ENISA playbook. The full ENISA checklist, evidence list and release gate are in the original text below. Your ticks are saved only in this browser.</p>
+  <ul class="check-list"><li><label><input type="checkbox"><span>We keep a list of every reachable interface: APIs, ports, admin pages, update channels.</span></label></li><li><label><input type="checkbox"><span>Everything is closed by default and only what production needs is open.</span></label></li><li><label><input type="checkbox"><span>Debuggers, test endpoints and developer features are removed from production builds.</span></label></li><li><label><input type="checkbox"><span>Unused libraries and optional components are removed from the final build.</span></label></li><li><label><input type="checkbox"><span>We only collect and keep the data we need, and we can delete it.</span></label></li><li><label><input type="checkbox"><span>We review exposure for every release and remove legacy leftovers.</span></label></li></ul>
+  <div class="actions">
+    <button class="btn primary" id="print-checklist" type="button">Print this checklist</button>
+    <button class="btn" id="done-btn" type="button" aria-pressed="false">Mark this one as done</button>
+    <button class="btn" id="clear-checks" type="button">Clear ticks</button>
+  </div>
+</section>
+      <section class="panel original" id="original" aria-labelledby="orig-h">
+        <div class="original-head">
+          <div class="panel-label"><span class="dot" aria-hidden="true"></span>Original text · unchanged</div>
+          <h2 id="orig-h" style="font-size:22px;margin:0 0 6px">The full ENISA playbook</h2>
+          <p>Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook/blob/main/playbooks/04-attack-surface-minimisation.md" rel="noopener">ENISA Secure by Design and Default Playbooks, 04-attack-surface-minimisation.md</a>, European Union Agency for Cybersecurity (ENISA), licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>. Reproduced word for word; only converted from Markdown to this page.</p>
+        </div>
+        <div class="original-body prose"><h2>Attack surface minimisation</h2>
+<h3>Principle</h3>
+<p><strong>(secure by design)</strong></p>
+<p>Expose only what is strictly necessary. Remove or disable all unnecessary code, services, interfaces, protocols and dependencies by default.</p>
+<h3>Objective</h3>
+<p>Reduce the likelihood and impact of compromise by eliminating unnecessary entry points and limiting attacker options.</p>
+<h3>Checklist</h3>
+<h4>List exposed interfaces</h4>
+<ul>
+<li>Identify all externally reachable APIs, ports, local interfaces (HMI), protocols, admin endpoints and update channels.</li>
+<li>Remove or disable anything without a clear, current justification.</li>
+</ul>
+<h4>Enforce default deny</h4>
+<ul>
+<li>Close all ports, APIs and interfaces by default.</li>
+<li>Explicitly allow only what is required for production.</li>
+</ul>
+<h4>Remove development and diagnostic functionality</h4>
+<ul>
+<li>Remove debuggers, test endpoints and debug modes from production builds.</li>
+<li>Remove development features.</li>
+</ul>
+<h4>Minimise dependencies</h4>
+<ul>
+<li>Remove unused libraries, SDKs and optional components from final builds. Remaining libraries should be verified for authenticity and integrity.</li>
+<li>Use the smallest possible operating system, runtime or firmware configuration that supports the product’s intended function.</li>
+</ul>
+<h4>Continuously monitor for legacy exposure</h4>
+<ul>
+<li>Continuously review exposed interfaces and dependencies.</li>
+<li>Update/remove deprecated APIs, old protocols and unused resources.</li>
+</ul>
+<h4>Minimise data collection, processing and retention</h4>
+<ul>
+<li>Collect, retain and store only the personal or sensitive data necessary for the product’s intended purpose and securely delete it when no longer required.</li>
+</ul>
+<h3>Minimum evidence</h3>
+<ul>
+<li>Exposure inventory exists: a maintained list of externally reachable interfaces (APIs, ports, protocols, admin interfaces, update channels) is stored in the repo or product documentation.</li>
+<li>Default deny enforced: network rules, gateway configuration or device settings show that only explicitly required interfaces are enabled in production.</li>
+<li>Minimal build verified: build configuration, manifest, package list or firmware contents show that only required components are included.</li>
+<li>No dev or diagnostic tooling shipped that might enable exploitation: inspection of production artefacts confirms absence (or verification that they cannot impact security) of shells, debuggers, compilers, test interfaces and diagnostic utilities.</li>
+<li>No legacy exposure: release notes, ticket or checklist entry confirms that exposed interfaces and dependencies were reviewed and any unused or legacy elements removed.</li>
+<li>Data inventory and retention record: data inventory with purposes, retention periods and deletion methods is kept.</li>
+</ul>
+<h3>Release gate</h3>
+<ul>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Exposed interfaces reviewed; only required APIs, ports, protocols and management interfaces enabled</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Default-deny posture confirmed; no unintended network paths or interfaces exposed</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Production build is minimal; unused libraries, services and optional components removed</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>No development or diagnostic tools present in production unless there is evidence that it cannot impact security</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Attack surface review completed for this release; deprecated or legacy interfaces updates/removed</li>
+<li class="task"><span class="box" aria-hidden="true"></span><span class="sr-only">[ ] </span>Unnecessary data processing has been removed and required deletion mechanisms verified</li>
+</ul></div>
+      </section>
+      <nav class="pager" aria-label="Previous and next playbook"><a href="03-strong-identity-and-authentication-architecture.html"><small>Previous, 3 of 22</small>Strong identity and authentication architecture</a><a class="next" href="05-defence-in-depth.html"><small>Next, 5 of 22</small>Defence in depth</a></nav>
+    </article>
+    <aside class="toc" aria-label="On this page"><h2>On this page</h2><ol><li><a href="#plain-words">In plain words</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original ENISA text</a></li></ol></aside>
+  </div>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

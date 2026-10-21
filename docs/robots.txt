@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cyberforte-ot.github.io/sitemap.xml

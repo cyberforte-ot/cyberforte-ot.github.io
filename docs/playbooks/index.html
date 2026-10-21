@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure by Design and Default playbooks | CyberForte</title>
+<meta name="description" content="All 22 ENISA Secure by Design and Default playbooks in plain words, with checklists and the full original text.">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://cyberforte-ot.github.io/playbooks/index.html">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("cf-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-page="" data-part="sbd">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html" aria-label="CyberForte security guides, home"><span class="logo-chip"><img src="../assets/img/cyberforte-logo.png" alt="CyberForte" width="720" height="112"></span></a>
+    <nav class="nav" id="site-nav" aria-label="Main"><a href="../playbooks/index.html" aria-current="page">Secure by Design and Default</a><a href="../ot-top-10/index.html">OWASP OT Top 10</a><a href="../about.html">About and licences</a></nav>
+    <div class="tools">
+      <button class="icon-btn" id="search-btn" type="button" aria-haspopup="dialog" aria-controls="search-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="search-label">Search</span><span class="kbd" aria-hidden="true">/</span></button>
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch colour mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow rise">Part 1 · 22 playbooks</div>
+    <h1 class="rise d1">Secure by Design and Default</h1>
+    <p class="lead rise d2">ENISA's practical playbooks for small and medium-sized companies that make products with digital elements. Each one comes with a friendly summary, a short checklist and the full original text.</p>
+    <p class="byline rise d3">Based on the <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a> (<a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>). Brought to you by <strong>CyberForte</strong>.</p>
+  </section>
+  <div class="progress" data-progress>
+    <div class="progress-row"><span><strong><span data-done>0</span> of 22</strong> playbooks marked as done</span><button class="link-btn" id="reset-progress" type="button">Reset progress</button></div>
+    <div class="bar" role="progressbar" aria-label="Playbooks done" aria-valuemin="0" aria-valuemax="22" aria-valuenow="0"><span></span></div>
+    <p class="note" style="margin:0">Progress is saved only in this browser. Use the “Mark this one as done” button at the end of each checklist.</p>
+  </div>
+  <section class="block" aria-labelledby="where-h">
+    <div class="section-head"><div><h2 id="where-h">Where to start</h2><p>ENISA suggests adopting the playbooks step by step. In short, from its “Progressive adoption” section:</p></div></div>
+    <div class="grid three">
+      <div class="card"><span class="card-num">STEP 1</span><span class="card-title">Know your context and priorities</span><p>Start with <a href="01-trust-boundaries-and-threat-modelling.html">Trust boundaries and threat modelling</a> to find the threats that matter most for your product.</p></div>
+      <div class="card"><span class="card-num">STEP 2</span><span class="card-title">Lay an engineering baseline</span><p>ENISA's examples: playbooks 9, 10, 13, 14, 16, 17, 18 and 20, marked “Early baseline” below, plus any others your risks call for.</p></div>
+      <div class="card"><span class="card-num">STEP 3</span><span class="card-title">Broaden and strengthen</span><p>Add the remaining playbooks that apply, and improve coverage and automation over time.</p></div>
+    </div>
+    <p class="note" style="margin-top:14px">ENISA stresses that this order is illustrative, later playbooks are not less important, and legal requirements (including under the EU Cyber Resilience Act) cannot be postponed.</p>
+  </section>
+  <section class="block" aria-labelledby="all-h" style="padding-top:0">
+    <div class="section-head"><div><h2 id="all-h">All 22 playbooks</h2><p>Filter by family or group.</p></div></div>
+    <div class="chips" role="group" aria-label="Filter playbooks">
+      <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-filter="design" aria-pressed="false">Secure by Design</button>
+      <button class="chip" type="button" data-filter="default" aria-pressed="false">Secure by Default</button>
+      <button class="chip" type="button" data-filter="architectural" aria-pressed="false">Architectural Foundations</button>
+      <button class="chip" type="button" data-filter="operational" aria-pressed="false">Operational Integrity</button>
+      <button class="chip" type="button" data-filter="hardening" aria-pressed="false">Default Hardening</button>
+      <button class="chip" type="button" data-filter="guided" aria-pressed="false">Guided Protection</button>
+    </div>
+    <div data-group="architectural" data-family="design">
+  <h3 class="group-title">Secure by Design · Architectural Foundations</h3>
+  <p class="note" style="margin:-4px 0 14px;max-width:70ch">ENISA: “structural design choices that make a product inherently difficult to compromise or exploit.”</p>
+  <div class="grid three"><a class="card rise" href="01-trust-boundaries-and-threat-modelling.html" data-slug="01-trust-boundaries-and-threat-modelling" data-part="sbd">
+  <span class="card-num">01</span>
+  <span class="card-title">Trust boundaries and threat modelling</span>
+  <p>Draw your product, find the doors, decide which ones need a lock first.</p>
+  <span class="meta"><span class="tag">Architectural Foundations</span><span class="tag red">Start here</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="02-least-privilege.html" data-slug="02-least-privilege" data-part="sbd">
+  <span class="card-num">02</span>
+  <span class="card-title">Least privilege</span>
+  <p>Give every person and program only the keys they need, only for as long as they need them.</p>
+  <span class="meta"><span class="tag">Architectural Foundations</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="03-strong-identity-and-authentication-architecture.html" data-slug="03-strong-identity-and-authentication-architecture" data-part="sbd">
+  <span class="card-num">03</span>
+  <span class="card-title">Strong identity and authentication architecture</span>
+  <p>Know exactly who (or what) is knocking, on every door, every time.</p>
+  <span class="meta"><span class="tag">Architectural Foundations</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="04-attack-surface-minimisation.html" data-slug="04-attack-surface-minimisation" data-part="sbd">
+  <span class="card-num">04</span>
+  <span class="card-title">Attack surface minimisation</span>
+  <p>Fewer doors means fewer break-ins. Close everything you do not need.</p>
+  <span class="meta"><span class="tag">Architectural Foundations</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="05-defence-in-depth.html" data-slug="05-defence-in-depth" data-part="sbd">
+  <span class="card-num">05</span>
+  <span class="card-title">Defence in depth</span>
+  <p>Layers, like a castle: wall, moat, gate and guards, so one failure is not the end.</p>
+  <span class="meta"><span class="tag">Architectural Foundations</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="06-open-design.html" data-slug="06-open-design" data-part="sbd">
+  <span class="card-num">06</span>
+  <span class="card-title">Open design</span>
+  <p>Good security still works when the attacker has read the manual.</p>
+  <span class="meta"><span class="tag">Architectural Foundations</span><span class="done-badge">✓ Done</span></span>
+</a></div>
+</div><div data-group="operational" data-family="design">
+  <h3 class="group-title">Secure by Design · Operational Integrity</h3>
+  <p class="note" style="margin:-4px 0 14px;max-width:70ch">ENISA: “human and procedural practices that maintain product security throughout development, deployment, operation, and retirement.”</p>
+  <div class="grid three"><a class="card rise" href="07-life-cycle-management.html" data-slug="07-life-cycle-management" data-part="sbd">
+  <span class="card-num">07</span>
+  <span class="card-title">Life-cycle management</span>
+  <p>Security is not a launch-day job. It lasts from the first sketch to the last switch-off.</p>
+  <span class="meta"><span class="tag">Operational Integrity</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="08-user-centric-design.html" data-slug="08-user-centric-design" data-part="sbd">
+  <span class="card-num">08</span>
+  <span class="card-title">User-centric design</span>
+  <p>If the safe way is the easy way, people will take it.</p>
+  <span class="meta"><span class="tag">Operational Integrity</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="09-secure-coding-and-verification-practices.html" data-slug="09-secure-coding-and-verification-practices" data-part="sbd">
+  <span class="card-num">09</span>
+  <span class="card-title">Secure coding and verification practices</span>
+  <p>Write code that is hard to get wrong, then check it automatically.</p>
+  <span class="meta"><span class="tag">Operational Integrity</span><span class="tag red">Early baseline</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="10-logging-monitoring-and-alerting.html" data-slug="10-logging-monitoring-and-alerting" data-part="sbd">
+  <span class="card-num">10</span>
+  <span class="card-title">Logging, monitoring and alerting</span>
+  <p>Keep a diary of what matters, keep it safe, and get a tap on the shoulder when something looks wrong.</p>
+  <span class="meta"><span class="tag">Operational Integrity</span><span class="tag red">Early baseline</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="11-configuration-and-change-management.html" data-slug="11-configuration-and-change-management" data-part="sbd">
+  <span class="card-num">11</span>
+  <span class="card-title">Configuration and change management</span>
+  <p>No silent changes. Every setting is written down, reviewed and easy to roll back.</p>
+  <span class="meta"><span class="tag">Operational Integrity</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="12-incident-response-and-recovery.html" data-slug="12-incident-response-and-recovery" data-part="sbd">
+  <span class="card-num">12</span>
+  <span class="card-title">Incident response and recovery</span>
+  <p>Hope for the best, plan for the bad day, and rehearse it.</p>
+  <span class="meta"><span class="tag">Operational Integrity</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="13-vulnerability-and-patch-management.html" data-slug="13-vulnerability-and-patch-management" data-part="sbd">
+  <span class="card-num">13</span>
+  <span class="card-title">Vulnerability and patch management</span>
+  <p>Find the holes, decide what to fix first, fix it, and tell people.</p>
+  <span class="meta"><span class="tag">Operational Integrity</span><span class="tag red">Early baseline</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="14-supply-chain-controls.html" data-slug="14-supply-chain-controls" data-part="sbd">
+  <span class="card-num">14</span>
+  <span class="card-title">Supply-chain controls</span>
+  <p>Know what goes into your product, and protect the factory that builds it.</p>
+  <span class="meta"><span class="tag">Operational Integrity</span><span class="tag red">Early baseline</span><span class="done-badge">✓ Done</span></span>
+</a></div>
+</div><div data-group="hardening" data-family="default">
+  <h3 class="group-title">Secure by Default · Default Hardening</h3>
+  <p class="note" style="margin:-4px 0 14px;max-width:70ch">ENISA: “the factory-shipped state of the software, ensuring that the initial configuration is as restrictive as possible.”</p>
+  <div class="grid three"><a class="card rise" href="15-minimisation-of-default-services.html" data-slug="15-minimisation-of-default-services" data-part="sbd">
+  <span class="card-num">15</span>
+  <span class="card-title">Minimisation of default services</span>
+  <p>Out of the box, only the essentials are switched on.</p>
+  <span class="meta"><span class="tag">Default Hardening</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="16-restrictive-initial-access.html" data-slug="16-restrictive-initial-access" data-part="sbd">
+  <span class="card-num">16</span>
+  <span class="card-title">Restrictive initial access</span>
+  <p>No &quot;admin/admin&quot;. Every unit starts locked, with its own key.</p>
+  <span class="meta"><span class="tag">Default Hardening</span><span class="tag red">Early baseline</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="17-secure-communication-by-default.html" data-slug="17-secure-communication-by-default" data-part="sbd">
+  <span class="card-num">17</span>
+  <span class="card-title">Secure communication by default</span>
+  <p>Everything that leaves the box is encrypted and checked, from day one.</p>
+  <span class="meta"><span class="tag">Default Hardening</span><span class="tag red">Early baseline</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="18-unique-device-identity-and-secrets-by-default.html" data-slug="18-unique-device-identity-and-secrets-by-default" data-part="sbd">
+  <span class="card-num">18</span>
+  <span class="card-title">Unique device identity and secrets by default</span>
+  <p>One stolen key should open one door, not every door you have ever sold.</p>
+  <span class="meta"><span class="tag">Default Hardening</span><span class="tag red">Early baseline</span><span class="done-badge">✓ Done</span></span>
+</a></div>
+</div><div data-group="guided" data-family="default">
+  <h3 class="group-title">Secure by Default · Guided Protection</h3>
+  <p class="note" style="margin:-4px 0 14px;max-width:70ch">ENISA: “mandatory setup steps, automation, and clear feedback that help users maintain a secure state.”</p>
+  <div class="grid three"><a class="card rise" href="19-mandatory-security-onboarding.html" data-slug="19-mandatory-security-onboarding" data-part="sbd">
+  <span class="card-num">19</span>
+  <span class="card-title">Mandatory security onboarding</span>
+  <p>The product will not go to work until the safety steps are done.</p>
+  <span class="meta"><span class="tag">Guided Protection</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="20-automated-maintenance-and-updates.html" data-slug="20-automated-maintenance-and-updates" data-part="sbd">
+  <span class="card-num">20</span>
+  <span class="card-title">Automated maintenance and updates</span>
+  <p>Security updates arrive by themselves, safely, without wrecking the day.</p>
+  <span class="meta"><span class="tag">Guided Protection</span><span class="tag red">Early baseline</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="21-transparent-security-posture.html" data-slug="21-transparent-security-posture" data-part="sbd">
+  <span class="card-num">21</span>
+  <span class="card-title">Transparent security posture</span>
+  <p>A clear dashboard light: are we in a safe state, and how do we get back if not?</p>
+  <span class="meta"><span class="tag">Guided Protection</span><span class="done-badge">✓ Done</span></span>
+</a><a class="card rise" href="22-secure-recovery-and-ownership-life-cycle.html" data-slug="22-secure-recovery-and-ownership-life-cycle" data-part="sbd">
+  <span class="card-num">22</span>
+  <span class="card-title">Secure recovery and ownership life cycle</span>
+  <p>Resets, recoveries and handovers that help the owner, not the intruder.</p>
+  <span class="meta"><span class="tag">Guided Protection</span><span class="done-badge">✓ Done</span></span>
+</a></div>
+</div>
+  </section>
+  <section class="block" aria-labelledby="fig-h" style="padding-top:0">
+    <h2 id="fig-h">How the playbooks fit together</h2>
+    <figure>
+      <img src="../assets/img/enisa-figure-1.png" alt="ENISA diagram: Secure by Design and Default principles applied across a product's life cycle, linked to risk management activities." loading="lazy" width="1600" height="900">
+      <figcaption>Figure 1 from ENISA: “Secure by design and default across a product’s life cycle.” Source: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, CC BY 4.0, unchanged.</figcaption>
+    </figure>
+  </section>
+</div>
+</main>
+<footer class="credits">
+  <div class="wrap">
+    <div>
+      <h2>Brought to you by CyberForte</h2>
+      <p>Free, plain-English guides to security good practice for small businesses and industrial operators. Summaries and checklists are CyberForte's own words; the original texts are reproduced unchanged.</p>
+      <p>Questions? <a href="mailto:info@cyberforte.co.uk">info@cyberforte.co.uk</a> · <a href="https://cyberforte.co.uk" rel="noopener">cyberforte.co.uk</a></p>
+    </div>
+    <div>
+      <h2>Sources and licences</h2>
+      <p>Content: <a href="https://github.com/enisaeu/enisa-sbd-playbook" rel="noopener">ENISA Secure by Design and Default Playbooks</a>, European Union Agency for Cybersecurity, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>.</p>
+      <p>Content: <a href="https://ot.owasp.org/v/2025/" rel="noopener">OWASP OT Top 10 2025</a>, OWASP OT Top 10 project, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</p>
+    </div>
+    <div>
+      <h2>Please note</h2>
+      <p>CyberForte is not affiliated with, or endorsed by, ENISA or OWASP.</p>
+      <p>This is general good-practice guidance, not legal advice. Using it supports readiness; it does not on its own meet any legal requirement. <a href="../about.html">Licences and changes</a></p>
+    </div>
+  </div>
+</footer>
+<dialog class="search-dialog" id="search-dialog" aria-label="Search the site">
+  <div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><label for="search-input" class="sr-only">Search</label><input id="search-input" type="search" placeholder="Search playbooks and OT risks" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="search-results"><button class="icon-btn" id="search-close" type="button" aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <ul class="search-results" id="search-results" role="listbox" aria-label="Results"></ul>
+</dialog>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>
