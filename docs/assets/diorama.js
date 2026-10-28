@@ -39,6 +39,7 @@ function init() {
   const stillImgs = [0, 1].map(() => { const im = document.createElement("img"); im.className = "dio-still"; im.alt = ""; im.decoding = "async"; im.setAttribute("aria-hidden", "true"); return im; });
   const stills = { cur: -1, shown: null, missing: {}, loaded: {}, pending: null, manifest: null };
   let stillArm = 0, idleSince = 0;
+  stills.target = null;
   fetch(STILLS_BASE + "manifest.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).then((m) => { stills.manifest = Array.isArray(m) ? m : (m && m.files) || []; }).catch(() => { stills.manifest = []; });
   const switchBtn = document.getElementById("dio-controls");
   const layersBtn = document.getElementById("dio-layers");
@@ -208,7 +209,7 @@ function init() {
   }
   function userMoved() {
     if (glide) { glide = null; }
-    hideStill();
+    stills.target = null; hideStill();
     st.userView = true;
     if (hintEl && !hintEl.classList.contains("gone")) hintEl.classList.add("gone");
     requestRender();
@@ -713,7 +714,7 @@ function init() {
     });
     if (live) live.setControls(on, tween);
     if (purdue) purdue.setControls(on);
-    hideStill(); clearTimeout(stillArm); stillArm = setTimeout(syncStill, 260);
+    clearTimeout(stillArm); transitionTo(keyFor(st.step));
     if (!instant) {
       const r = byN[st.active];
       showToast(on ? (DATA.toast ? DATA.toast.on : "Controls on.") : (r ? r.off : (DATA.toast ? DATA.toast.off : "Controls off.")), on ? 4500 : 7000);
@@ -742,20 +743,38 @@ function init() {
     if (!key || stills.missing[key] || stills.loaded[key]) return;
     if (!stills.manifest || stills.manifest.indexOf(key + ".webp") < 0) return;
     const im = new Image(); im.decoding = "async";
-    im.onload = () => { stills.loaded[key] = true; if (stillKey() === key) showStill(key); };
+    im.onload = () => { stills.loaded[key] = true; if (stills.target === key && !pointers.size && !st.userView) showStill(key); else if (stillKey() === key) showStill(key); };
     im.onerror = () => { stills.missing[key] = true; };
     im.src = stillUrl(key);
+  }
+  function keyFor(step) {
+    if (st.mode !== MODE.SITE) return null;
+    const id = step >= 1 && step <= 10 ? "risk_" + String(step).padStart(2, "0") : (step === 0 ? "wide" : null);
+    return id ? id + "-" + (st.controls ? "on" : "off") + "-" + (aspect < 1 ? "mobile" : "desktop") : null;
+  }
+  /* crossfade from the current still straight to the next one; live stays hidden underneath */
+  function transitionTo(key) {
+    stills.target = key;
+    if (!key) { hideStill(); return; }
+    if (stills.loaded[key]) showStill(key); else preloadStill(key);
   }
   function showStill(key) {
     if (stills.shown === key) return;
     if (!stills.loaded[key]) { preloadStill(key); return; }
     const next = (stills.cur + 1) % 2, im = stillImgs[next];
+    clearTimeout(im._hide); im.classList.remove("fast");
     im.hidden = false; im.src = stillUrl(key);
+    /* the outgoing still stays fully opaque underneath; only the incoming one fades in on top, then the old one is removed */
+    stillImgs.forEach((o) => { if (o !== im) { o.classList.add("under"); clearTimeout(o._hide); o._hide = setTimeout(() => { if (!o.classList.contains("show") || o.classList.contains("under")) { o.classList.remove("show", "under"); o.hidden = true; } }, 1200); } });
+    im.classList.remove("under"); im.style.zIndex = "2";
+    stillImgs.forEach((o) => { if (o !== im) o.style.zIndex = "1"; });
+    void im.offsetWidth;
     if (stills.onFirstShow) { const f = stills.onFirstShow; stills.onFirstShow = null; f(); }
-    im.classList.add("show"); stillImgs[stills.cur === -1 ? 1 : stills.cur].classList.remove("show");
+    im.classList.add("show");
     stills.cur = next; stills.shown = key;
   }
-  function hideStill() { if (stills.shown === null) return; stillImgs.forEach((im) => { im.classList.remove("show"); im.classList.add("drop"); im.hidden = true; im.classList.remove("drop"); }); stills.shown = null; }
+  /* only a real interaction (or the Purdue chapter) reveals the live canvas: a quick fade, no instant pop */
+  function hideStill() { if (stills.shown === null) return; stillImgs.forEach((im) => { im.classList.add("fast"); im.classList.remove("show", "under"); clearTimeout(im._hide); im._hide = setTimeout(() => { if (!im.classList.contains("show")) im.hidden = true; }, 200); }); stills.shown = null; }
   function atCanonicalPose() {
     if (glide || pointers.size) return false;
     const p = st.mode === MODE.PURDUE ? null : (st.active ? cams[byN[st.active].cam] : cams.wide);
@@ -767,11 +786,12 @@ function init() {
     if (!st.ready || st.mode !== MODE.SITE) return;
     if (!atCanonicalPose()) { idleSince = 0; return; }
     if (!idleSince) idleSince = now;
-    if (now - idleSince > 1200 && stills.shown !== stillKey()) { st.userView = false; syncStill(); }
+    if (now - idleSince > 1200 && stills.shown !== stillKey()) { st.userView = false; stills.target = stillKey(); syncStill(); }
   }
   function syncStill() {
     const key = stillKey();
-    if (!key) { hideStill(); return; }
+    if (!key) { if (!stills.target || st.mode !== MODE.SITE) hideStill(); return; }
+    stills.target = key;
     if (stills.loaded[key]) showStill(key); else { hideStill(); preloadStill(key); }
   }
   /* approach: preload the neighbours of the current step so the still is ready on arrival */
@@ -1027,7 +1047,7 @@ function init() {
     steps.forEach((s) => s.classList.toggle("on", +s.getAttribute("data-step") === k));
     dots.forEach((d) => d.el.classList.toggle("on", d.k === k));
     if (k !== +card.getAttribute("data-step") || !card.innerHTML) fillCard(k); else card.classList.remove("hidden");
-    preloadAround(k); clearTimeout(stillArm); hideStill();
+    preloadAround(k); clearTimeout(stillArm); transitionTo(keyFor(k));
     if (!st.ready) return;
     const wasPurdue = st.mode === MODE.PURDUE;
     if (k === 11) {
