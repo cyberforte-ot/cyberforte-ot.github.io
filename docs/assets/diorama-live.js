@@ -63,125 +63,128 @@ export function createLive(ctx) {
     }));
   });
 
-  /* ---------- SCADA screens: a live HMI drawn on a canvas atlas, 8 fps.
-     The glb's uv_atlas extra names each cell (console_*, videowall_r*_c*, engineering_laptop); row 0 is the top. */
-  const CYAN = "#39d6ff", GREEN = "#36d37a", AMBER = "#f5a524", RED = "#ff3b40", INK = "#dfe9f2", DIM = "#6b8196", BG = "#0b1620", PANEL = "#10212e", GRID = "#1a3446";
+  /* ---------- SCADA screens: one self-contained panel per screen on a 512 px atlas cell, 8 fps.
+     Nothing crosses a bezel; the alarm banner lives inside each screen. */
+  const CYAN = "#39d6ff", GREEN = "#36d37a", AMBER = "#f5a524", RED = "#ff3b40", INK = "#e9f1f7", DIM = "#7f94a8", BG = "#0a1522", GRID = "#1b3448";
   const F = "-apple-system, Segoe UI, Roboto, sans-serif";
   function parse(v) { if (typeof v === "string") { try { return JSON.parse(v); } catch (e) { return null; } } return v; }
   function makeScreens(name) {
     const list = nodesByPrefix(name); if (!list.length) return;
     const atlas = parse(list[0].userData.uv_atlas) || { cols: 5, rows: 4, cells: [] };
     const cols = atlas.cols || 5, rows = atlas.rows || 4;
-    const cell = lowPower ? 160 : 256;
+    const cell = lowPower ? 320 : 512;
     const W = cols * cell, H = rows * cell;
     const c = document.createElement("canvas"); c.width = W; c.height = H;
     const g = c.getContext("2d");
-    const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.flipY = false; tex.anisotropy = 4;
+    const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.flipY = false; tex.anisotropy = 8;
     disposables.push(tex);
     let applied = 0;
     meshesOf(list).forEach((m) => {
       if (!m.geometry.attributes.uv) return;
       const next = matsOf(m).map((mat) => {
         const sm = mat.clone(); sm.name = "Screen:" + m.name;
-        sm.vertexColors = false; sm.color.set(0x0b1620); sm.map = tex; sm.emissive.set(0xffffff); sm.emissiveMap = tex; sm.emissiveIntensity = 1.35;
-        sm.roughness = 0.4; sm.metalness = 0; sm.onBeforeCompile = function () {}; sm.customProgramCacheKey = () => "screen"; sm.toneMapped = true; sm.needsUpdate = true;
+        sm.vertexColors = false; sm.color.set(0x0a1522); sm.map = tex; sm.emissive.set(0xffffff); sm.emissiveMap = tex; sm.emissiveIntensity = 1.3;
+        sm.roughness = 0.4; sm.metalness = 0; sm.onBeforeCompile = function () {}; sm.customProgramCacheKey = () => "screen"; sm.needsUpdate = true;
         disposables.push(sm); applied++; return sm;
       });
       m.material = Array.isArray(m.material) ? next : next[0];
     });
     if (!applied) return;
     const cells = (atlas.cells || []).map((cl) => ({ name: cl.name, col: cl.col, row: cl.row, aspect: (cl.w_m && cl.h_m) ? cl.w_m / cl.h_m : 1.6 }));
-    const wall = cells.filter((cl) => /^videowall_r\d+_c\d+/.test(cl.name));
-    const wallRows = wall.length ? 1 + Math.max.apply(null, wall.map((cl) => +cl.name.match(/r(\d+)/)[1])) : 0;
-    const wallCols = wall.length ? 1 + Math.max.apply(null, wall.map((cl) => +cl.name.match(/c(\d+)/)[1])) : 0;
-    const wallCanvas = document.createElement("canvas"); wallCanvas.width = Math.max(1, wallCols) * 320; wallCanvas.height = Math.max(1, wallRows) * 200;
-    const scr = { c, g, tex, W, H, cell, cells, wall, wallRows, wallCols, wallCanvas, wg: wallCanvas.getContext("2d"), last: -1, samples: [], seed: screens.length };
-    for (let i = 0; i < 4; i++) { scr.samples.push([]); for (let k = 0; k < 80; k++) scr.samples[i].push(0.5); }
+    const scr = { c, g, tex, W, H, cell, cells, last: -1, samples: [], seed: screens.length };
+    for (let i = 0; i < 4; i++) { scr.samples.push([]); for (let k = 0; k < 60; k++) scr.samples[i].push(0.5); }
     screens.push(scr);
     draw(scr, 0);
   }
-  function label(g, x, y, size, color, text, align) { g.fillStyle = color; g.font = "600 " + size + "px " + F; g.textAlign = align || "left"; g.textBaseline = "middle"; g.fillText(text, x, y); }
-  function header(g, w, h, title) {
-    g.fillStyle = alarmOn ? RED : "#132c3c"; g.fillRect(0, 0, w, h * 0.13);
-    label(g, w * 0.03, h * 0.065, Math.round(h * 0.075), alarmOn ? "#fff" : INK, alarmOn ? "ALARM · UNAUTHORISED CONNECTION" : title);
-    if (!alarmOn) label(g, w * 0.97, h * 0.065, Math.round(h * 0.065), GREEN, "NORMAL", "right");
+  /* drawing helpers work in a logical 640 × (640/aspect) space with generous padding */
+  function text(g, x, y, size, color, str, align, weight) { g.fillStyle = color; g.font = (weight || 600) + " " + size + "px " + F; g.textAlign = align || "left"; g.textBaseline = "middle"; g.fillText(str, x, y); }
+  function frame(g, w, h, title, t) {
+    g.fillStyle = BG; g.fillRect(0, 0, w, h);
+    const pad = w * 0.06;
+    text(g, pad, h * 0.11, Math.round(h * 0.1), DIM, title.toUpperCase(), "left", 700);
+    if (alarmOn) {
+      const bh = h * 0.17;
+      g.fillStyle = Math.floor(t * 2) % 2 ? RED : "#b3121a"; g.fillRect(0, h - bh, w, bh);
+      text(g, w / 2, h - bh / 2, Math.round(bh * 0.5), "#fff", "ALARM · INTRUSION", "center", 800);
+    } else { g.fillStyle = GREEN; g.beginPath(); g.arc(w - pad, h * 0.11, h * 0.035, 0, Math.PI * 2); g.fill(); }
+    return { pad, top: h * 0.22, bottom: alarmOn ? h * 0.78 : h * 0.92 };
   }
-  function trendPanel(g, scr, w, h, which) {
-    header(g, w, h, which === 0 ? "TURBINE · TRENDS" : "FEEDWATER · TRENDS");
-    const x = w * 0.06, y = h * 0.2, tw = w * 0.88, th = h * 0.7;
-    g.strokeStyle = GRID; g.lineWidth = 1;
-    for (let i = 0; i <= 4; i++) { g.beginPath(); g.moveTo(x, y + th * i / 4); g.lineTo(x + tw, y + th * i / 4); g.stroke(); }
-    [[0, CYAN], [1, alarmOn ? RED : GREEN], [2, AMBER]].forEach(([idx, color]) => {
-      const sm = scr.samples[(idx + which) % 4];
-      g.strokeStyle = color; g.lineWidth = Math.max(2, h * 0.018); g.lineJoin = "round"; g.beginPath();
-      sm.forEach((v, i) => { const px = x + tw * i / (sm.length - 1), py = y + th * (1 - v); if (i) g.lineTo(px, py); else g.moveTo(px, py); });
-      g.stroke();
-    });
-    if (alarmOn) label(g, x + tw, y + 4, Math.round(h * 0.07), RED, "OUT OF RANGE", "right");
-  }
-  function valuesPanel(g, w, h, t, which) {
-    header(g, w, h, which ? "GENERATOR · LIVE" : "UNIT 1 · LIVE VALUES");
-    const rows = which ? [["Grid export", value(248, 1.1, t, 4, alarmOn), "MW", 1], ["Frequency", value(50.0, 0.02, t, 6, alarmOn), "Hz", 2], ["Stator temp", value(76, 0.6, t, 7, alarmOn), "°C", 1], ["Excitation", value(312, 2, t, 8, alarmOn), "A", 0]]
-      : [["Turbine speed", value(3000, 4, t, 1, alarmOn), "rpm", 0], ["Steam temp", value(412, 1.5, t, 2, alarmOn), "°C", 1], ["Feed flow", value(118, 2.2, t, 3, alarmOn), "m³/h", 1], ["Cond. vacuum", value(-0.92, 0.01, t, 5, alarmOn), "bar", 2]];
-    rows.forEach((r, i) => { const yy = h * (0.28 + i * 0.19); label(g, w * 0.06, yy, Math.round(h * 0.085), DIM, r[0]); label(g, w * 0.94, yy, Math.round(h * 0.1), alarmOn && i % 2 ? AMBER : CYAN, r[1].toFixed(r[3]) + " " + r[2], "right"); });
+  function trendPanel(g, scr, w, h, t, which) {
+    const a = frame(g, w, h, which ? "Feedwater flow" : "Turbine speed", t);
+    const x = a.pad, y = a.top, tw = w - a.pad * 2, th = a.bottom - a.top - h * 0.1;
+    g.strokeStyle = GRID; g.lineWidth = 2;
+    for (let i = 0; i <= 3; i++) { g.beginPath(); g.moveTo(x, y + th * i / 3); g.lineTo(x + tw, y + th * i / 3); g.stroke(); }
+    const sm = scr.samples[which % 4], erratic = alarmOn && which === 1;
+    g.strokeStyle = erratic ? RED : CYAN; g.lineWidth = Math.max(4, h * 0.03); g.lineJoin = "round"; g.beginPath();
+    sm.forEach((v, i) => { const px = x + tw * i / (sm.length - 1), py = y + th * (1 - v); if (i) g.lineTo(px, py); else g.moveTo(px, py); });
+    g.stroke();
+    text(g, x + tw, a.bottom - h * 0.02, Math.round(h * 0.11), erratic ? RED : INK, (which ? value(118, 2, t, 3, alarmOn).toFixed(0) + " m³/h" : value(3000, 3, t, 1, alarmOn).toFixed(0) + " rpm"), "right", 800);
   }
   function mimicPanel(g, w, h, t) {
-    header(g, w, h, "MIMIC · FEEDWATER AND STEAM");
-    const mx = w * 0.08, mw = w * 0.84, cy = h * 0.58;
-    g.strokeStyle = "#2b4a5e"; g.lineWidth = Math.max(3, h * 0.04); g.lineCap = "round"; g.beginPath(); g.moveTo(mx, cy); g.lineTo(mx + mw, cy); g.stroke();
-    [["Tank", 0], ["Pump", 0.27], ["Valve", 0.52], ["Boiler", 0.75], ["Turb.", 1]].forEach((n, i) => {
-      const px = mx + mw * n[1], r = h * 0.09;
-      g.fillStyle = PANEL; g.strokeStyle = i === 2 && alarmOn ? RED : (i === 4 ? AMBER : CYAN); g.lineWidth = 3; g.beginPath();
-      if (i === 4) { g.moveTo(px - r, cy - r * 1.3); g.lineTo(px + r, cy - r * 0.7); g.lineTo(px + r, cy + r * 0.7); g.lineTo(px - r, cy + r * 1.3); g.closePath(); } else g.rect(px - r, cy - r, r * 2, r * 2);
-      g.fill(); g.stroke(); label(g, px, cy + r * 2.1, Math.round(h * 0.075), DIM, n[0], "center");
+    const a = frame(g, w, h, "Steam cycle", t);
+    const mx = a.pad, mw = w - a.pad * 2, cy = (a.top + a.bottom) / 2;
+    g.strokeStyle = GRID; g.lineWidth = Math.max(6, h * 0.05); g.lineCap = "round"; g.beginPath(); g.moveTo(mx, cy); g.lineTo(mx + mw, cy); g.stroke();
+    const r = h * 0.1;
+    [["Tank", 0], ["Pump", 0.33], ["Boiler", 0.66], ["Turbine", 1]].forEach((n, i) => {
+      const px = mx + mw * n[1];
+      g.fillStyle = BG; g.strokeStyle = i === 1 && alarmOn ? RED : (i === 3 ? AMBER : CYAN); g.lineWidth = 5; g.beginPath();
+      if (i === 3) { g.moveTo(px - r, cy - r * 1.3); g.lineTo(px + r, cy - r * 0.7); g.lineTo(px + r, cy + r * 0.7); g.lineTo(px - r, cy + r * 1.3); g.closePath(); } else g.rect(px - r, cy - r, r * 2, r * 2);
+      g.fill(); g.stroke();
+      text(g, px, cy + r * 2.2, Math.round(h * 0.085), DIM, n[0], "center");
     });
     g.fillStyle = alarmOn ? AMBER : CYAN;
-    for (let k = 0; k < 9; k++) { const p = ((k / 9) + (reduce ? 0 : t * 0.12)) % 1; const px = mx + mw * p; g.beginPath(); g.moveTo(px, cy - h * 0.03); g.lineTo(px + h * 0.045, cy); g.lineTo(px, cy + h * 0.03); g.closePath(); g.fill(); }
+    for (let k = 0; k < 6; k++) { const p = ((k / 6) + (reduce ? 0 : t * 0.1)) % 1; const px = mx + mw * p; g.beginPath(); g.moveTo(px, cy - h * 0.03); g.lineTo(px + h * 0.045, cy); g.lineTo(px, cy + h * 0.03); g.closePath(); g.fill(); }
   }
-  function statusPanel(g, w, h, t) {
-    header(g, w, h, "SECURITY · STATUS");
-    const st = [["Firewall OT", !alarmOn], ["Remote access", !alarmOn], ["Patch level", true], ["Backups", true], ["Historian", true]];
-    st.forEach((r, i) => { const yy = h * (0.27 + i * 0.15); label(g, w * 0.06, yy, Math.round(h * 0.085), DIM, r[0]); label(g, w * 0.94, yy, Math.round(h * 0.085), r[1] ? GREEN : RED, r[1] ? "OK" : "OPEN", "right"); });
-    if (alarmOn && Math.floor(t * 2) % 2) label(g, w * 0.5, h * 0.93, Math.round(h * 0.07), RED, "ACKNOWLEDGE", "center");
+  function networkPanel(g, w, h, t) {
+    const a = frame(g, w, h, "Network", t);
+    const y = (a.top + a.bottom) / 2, bw = w * 0.22, bh = h * 0.2;
+    const xs = [w * 0.2, w * 0.5, w * 0.8], names = ["OFFICE", "DMZ", "PLANT"], cols = [GREEN, alarmOn ? RED : GREEN, AMBER];
+    g.strokeStyle = alarmOn ? RED : GRID; g.lineWidth = alarmOn ? 6 : 4; g.setLineDash(alarmOn ? [14, 10] : []);
+    g.beginPath(); g.moveTo(xs[0] + bw / 2, y); g.lineTo(xs[2] - bw / 2, y); g.stroke(); g.setLineDash([]);
+    xs.forEach((x, i) => { g.fillStyle = BG; g.strokeStyle = cols[i]; g.lineWidth = 5; g.beginPath(); g.rect(x - bw / 2, y - bh / 2, bw, bh); g.fill(); g.stroke(); text(g, x, y, Math.round(h * 0.075), INK, names[i], "center", 800); });
+    g.fillStyle = alarmOn ? RED : CYAN;
+    for (let k = 0; k < 4; k++) { const p = ((k / 4) + (reduce ? 0 : t * 0.12)) % 1; g.beginPath(); g.arc(xs[0] + bw / 2 + (xs[2] - bw / 2 - xs[0] - bw / 2) * p, y - bh * 0.75, h * 0.02, 0, Math.PI * 2); g.fill(); }
+    text(g, w / 2, a.bottom - h * 0.02, Math.round(h * 0.08), alarmOn ? RED : GREEN, alarmOn ? "DIRECT IT → OT PATH" : "SEGMENTED", "center", 800);
   }
-  function alarmsPanel(g, w, h, t) {
-    header(g, w, h, "ALARMS · LAST 24 H");
-    const list = alarmOn ? [["NOW", "IT→OT connection", RED], ["NOW", "Setpoint changed", RED], ["08:14", "Valve 3 slow", AMBER], ["06:02", "Filter dP high", AMBER]] : [["08:14", "Valve 3 slow", AMBER], ["06:02", "Filter dP high", AMBER], ["02:40", "Pump 2 vibration", GREEN], ["01:12", "Historian sync", GREEN]];
-    list.forEach((r, i) => { const yy = h * (0.27 + i * 0.17); g.fillStyle = r[2]; g.fillRect(w * 0.06, yy - h * 0.03, w * 0.02, h * 0.06); label(g, w * 0.11, yy, Math.round(h * 0.08), DIM, r[0]); label(g, w * 0.3, yy, Math.round(h * 0.085), INK, r[1]); });
+  function alarmPanel(g, w, h, t) {
+    const a = frame(g, w, h, "Alarms", t);
+    const list = alarmOn ? [["NOW", "IT → OT link", RED], ["NOW", "Setpoint changed", RED], ["08:14", "Valve 3 slow", AMBER]] : [["08:14", "Valve 3 slow", AMBER], ["06:02", "Filter dP high", AMBER], ["02:40", "Pump 2 vibration", GREEN]];
+    list.forEach((r, i) => { const yy = a.top + h * 0.09 + i * h * 0.2; g.fillStyle = r[2]; g.fillRect(a.pad, yy - h * 0.055, w * 0.03, h * 0.11); text(g, a.pad + w * 0.06, yy, Math.round(h * 0.075), DIM, r[0]); text(g, a.pad + w * 0.25, yy, Math.round(h * 0.085), INK, r[1], "left", 700); });
     void t;
   }
-  function engineeringPanel(g, w, h, t) {
-    header(g, w, h, "ENGINEERING · PLC PROGRAM");
-    g.strokeStyle = GRID; g.lineWidth = 1;
-    for (let r = 0; r < 4; r++) { const yy = h * (0.3 + r * 0.17); g.beginPath(); g.moveTo(w * 0.06, yy); g.lineTo(w * 0.94, yy); g.stroke(); for (let k = 0; k < 3; k++) { const px = w * (0.15 + k * 0.25); g.strokeStyle = k === 1 && r === 1 && alarmOn ? RED : CYAN; g.lineWidth = 2; g.strokeRect(px, yy - h * 0.04, w * 0.06, h * 0.08); g.strokeStyle = GRID; g.lineWidth = 1; } }
-    label(g, w * 0.06, h * 0.93, Math.round(h * 0.065), alarmOn ? RED : DIM, alarmOn ? "ONLINE EDIT · REMOTE SESSION ACTIVE" : "ONLINE · RUN MODE" + (reduce ? "" : " · " + Math.floor(t) % 60 + "s"));
+  function kpiPanel(g, w, h, t) {
+    const a = frame(g, w, h, "Unit 1", t);
+    const rows = [["Output", value(248, 1.1, t, 4, alarmOn).toFixed(0), "MW"], ["Frequency", value(50.0, 0.02, t, 6, alarmOn).toFixed(2), "Hz"], ["Steam", value(412, 1.5, t, 2, alarmOn).toFixed(0), "°C"]];
+    rows.forEach((r, i) => { const yy = a.top + h * 0.1 + i * h * 0.22; text(g, a.pad, yy, Math.round(h * 0.075), DIM, r[0]); text(g, w - a.pad, yy, Math.round(h * 0.13), alarmOn && i === 1 ? AMBER : CYAN, r[1] + " " + r[2], "right", 800); });
   }
-  function overview(scr, t) {
-    const g = scr.wg, w = scr.wallCanvas.width, h = scr.wallCanvas.height;
-    g.fillStyle = BG; g.fillRect(0, 0, w, h);
-    header(g, w, h, "SITE OVERVIEW · NETWORK AND PROCESS");
-    const blocks = [["OFFICE IT", 0.1, 0.5, GREEN], ["DMZ", 0.32, 0.5, alarmOn ? RED : GREEN], ["CONTROL ROOM", 0.54, 0.3, CYAN], ["EQUIPMENT", 0.54, 0.7, CYAN], ["PLANT", 0.82, 0.5, AMBER]];
-    const bx = (p) => w * p, by = (p) => h * (0.2 + p * 0.65);
-    g.strokeStyle = alarmOn ? RED : "#2b4a5e"; g.lineWidth = alarmOn ? 4 : 3;
-    const link = (a, b) => { g.beginPath(); g.moveTo(bx(a[0]), by(a[1])); g.lineTo(bx(b[0]), by(b[1])); g.stroke(); };
-    link([0.18, 0.5], [0.26, 0.5]); link([0.38, 0.5], [0.46, 0.3]); link([0.38, 0.5], [0.46, 0.7]); link([0.62, 0.3], [0.74, 0.5]); link([0.62, 0.7], [0.74, 0.5]);
-    if (alarmOn) { g.setLineDash([10, 8]); link([0.18, 0.42], [0.74, 0.42]); g.setLineDash([]); }
-    blocks.forEach((b) => { const bw = w * 0.14, bh = h * 0.18; g.fillStyle = PANEL; g.strokeStyle = b[3]; g.lineWidth = 3; g.beginPath(); g.rect(bx(b[1]) - bw / 2, by(b[2]) - bh / 2, bw, bh); g.fill(); g.stroke(); label(g, bx(b[1]), by(b[2]), Math.round(bh * 0.3), INK, b[0], "center"); });
-    g.fillStyle = alarmOn ? RED : CYAN;
-    for (let k = 0; k < 8; k++) { const p = ((k / 8) + (reduce ? 0 : t * 0.1)) % 1; g.beginPath(); g.arc(bx(0.18 + p * 0.56), by(alarmOn ? 0.42 : 0.5), 4, 0, Math.PI * 2); g.fill(); }
-    label(g, w * 0.03, h * 0.94, Math.round(h * 0.06), alarmOn ? RED : DIM, alarmOn ? "DIRECT IT→OT PATH DETECTED · VALUES UNVERIFIED" : "SEGMENTED · " + (120 + Math.floor(t) % 7) + " ASSETS ONLINE · ALL SYSTEMS NORMAL");
+  function cameraPanel(g, w, h, t) {
+    const a = frame(g, w, h, "Cam 3 · gate", t);
+    g.fillStyle = "#14202b"; g.fillRect(a.pad, a.top, w - a.pad * 2, a.bottom - a.top - h * 0.04);
+    g.strokeStyle = "#2b4152"; g.lineWidth = 3; g.beginPath(); g.moveTo(a.pad, a.bottom - h * 0.2); g.lineTo(w - a.pad, a.bottom - h * 0.28); g.stroke();
+    g.fillStyle = "#31485a"; g.fillRect(w * 0.6, a.top + h * 0.1, w * 0.18, h * 0.3);
+    const blink = Math.floor(t) % 2 === 0;
+    g.fillStyle = blink ? RED : "#5a2a2e"; g.beginPath(); g.arc(w - a.pad - h * 0.04, a.top + h * 0.06, h * 0.025, 0, Math.PI * 2); g.fill();
+    text(g, a.pad + w * 0.02, a.top + h * 0.06, Math.round(h * 0.06), INK, "REC", "left", 700);
+  }
+  function engineeringPanel(g, w, h, t) {
+    const a = frame(g, w, h, "PLC program", t);
+    g.strokeStyle = GRID; g.lineWidth = 2;
+    for (let r = 0; r < 3; r++) { const yy = a.top + h * 0.1 + r * h * 0.2; g.beginPath(); g.moveTo(a.pad, yy); g.lineTo(w - a.pad, yy); g.stroke(); for (let k = 0; k < 3; k++) { g.strokeStyle = k === 1 && r === 1 && alarmOn ? RED : CYAN; g.lineWidth = 4; g.strokeRect(a.pad + w * 0.1 + k * w * 0.28, yy - h * 0.05, w * 0.1, h * 0.1); g.strokeStyle = GRID; g.lineWidth = 2; } }
+    text(g, a.pad, a.bottom - h * 0.02, Math.round(h * 0.07), alarmOn ? RED : GREEN, alarmOn ? "REMOTE EDIT" : "RUN", "left", 800);
   }
   function drawCell(scr, cl, t) {
     const { g, cell } = scr;
-    const lw = 320, lh = Math.round(320 / cl.aspect);
+    const lw = 640, lh = Math.round(640 / cl.aspect);
     g.save(); g.translate(cl.col * cell, cl.row * cell); g.scale(cell / lw, cell / lh);
-    g.fillStyle = BG; g.fillRect(0, 0, lw, lh);
+    g.beginPath(); g.rect(0, 0, lw, lh); g.clip();
     const m = cl.name.match(/^videowall_r(\d+)_c(\d+)/);
-    if (m) { g.drawImage(scr.wallCanvas, (+m[2]) * 320, (+m[1]) * 200, 320, 200, 0, 0, lw, lh); }
-    else if (/^engineering/.test(cl.name)) engineeringPanel(g, lw, lh, t);
+    if (m) {
+      const k = (+m[1]) * 3 + (+m[2]);
+      [mimicPanel, networkPanel, (g2, w, h, tt) => trendPanel(g2, scr, w, h, tt, 0), alarmPanel, kpiPanel, cameraPanel][k % 6](g, lw, lh, t);
+    } else if (/^engineering/.test(cl.name)) engineeringPanel(g, lw, lh, t);
     else {
-      const k = (cl.col + cl.row * 5) % 5;
-      if (k === 0) trendPanel(g, scr, lw, lh, 0); else if (k === 1) valuesPanel(g, lw, lh, t, 0); else if (k === 2) mimicPanel(g, lw, lh, t); else if (k === 3) statusPanel(g, lw, lh, t); else alarmsPanel(g, lw, lh, t);
+      const k = (cl.col + cl.row * 5) % 3;
+      if (k === 0) trendPanel(g, scr, lw, lh, t, 1); else if (k === 1) mimicPanel(g, lw, lh, t); else alarmPanel(g, lw, lh, t);
     }
     g.restore();
   }
@@ -201,7 +204,6 @@ export function createLive(ctx) {
   function draw(scr, t) {
     const { g, W, H } = scr;
     g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = BG; g.fillRect(0, 0, W, H);
-    if (scr.wall.length) overview(scr, t);
     scr.cells.forEach((cl) => drawCell(scr, cl, t));
     scr.tex.needsUpdate = true;
   }

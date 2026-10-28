@@ -1,70 +1,144 @@
-/* CyberForte OT diorama: tree impostors. One instanced quad per tree, billboarded around Y; the
-   atlas cell is chosen per instance from the camera azimuth (8 side views) or the top view when the
-   camera looks steeply down. Atlas layout and instances come from the glb extras (trees_impostor). */
+/* CyberForte OT diorama: tree impostors. One instanced quad per tree facing the camera.
+   Two atlas styles, chosen from the glb extras (trees_impostor.impostor_atlas):
+   - mapping "hemi-octa": N×N frames per variant over the upper hemisphere; the three nearest frames
+     are blended (barycentric weights), each sampled through its own frame plane;
+   - otherwise the older 8-azimuth + top strip, nearest view only. */
 export function createTrees(ctx) {
   const { THREE, atlas, instances, texture } = ctx;
-  const views = atlas.views || 8, cols = atlas.cols || 9, rows = atlas.rows || 9;
-  const variants = atlas.variants || [];
   const n = instances.length;
   if (!n || !texture) return null;
+  const hemi = /hemi/i.test(String(atlas.mapping || ""));
+  const grid = +atlas.grid || 0;
+  const variants = atlas.variants || [];
   const geo = new THREE.InstancedBufferGeometry();
-  const quad = new THREE.PlaneGeometry(1, 1); quad.translate(0, 0.5, 0);   // base on the ground
+  const quad = new THREE.PlaneGeometry(1, 1);
   geo.index = quad.index; geo.setAttribute("position", quad.getAttribute("position")); geo.setAttribute("uv", quad.getAttribute("uv"));
   const pos = new Float32Array(n * 3), inst = new Float32Array(n * 4);
   instances.forEach((it, i) => {
-    const v = variants[it.row] || variants[0] || {};
+    const v = variants[it.row != null ? it.row : (it.variant || 0)] || variants[0] || {};
     pos[i * 3] = it.pos_yup[0]; pos[i * 3 + 1] = it.pos_yup[1]; pos[i * 3 + 2] = it.pos_yup[2];
-    inst[i * 4] = (v.size_m || 4.5) * (it.scale || 1); inst[i * 4 + 1] = (v.top_size_m || v.size_m || 4.5) * (it.scale || 1); inst[i * 4 + 2] = it.row || 0; inst[i * 4 + 3] = it.tint == null ? 1 : it.tint;
+    inst[i * 4] = (v.size_m || 4.5) * (it.scale || 1); inst[i * 4 + 1] = (v.top_size_m || v.size_m || 4.5) * (it.scale || 1);
+    inst[i * 4 + 2] = it.row != null ? it.row : (it.variant || 0); inst[i * 4 + 3] = it.tint == null ? 1 : it.tint;
   });
   geo.setAttribute("iPos", new THREE.InstancedBufferAttribute(pos, 3));
   geo.setAttribute("iData", new THREE.InstancedBufferAttribute(inst, 4));
   geo.instanceCount = n;
-  texture.colorSpace = THREE.SRGBColorSpace; texture.flipY = false; texture.anisotropy = 8; texture.generateMipmaps = true; texture.minFilter = THREE.LinearMipmapLinearFilter;
-  const mat = new THREE.ShaderMaterial({
-    uniforms: { map: { value: texture }, uCols: { value: cols }, uRows: { value: rows }, uViews: { value: views }, uOpacity: { value: 1 }, fogColor: { value: new THREE.Color(0xe4ecf1) }, fogNear: { value: 120 }, fogFar: { value: 300 } },
-    vertexShader: `
-      attribute vec3 iPos; attribute vec4 iData;
-      uniform float uCols, uRows, uViews;
-      varying vec2 vUv; varying float vTint; varying float vFog;
-      void main() {
-        vec3 toCam = cameraPosition - iPos;
-        float az = atan(toCam.x, toCam.z);                 // direction from tree to camera, Y-up
-        float el = atan(toCam.y, length(toCam.xz));
-        bool top = el > 1.22;                              // ~70 degrees: use the top-down cell on a flat quad
-        float col = top ? uCols - 1.0 : mod(floor(az / 6.2831853 * uViews + 0.5), uViews);
-        float size = top ? iData.y : iData.x;
-        vec3 right = normalize(vec3(cos(az), 0.0, -sin(az)));
-        vec3 p;
-        if (top) {
-          vec3 fwd = normalize(vec3(-sin(az), 0.0, -cos(az)));
-          p = iPos + right * (position.x * size) + fwd * ((position.y - 0.5) * size) + vec3(0.0, iData.x * 0.55, 0.0);
-        } else {
-          p = iPos + right * (position.x * size) + vec3(0.0, position.y * size, 0.0);
+  texture.colorSpace = THREE.SRGBColorSpace; texture.flipY = false; texture.anisotropy = 8; texture.generateMipmaps = true; texture.minFilter = THREE.LinearMipmapLinearFilter; texture.magFilter = THREE.LinearFilter;
+
+  const common = `
+    uniform sampler2D map; uniform float uOpacity; uniform vec3 fogColor; uniform float fogNear, fogFar;
+    varying float vTint; varying float vFog;
+    float bayer(vec2 p) { // 4x4 ordered dither in [0,1)
+      vec2 q = floor(mod(p, 4.0)); float i = q.x + q.y * 4.0;
+      float m = mod(i, 2.0) * 8.0 + mod(floor(i / 2.0), 2.0) * 4.0 + mod(floor(i / 4.0), 2.0) * 2.0 + mod(floor(i / 8.0), 2.0);
+      return (m + 0.5) / 16.0; }
+    vec4 finish(vec4 c) {
+      if (c.a < 0.25 + 0.5 * bayer(gl_FragCoord.xy) * 0.6) discard;
+      vec3 rgb = c.rgb * vTint;
+      rgb = mix(rgb, fogColor, smoothstep(fogNear, fogFar, vFog));
+      return vec4(rgb, uOpacity); }`;
+
+  let material;
+  if (hemi && grid >= 2) {
+    /* ---- hemi-octahedral: frames laid out grid×grid per variant row block */
+    const framesPerRow = +atlas.cols || grid, rowsPerVariant = +atlas.rows_per_variant || grid;
+    const vRows = +atlas.variant_rows || variants.length || 1;
+    material = new THREE.ShaderMaterial({
+      uniforms: { map: { value: texture }, uGrid: { value: grid }, uCols: { value: framesPerRow }, uVRows: { value: vRows }, uRowsPer: { value: rowsPerVariant }, uOpacity: { value: 1 }, uFlip: { value: new THREE.Vector2(+(atlas.flip_x || 0), +(atlas.flip_y || 0)) }, fogColor: { value: new THREE.Color(0xe4ecf1) }, fogNear: { value: 120 }, fogFar: { value: 300 } },
+      vertexShader: `
+        attribute vec3 iPos; attribute vec4 iData;
+        uniform float uGrid;
+        varying vec2 vLocal; varying float vTint; varying float vFog; varying vec3 vFrame; varying vec3 vW; varying float vSize; varying float vRow;
+        void main() {
+          vec3 toCam = cameraPosition - iPos;
+          vec3 d = normalize(toCam); d.y = max(d.y, 0.02);
+          vec3 right = normalize(cross(vec3(0.0, 1.0, 0.0), d));
+          vec3 up = cross(d, right);
+          float size = iData.x;
+          vec3 centre = iPos + vec3(0.0, size * 0.5, 0.0);
+          vec3 p = centre + right * (position.x * size) + up * (position.y * size);
+          vLocal = position.xy; vFrame = d; vW = p; vSize = size; vRow = iData.z; vTint = iData.w;
+          vec4 mv = modelViewMatrix * vec4(p, 1.0);
+          vFog = -mv.z;
+          gl_Position = projectionMatrix * mv;
+        }`,
+      fragmentShader: `
+        uniform float uGrid, uCols, uVRows, uRowsPer; uniform vec2 uFlip;
+        varying vec2 vLocal; varying vec3 vFrame; varying vec3 vW; varying float vSize; varying float vRow;
+        ${common}
+        vec2 encode(vec3 d) { d /= dot(abs(d), vec3(1.0)); return vec2(d.x + d.z, d.x - d.z) * 0.5 + 0.5; }
+        vec3 decode(vec2 uv) { vec2 f = uv * 2.0 - 1.0; vec3 d = vec3((f.x + f.y) * 0.5, 0.0, (f.x - f.y) * 0.5); d.y = 1.0 - abs(d.x) - abs(d.z); return normalize(d); }
+        vec4 frameSample(vec2 cell, vec3 fd) {
+          /* project the billboard point onto this frame's plane and sample its cell */
+          vec3 fx = normalize(cross(vec3(0.0, 1.0, 0.0), fd)); vec3 fy = cross(fd, fx);
+          vec3 q = vec3(vLocal.x, vLocal.y, 0.0);
+          vec3 right = normalize(cross(vec3(0.0, 1.0, 0.0), vFrame)); vec3 up = cross(vFrame, right);
+          vec3 world = right * q.x + up * q.y;                         // offset from the tree centre, size 1
+          float px = dot(world, fx), py = dot(world, fy);
+          float d2 = dot(world, fd); px += 0.0 * d2;                     // (parallax ignored: flat cards)
+          vec2 local = clamp(vec2(px, py) + 0.5, 0.001, 0.999);
+          if (uFlip.x > 0.5) local.x = 1.0 - local.x; if (uFlip.y > 0.5) local.y = 1.0 - local.y;
+          float blockRow = vRow * uRowsPer;
+          vec2 uv = vec2((cell.x + local.x) / uCols, (blockRow + cell.y + (1.0 - local.y)) / (uVRows * uRowsPer));
+          return texture2D(map, uv);
         }
-        vUv = vec2((col + uv.x) / uCols, (iData.z + (1.0 - uv.y)) / uRows);
-        vTint = iData.w;
-        vec4 mv = modelViewMatrix * vec4(p, 1.0);
-        vFog = -mv.z;
-        gl_Position = projectionMatrix * mv;
-      }`,
-    fragmentShader: `
-      uniform sampler2D map; uniform float uOpacity; uniform vec3 fogColor; uniform float fogNear, fogFar;
-      varying vec2 vUv; varying float vTint; varying float vFog;
-      void main() {
-        vec4 c = texture2D(map, vUv);
-        if (c.a < 0.5) discard;
-        vec3 rgb = c.rgb * vTint;
-        float f = smoothstep(fogNear, fogFar, vFog);
-        rgb = mix(rgb, fogColor, f);
-        gl_FragColor = vec4(rgb, c.a * uOpacity);
-        #include <tonemapping_fragment>
-        #include <colorspace_fragment>
-      }`,
-    transparent: false, depthWrite: true, side: THREE.DoubleSide,
-  });
-  mat.name = "ImpostorInstanced"; mat.toneMapped = true;
-  const mesh = new THREE.Mesh(geo, mat);
+        void main() {
+          vec2 g = encode(vFrame) * (uGrid - 1.0);
+          vec2 c0 = floor(g); vec2 f = g - c0;
+          vec2 cA = c0, cB, cC; vec3 w;
+          if (f.x + f.y < 1.0) { cB = c0 + vec2(1.0, 0.0); cC = c0 + vec2(0.0, 1.0); w = vec3(1.0 - f.x - f.y, f.x, f.y); }
+          else { cA = c0 + vec2(1.0, 1.0); cB = c0 + vec2(1.0, 0.0); cC = c0 + vec2(0.0, 1.0); w = vec3(f.x + f.y - 1.0, 1.0 - f.y, 1.0 - f.x); }
+          cA = min(cA, uGrid - 1.0); cB = min(cB, uGrid - 1.0); cC = min(cC, uGrid - 1.0);
+          vec4 a = frameSample(cA, decode(cA / (uGrid - 1.0)));
+          vec4 b = frameSample(cB, decode(cB / (uGrid - 1.0)));
+          vec4 c = frameSample(cC, decode(cC / (uGrid - 1.0)));
+          vec4 s = a * w.x + b * w.y + c * w.z;
+          float asum = max(s.a, 0.0001);
+          s.rgb = (a.rgb * a.a * w.x + b.rgb * b.a * w.y + c.rgb * c.a * w.z) / asum;   // alpha-weighted colour
+          gl_FragColor = finish(s);
+          #include <tonemapping_fragment>
+          #include <colorspace_fragment>
+        }`,
+      transparent: false, depthWrite: true, side: THREE.DoubleSide, alphaToCoverage: true,
+    });
+  } else {
+    /* ---- 8 azimuth views + top strip (nearest view) */
+    const views = atlas.views || 8, cols = atlas.cols || 9, rows = atlas.rows || 9;
+    material = new THREE.ShaderMaterial({
+      uniforms: { map: { value: texture }, uCols: { value: cols }, uRows: { value: rows }, uViews: { value: views }, uOpacity: { value: 1 }, fogColor: { value: new THREE.Color(0xe4ecf1) }, fogNear: { value: 120 }, fogFar: { value: 300 } },
+      vertexShader: `
+        attribute vec3 iPos; attribute vec4 iData;
+        uniform float uCols, uRows, uViews;
+        varying vec2 vUv; varying float vTint; varying float vFog;
+        void main() {
+          vec3 toCam = cameraPosition - iPos;
+          float az = atan(toCam.x, toCam.z);
+          float el = atan(toCam.y, length(toCam.xz));
+          bool top = el > 1.22;
+          float col = top ? uCols - 1.0 : mod(floor(az / 6.2831853 * uViews + 0.5), uViews);
+          float size = top ? iData.y : iData.x;
+          vec3 right = normalize(vec3(cos(az), 0.0, -sin(az)));
+          vec3 p;
+          if (top) { vec3 fwd = normalize(vec3(-sin(az), 0.0, -cos(az))); p = iPos + right * (position.x * size) + fwd * (position.y * size) + vec3(0.0, iData.x * 0.55, 0.0); }
+          else { p = iPos + right * (position.x * size) + vec3(0.0, (position.y + 0.5) * size, 0.0); }
+          vUv = vec2((col + uv.x) / uCols, (iData.z + (1.0 - uv.y)) / uRows);
+          vTint = iData.w;
+          vec4 mv = modelViewMatrix * vec4(p, 1.0);
+          vFog = -mv.z;
+          gl_Position = projectionMatrix * mv;
+        }`,
+      fragmentShader: `
+        varying vec2 vUv;
+        ${common}
+        void main() { gl_FragColor = finish(texture2D(map, vUv));
+          #include <tonemapping_fragment>
+          #include <colorspace_fragment> }`,
+      transparent: false, depthWrite: true, side: THREE.DoubleSide, alphaToCoverage: true,
+    });
+  }
+  material.name = "ImpostorInstanced"; material.toneMapped = true;
+  const mesh = new THREE.Mesh(geo, material);
   mesh.frustumCulled = false; mesh.castShadow = false; mesh.receiveShadow = false; mesh.name = "trees_web_impostors";
   const box = new THREE.Box3(); instances.forEach((it) => box.expandByPoint(new THREE.Vector3(it.pos_yup[0], it.pos_yup[1], it.pos_yup[2])));
-  return { mesh, mat, count: n, box, setFog(color, near, far) { mat.uniforms.fogColor.value.copy(color); mat.uniforms.fogNear.value = near; mat.uniforms.fogFar.value = far; } };
+  return { mesh, mat: material, count: n, box, hemi: hemi && grid >= 2, setFog(color, near, far) { material.uniforms.fogColor.value.copy(color); material.uniforms.fogNear.value = near; material.uniforms.fogFar.value = far; } };
 }

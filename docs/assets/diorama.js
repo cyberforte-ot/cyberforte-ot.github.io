@@ -291,6 +291,33 @@ function init() {
   cv.addEventListener("webglcontextlost", (e) => { e.preventDefault(); if (!destroyed) stage.setAttribute("data-state", "poster"); }, false);
   cv.addEventListener("webglcontextrestored", () => { if (!destroyed && st.ready) { stage.setAttribute("data-state", "ready"); last = performance.now(); requestRender(); } }, false);
 
+  /* a 256 px tiling noise, multiplied into the baked ground within ~45 m of the camera */
+  let detailTex = null;
+  function groundDetailTexture() {
+    if (detailTex) return detailTex;
+    const c = document.createElement("canvas"); c.width = c.height = 256; const g = c.getContext("2d");
+    const img = g.createImageData(256, 256); const d = img.data;
+    const h = (x, y) => { const v = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453; return v - Math.floor(v); };
+    for (let y = 0; y < 256; y++) for (let x = 0; x < 256; x++) {
+      /* two octaves of value noise, tileable by sampling on a torus */
+      const n1 = h((x >> 3) & 31, (y >> 3) & 31), n2 = h((x >> 1) & 127, (y >> 1) & 127);
+      const v = 150 + (n1 - 0.5) * 70 + (n2 - 0.5) * 50;
+      const i = (y * 256 + x) * 4; d[i] = d[i + 1] = d[i + 2] = Math.max(0, Math.min(255, v)); d[i + 3] = 255;
+    }
+    g.putImageData(img, 0, 0);
+    detailTex = new THREE.CanvasTexture(c); detailTex.wrapS = detailTex.wrapT = THREE.RepeatWrapping; detailTex.generateMipmaps = true; detailTex.minFilter = THREE.LinearMipmapLinearFilter;
+    return detailTex;
+  }
+  function addGroundDetail(mat) {
+    const tex = groundDetailTexture();
+    mat.onBeforeCompile = (shader) => {
+      shader.uniforms.uDetail = { value: tex }; shader.uniforms.uDetailScale = { value: 0.9 };
+      shader.vertexShader = "varying vec3 vWorldPos;\n" + shader.vertexShader.replace("#include <worldpos_vertex>", "#include <worldpos_vertex>\n\tvWorldPos = (modelMatrix * vec4(transformed, 1.0)).xyz;");
+      shader.fragmentShader = "uniform sampler2D uDetail; uniform float uDetailScale; varying vec3 vWorldPos;\n" + shader.fragmentShader.replace("#include <map_fragment>", "#include <map_fragment>\n\t{ float dist = distance(vWorldPos, cameraPosition); float k = 1.0 - smoothstep(18.0, 48.0, dist); float dn = texture2D(uDetail, vWorldPos.xz * uDetailScale).r * 0.6 + 0.7; diffuseColor.rgb *= mix(1.0, dn, k * 0.75); }");
+    };
+    mat.customProgramCacheKey = () => "groundDetail";
+    mat.needsUpdate = true;
+  }
   function uniqueMaterials(o) {
     if (!o) return;
     o.traverse((m) => {
@@ -328,6 +355,7 @@ function init() {
           /* baked or pre-lit textures: render unlit so they are not lit twice */
           const u = new THREE.MeshBasicMaterial({ map: m.map || m.emissiveMap || null, color: 0xffffff, vertexColors: !!o.geometry.attributes.color, transparent: !!m.transparent, alphaTest: m.name === "ImpostorWeb" ? Math.max(m.alphaTest || 0, 0.5) : (m.alphaTest || 0), side: m.side, fog: true, toneMapped: true });
           u.name = m.name; u.userData = Object.assign({}, m.userData);
+          if (m.name === "GroundBakeWeb") addGroundDetail(u);
           if (Array.isArray(o.material)) o.material[i] = u; else o.material = u;
           o.castShadow = m.name !== "GroundBakeWeb"; o.receiveShadow = m.name === "GroundBakeWeb";
         }
@@ -754,9 +782,25 @@ function init() {
       if (!aFixed) { a.x -= ux * push * (bFixed ? 2 : 1); a.y -= uy * push * (bFixed ? 2 : 1); }
       if (!bFixed) { b.x += ux * push * (aFixed ? 2 : 1); b.y += uy * push * (aFixed ? 2 : 1); }
     }
+    /* the active marker's label is a rectangle to its right: push the others out of it, hide what cannot escape */
+    const act = rows.find((r) => r.m.n === st.active);
+    if (act && !act.behind && W >= 960) {
+      const lbl = act.m.el.querySelector(".dio-m-lbl");
+      const lw = (lbl && lbl.offsetWidth) || 220, lh = (lbl && lbl.offsetHeight) || 30;
+      const rx0 = act.x + 15, rx1 = act.x + 25 + lw, ry0 = act.y - lh / 2 - 6, ry1 = act.y + lh / 2 + 6;
+      rows.forEach((r) => {
+        r.collide = false;
+        if (r === act || r.behind) return;
+        if (r.x > rx0 - 14 && r.x < rx1 + 14 && r.y > ry0 - 14 && r.y < ry1 + 14) {
+          const up = r.y - (ry0 - 16), down = (ry1 + 16) - r.y;
+          if (Math.min(up, down) < 40) { if (up < down) r.y = ry0 - 16; else r.y = ry1 + 16; } else r.collide = true;
+        }
+      });
+    } else rows.forEach((r) => { r.collide = false; });
     rows.forEach((r) => {
       r.m.el.style.transform = "translate(" + r.x.toFixed(1) + "px," + r.y.toFixed(1) + "px) translate(-50%,-50%) scale(" + r.s.toFixed(3) + ")";
       r.m.el.classList.toggle("off", r.behind || r.x < -20 || r.x > W + 20 || r.y < -20 || r.y > H + 20);
+      r.m.el.classList.toggle("collide", !!r.collide);
     });
   }
 

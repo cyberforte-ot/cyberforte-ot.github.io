@@ -691,6 +691,8 @@ figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
 .dio-marker.dim { opacity: .5; }
 .dio-marker.dim:hover { opacity: 1; }
 .dio-marker.off { opacity: 0; pointer-events: none; }
+.dio-marker.collide .dio-m-num { opacity: 0; }
+.dio-marker.collide { background: rgba(237,28,36,.55); box-shadow: none; }
 .dio-marker:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 .dio-m-warn { position: absolute; right: -12px; top: -13px; width: 22px; height: 22px; color: var(--red); display: none; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .35)); }
 .dio-m-warn svg { width: 100%; height: 100%; display: block; }
