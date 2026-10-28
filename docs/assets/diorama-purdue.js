@@ -93,7 +93,7 @@ export function createPurdue(ctx) {
     flatLine.userData.purdueUi = true; flatLine.visible = false; stack.add(flatLine);
   }
   function anchorOf(id) {
-    const list = levelMeshes[id];
+    const list = levelMeshes[id] || [];
     if (list.length) { const box = new THREE.Box3(); list.forEach((m) => box.expandByObject(m)); if (!box.isEmpty()) { const c = box.getCenter(new THREE.Vector3()); c.y = box.max.y; return c; } }
     if (FIXED_BOX[id]) { const c = FIXED_BOX[id].getCenter(new THREE.Vector3()); c.y = FIXED_BOX[id].max.y; return c; }
     if (id === "L5" && ctx.cloudAnchor) return ctx.cloudAnchor();
@@ -101,7 +101,7 @@ export function createPurdue(ctx) {
   }
   function boxOf(id) {
     const box = new THREE.Box3();
-    levelMeshes[id].forEach((m) => box.expandByObject(m));
+    (levelMeshes[id] || []).forEach((m) => box.expandByObject(m));
     if (box.isEmpty() && FIXED_BOX[id]) box.copy(FIXED_BOX[id]);
     if (box.isEmpty() && id === "L5" && ctx.cloudAnchor) { const c = ctx.cloudAnchor(); box.setFromCenterAndSize(c, new THREE.Vector3(10, 4, 6)); }
     return box;
@@ -151,6 +151,7 @@ export function createPurdue(ctx) {
   function enter() { if (active) return; active = true; build(); stack.visible = true; setLevel(null, true); }
   function exit() { if (!active) return; active = false; ghost(false); glowLevel(null); stack.visible = false; current = null; }
   function setLevel(id, silent) {
+    if (id && !levelMeshes[id]) id = null;          // "all" or unknown ids mean the whole stack
     current = id;
     if (!active) return;
     ghost(!!id, id ? levelMeshes[id] : null);

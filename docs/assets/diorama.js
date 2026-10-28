@@ -22,7 +22,7 @@ function init() {
   const small = Math.min(window.innerWidth, window.innerHeight) < 700;
   const lowPower = small || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || (navigator.deviceMemory && navigator.deviceMemory <= 4) || (navigator.connection && navigator.connection.saveData);
   const modelsBase = section.getAttribute("data-models") || "../assets/models/";
-  const MODEL_VERSION = "v3_4";
+  const MODEL_VERSION = "v3_4b";
   const RISKS = DATA.risks, PURDUE = DATA.purdue;
   const byN = {}; RISKS.forEach((r) => { byN[r.n] = r; });
 
@@ -809,7 +809,7 @@ function init() {
     if (!purdue || st.mode !== MODE.PURDUE) return;
     if (id === lastLevelShown) return;
     lastLevelShown = id;
-    purdue.setLevel(id || null, hoverLevel && !st.level);   // hover previews without moving the camera; a pick glides
+    purdue.setLevel(id && id !== "all" ? id : null, !!hoverLevel && !st.level);   // hover previews, a pick glides
   }
   function updateLevelCard(id) {
     const cur = id !== undefined ? id : (hoverLevel || st.level);
