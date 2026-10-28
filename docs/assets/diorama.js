@@ -127,7 +127,7 @@ function init() {
   const observers = [];
 
   /* ---------- camera rig: target + azimuth + elevation + distance + fov, glided with eased tweens */
-  const LIM = { elMin: THREE.MathUtils.degToRad(10), elMax: THREE.MathUtils.degToRad(82), distMin: 4, distMax: 95, box: new THREE.Box3(new THREE.Vector3(-30, -6, -18), new THREE.Vector3(30, 14, 20)) };
+  const LIM = { elMin: THREE.MathUtils.degToRad(18), elMax: THREE.MathUtils.degToRad(82), distMin: 8, distMax: 95, box: new THREE.Box3(new THREE.Vector3(-30, -6, -18), new THREE.Vector3(30, 14, 20)) };
   const pose = { t: new THREE.Vector3(-10.5, 3.5, 0), az: 0.55, el: 0.62, dist: 60, fov: 26 };
   const goal = { t: pose.t.clone(), az: pose.az, el: pose.el, dist: pose.dist, fov: pose.fov };
   let glide = null;      // { from, to, t, dur, ease, lift }
