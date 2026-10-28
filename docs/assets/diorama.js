@@ -24,7 +24,7 @@ function init() {
   const lowPower = small || !!(navigator.connection && navigator.connection.saveData);
   const TONE = (new URLSearchParams(location.search).get("tone") || "aces").toLowerCase();
   const modelsBase = section.getAttribute("data-models") || "../assets/models/";
-  const MODEL_VERSION = "v3_5";
+  const MODEL_VERSION = "v3_6";
   const RISKS = DATA.risks, PURDUE = DATA.purdue;
   const byN = {}; RISKS.forEach((r) => { byN[r.n] = r; });
 
@@ -100,7 +100,7 @@ function init() {
       if (/\.hdr$/i.test(url)) new RGBELoader().load(url, done, undefined, () => tryNext(list.slice(1)));
       else new THREE.TextureLoader().load(url, (t) => { t.colorSpace = THREE.SRGBColorSpace; done(t); }, undefined, () => tryNext(list.slice(1)));
     };
-    tryNext(["sky_env.hdr", "sky_env.webp", "sky_env.jpg", "sky_env.png"]);
+    tryNext(lowPower ? ["sky_env_mobile.hdr", "sky_env.hdr"] : ["sky_env.hdr", "sky_env.webp", "sky_env.jpg"]);
   })();
   function applyEnvIntensity() {
     if (!root) return;
@@ -385,6 +385,8 @@ function init() {
     /* sun direction from the model, so live shadows line up with the baked ones */
     const sd = parseExtra((gltf.scene.userData && gltf.scene.userData.sun_dir_yup) || (gltf.userData && gltf.userData.sun_dir_yup) || (root.userData && root.userData.sun_dir_yup));
     if (Array.isArray(sd) && sd.length === 3) { const v = new THREE.Vector3(sd[0], sd[1], sd[2]).normalize(); if (v.y < 0) v.negate(); sun.position.copy(v.multiplyScalar(60)).add(sun.target.position); }
+    const sc = parseExtra(gltf.scene.userData && gltf.scene.userData.sun_color);
+    if (Array.isArray(sc) && sc.length === 3) { const c = new THREE.Color().setRGB(sc[0], sc[1], sc[2]); sun.color.copy(c).lerp(new THREE.Color(0xffe4c4), 0.5); }
     /* parts whose opacity is animated get their own copy of the shared materials */
     ["dmz_walls_flat", "dmz_walls_segmented", "net_flat_lines", "net_segmented_lines", "landscape_apron", "trees_web"].forEach((n) => nodesByPrefix(n).forEach(uniqueMaterials));
 
@@ -460,8 +462,8 @@ function init() {
     if (treeNode) {
       try {
         const atlas = parseExtra(treeNode.userData.impostor_atlas), inst = parseExtra(treeNode.userData.instances);
-        let tex = null; treeNode.traverse((m) => { if (!tex && m.isMesh) { const mm = Array.isArray(m.material) ? m.material[0] : m.material; tex = mm && (mm.map || mm.emissiveMap); } });
-        trees = (atlas && Array.isArray(inst)) ? createTrees({ THREE, atlas, instances: inst, texture: tex }) : null;
+        let tex = null, ntex = null; treeNode.traverse((m) => { if (!tex && m.isMesh) { const mm = Array.isArray(m.material) ? m.material[0] : m.material; tex = mm && (mm.map || mm.emissiveMap); ntex = mm && mm.normalMap; } });
+        trees = (atlas && Array.isArray(inst)) ? createTrees({ THREE, atlas, instances: inst, texture: tex, normalTexture: ntex }) : null;
         if (trees) { treeNode.visible = false; scene.add(trees.mesh); nodes.trees_web_impostors = trees.mesh; trees.setFog(scene.fog.color, scene.fog.near, scene.fog.far); console.info("[diorama] trees", trees.count); }
       } catch (err) { console.warn("[diorama] trees failed", err); trees = null; }
     }
