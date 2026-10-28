@@ -38,6 +38,7 @@ function init() {
   const STILLS_BASE = (section.getAttribute("data-stills") || "../assets/img/risk/");
   const stillImgs = [0, 1].map(() => { const im = document.createElement("img"); im.className = "dio-still"; im.alt = ""; im.decoding = "async"; im.setAttribute("aria-hidden", "true"); return im; });
   const stills = { cur: -1, shown: null, missing: {}, loaded: {}, pending: null, manifest: null };
+  let stillArm = 0;
   fetch(STILLS_BASE + "manifest.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).then((m) => { stills.manifest = Array.isArray(m) ? m : (m && m.files) || []; }).catch(() => { stills.manifest = []; });
   const switchBtn = document.getElementById("dio-controls");
   const layersBtn = document.getElementById("dio-layers");
@@ -167,7 +168,7 @@ function init() {
       glide = null; hideStill();
       pose.t.copy(target.t); pose.az = target.az; pose.el = target.el; pose.dist = target.dist; pose.fov = target.fov;
       Object.assign(goal, { az: pose.az, el: pose.el, dist: pose.dist, fov: pose.fov }); goal.t.copy(pose.t);
-      requestRender(); setTimeout(syncStill, 50); return;
+      requestRender(); clearTimeout(stillArm); stillArm = setTimeout(syncStill, 260); return;
     }
     const from = { t: pose.t.clone(), az: pose.az, el: pose.el, dist: pose.dist, fov: pose.fov };
     const dT = from.t.distanceTo(target.t);
@@ -187,7 +188,7 @@ function init() {
     pose.dist = a.dist + (b.dist - a.dist) * k + bump * glide.lift;
     pose.fov = a.fov + (b.fov - a.fov) * k;
     Object.assign(goal, { az: pose.az, el: pose.el, dist: pose.dist, fov: pose.fov }); goal.t.copy(pose.t);
-    if (glide.t >= 1) { glide = null; syncStill(); }
+    if (glide.t >= 1) { glide = null; clearTimeout(stillArm); stillArm = setTimeout(syncStill, 260); }
     return true;
   }
   function stepFollow(dt) {
@@ -713,7 +714,7 @@ function init() {
     });
     if (live) live.setControls(on, tween);
     if (purdue) purdue.setControls(on);
-    syncStill();
+    hideStill(); clearTimeout(stillArm); stillArm = setTimeout(syncStill, 260);
     if (!instant) {
       const r = byN[st.active];
       showToast(on ? (DATA.toast ? DATA.toast.on : "Controls on.") : (r ? r.off : (DATA.toast ? DATA.toast.off : "Controls off.")), on ? 4500 : 7000);
@@ -754,7 +755,7 @@ function init() {
     im.classList.add("show"); stillImgs[stills.cur === -1 ? 1 : stills.cur].classList.remove("show");
     stills.cur = next; stills.shown = key;
   }
-  function hideStill() { if (stills.shown === null) return; stillImgs.forEach((im) => { im.classList.remove("show"); setTimeout(() => { if (!im.classList.contains("show")) im.hidden = true; }, 700); }); stills.shown = null; }
+  function hideStill() { if (stills.shown === null) return; stillImgs.forEach((im) => { im.classList.remove("show"); im.classList.add("drop"); im.hidden = true; im.classList.remove("drop"); }); stills.shown = null; }
   function syncStill() {
     const key = stillKey();
     if (!key) { hideStill(); return; }
@@ -1013,7 +1014,7 @@ function init() {
     steps.forEach((s) => s.classList.toggle("on", +s.getAttribute("data-step") === k));
     dots.forEach((d) => d.el.classList.toggle("on", d.k === k));
     if (k !== +card.getAttribute("data-step") || !card.innerHTML) fillCard(k); else card.classList.remove("hidden");
-    preloadAround(k); hideStill();
+    preloadAround(k); clearTimeout(stillArm); hideStill();
     if (!st.ready) return;
     const wasPurdue = st.mode === MODE.PURDUE;
     if (k === 11) {
