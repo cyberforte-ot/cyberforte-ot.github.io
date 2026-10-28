@@ -44,7 +44,7 @@ function init() {
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-  } catch (e) { fail("WebGL is not available"); return; }
+  } catch (e) { stage.setAttribute("data-state", "fallback"); console.warn("[diorama] WebGL is not available"); return; }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.5 : 2));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -82,6 +82,7 @@ function init() {
   const tweens = [];
   let mixer = null, root = null, levelRanges = {}, steamSprites = [], cloudSprites = [], walkers = [], pulses = [], strataSlab = null, dmzSlab = null, doorNode = null;
   const fadeMats = [];   // materials that fade in purdue mode
+  const observers = [];
 
   /* ---------- camera rig: target + azimuth + elevation + distance + fov, glided with eased tweens */
   const LIM = { elMin: THREE.MathUtils.degToRad(10), elMax: THREE.MathUtils.degToRad(82), distMin: 4, distMax: 95, box: new THREE.Box3(new THREE.Vector3(-30, -6, -18), new THREE.Vector3(30, 14, 20)) };
@@ -128,7 +129,7 @@ function init() {
     const dT = from.t.distanceTo(target.t);
     const dur = opts.dur || THREE.MathUtils.clamp(1.1 + dT * 0.028, 1.2, 1.8);
     target.az = shortestAz(from.az, target.az);
-    glide = { from, to: target, t: 0, dur, ease: interrupted ? easeOut : easeInOut, lift: THREE.MathUtils.clamp(dT * 0.5, 0, 12) * (opts.lift === false ? 0 : 1) };
+    glide = { from, to: target, src: p, t: 0, dur, ease: interrupted ? easeOut : easeInOut, lift: THREE.MathUtils.clamp(dT * 0.5, 0, 12) * (opts.lift === false ? 0 : 1) };
     requestRender();
   }
   function stepGlide(dt) {
@@ -227,16 +228,37 @@ function init() {
   const urls = lowPower ? ["ot-diorama-mobile.glb", "ot-diorama.glb"] : ["ot-diorama.glb"];
   (function tryLoad(i) {
     if (i >= urls.length) { fail("The 3D model could not be loaded"); return; }
-    loader.load(modelsBase + urls[i] + "?v=" + MODEL_VERSION, onLoaded, (ev) => {
+    loader.load(modelsBase + urls[i] + "?v=" + MODEL_VERSION, (gltf) => { try { onLoaded(gltf); } catch (err) { console.error(err); fail("The 3D scene could not be built"); } }, (ev) => {
       if (statusEl && ev.total) statusEl.textContent = "Loading 3D site… " + Math.round(100 * ev.loaded / ev.total) + "%";
     }, () => tryLoad(i + 1));
   })(0);
 
+  let destroyed = false;
   function fail(msg) {
     stage.setAttribute("data-state", "fallback");
+    section.removeAttribute("data-live");
     if (statusEl) statusEl.textContent = "";
     console.warn("[diorama]", msg);
+    destroy();
   }
+  function destroy() {
+    if (destroyed) return; destroyed = true;
+    st.ready = false; glide = null; tweens.length = 0;
+    observers.forEach((o) => o.disconnect()); observers.length = 0;
+    if (mixer) { mixer.stopAllAction(); mixer = null; }
+    scene.traverse((o) => {
+      if (o.geometry) o.geometry.dispose();
+      if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => { if (!m) return; Object.keys(m).forEach((k) => { if (m[k] && m[k].isTexture) m[k].dispose(); }); m.dispose(); });
+    });
+    if (root) { scene.remove(root); root = null; }
+    if (steamTex) { steamTex.dispose(); steamTex = null; }
+    renderer.dispose();
+    if (cv.parentNode) cv.parentNode.removeChild(cv);
+    window.CF_DIORAMA = null;
+  }
+  /* a lost GL context shows the poster again; a restored one simply resumes */
+  cv.addEventListener("webglcontextlost", (e) => { e.preventDefault(); if (!destroyed) stage.setAttribute("data-state", "poster"); }, false);
+  cv.addEventListener("webglcontextrestored", () => { if (!destroyed && st.ready) { stage.setAttribute("data-state", "ready"); last = performance.now(); requestRender(); } }, false);
 
   function uniqueMaterials(o) {
     if (!o) return;
@@ -746,7 +768,7 @@ function init() {
         if (k !== st.step) setStep(k);
       });
     }, { rootMargin: "-42% 0px -42% 0px", threshold: 0 });
-    steps.forEach((s) => io.observe(s));
+    steps.forEach((s) => io.observe(s)); observers.push(io);
   }
   section.querySelectorAll(".dio-view").forEach((b) => b.addEventListener("click", () => {
     const n = +b.getAttribute("data-view");
@@ -765,30 +787,35 @@ function init() {
     scene.fog.color.setHex(dark ? FOG.dark : FOG.light);
     requestRender();
   }
-  new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  const mo = new MutationObserver(applyTheme); mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] }); observers.push(mo);
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme);
 
   /* ---------- sizing */
   function resize() {
     const r = canvasWrap.getBoundingClientRect();
     const W = Math.max(1, Math.round(r.width)), H = Math.max(1, Math.round(r.height));
-    renderer.setSize(W, H, false);
     aspect = W / H;
     camera.aspect = aspect; camera.updateProjectionMatrix();
-    if (st.ready && !st.userView && !glide) {
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.5 : 2));
+    renderer.setSize(W, H, false);
+    if (st.ready && glide) {
+      /* orientation change mid-glide: re-fit the destination for the new aspect */
+      const q = fitForAspect(glide.src); q.az = glide.to.az; glide.to = q;
+    } else if (st.ready && !st.userView) {
       /* re-fit the current framing for the new aspect */
       const p = st.mode === MODE.PURDUE ? cams.purdue : (st.active ? cams[byN[st.active].cam] : cams.wide);
       if (p) { const q = fitForAspect(p); goal.dist = q.dist; pose.dist = q.dist; }
     }
     requestRender();
   }
-  new ResizeObserver(resize).observe(canvasWrap);
+  const ro = new ResizeObserver(resize); ro.observe(canvasWrap); observers.push(ro);
 
   /* ---------- loop: render on demand, animate while visible */
   let needs = true, running = false, visible = true, last = performance.now(), t = 0;
   function requestRender() { needs = true; if (!running) { running = true; requestAnimationFrame(frame); } }
   function frame(now) {
     needs = false;
+    if (destroyed) { running = false; return; }
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     const animate = st.ready && !reduce && visible && !document.hidden;
     let busy = false;
@@ -818,12 +845,12 @@ function init() {
     if (running) requestAnimationFrame(frame);
   }
   if ("IntersectionObserver" in window) {
-    new IntersectionObserver((ents) => { visible = ents[0].isIntersecting; if (visible) { last = performance.now(); requestRender(); } }, { threshold: 0.02 }).observe(stage);
+    const vio = new IntersectionObserver((ents) => { visible = ents[0].isIntersecting; if (visible) { last = performance.now(); requestRender(); } }, { threshold: 0.02 }); vio.observe(stage); observers.push(vio);
   }
   document.addEventListener("visibilitychange", () => { if (!document.hidden) { last = performance.now(); requestRender(); } });
   window.addEventListener("resize", () => requestRender());
 
   function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 
-  window.CF_DIORAMA = { setStep, setControls: applyControls, resetView, pose, goal, cams, nodes, state: st };
+  window.CF_DIORAMA = { setStep, setControls: applyControls, resetView, destroy, pose, goal, cams, nodes, state: st };
 }
