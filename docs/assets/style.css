@@ -795,7 +795,7 @@ html:has(.dio[data-live="1"]) { scroll-snap-type: y proximity; }
 .dio-card .dio-explain dd { font-size: 13px; line-height: 1.45; }
 .dio-card.expanded .dio-explain { gap: 5px; margin: 6px 0 8px; }
 .dio-card .dio-ctl { margin: 0 0 8px; font-size: 12.5px; }
-.dio-card .sc-k { font-size: 11.5px; }
+.dio-card .sc-k { font-size: 11.5px; padding-right: 52px; }
 .dio-card .dio-ctl { margin: 0 0 12px; }
 .dio-card .dio-view { display: none; }
 .dio-card .btn.sm { min-height: 40px; }
@@ -814,12 +814,13 @@ html:has(.dio[data-live="1"]) { scroll-snap-type: y proximity; }
 .dio-card[data-step="11"] .dio-tag-sub { display: none; }
 /* pre-rendered stills crossfade over the live view when the camera is at rest */
 .dio-poster { z-index: 2; }
-.dio-still { z-index: 1; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; opacity: 0; transition: opacity .6s var(--ease); pointer-events: none; will-change: opacity, transform; }
+.dio-still { z-index: 1; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; opacity: 0; transform: scale(1.035); transition: opacity .7s var(--ease), transform 1.1s var(--ease); pointer-events: none; will-change: opacity, transform; }
 .dio-still[hidden], .dio-poster[hidden] { display: none; }
-.dio-still.show { opacity: 1; transition-duration: .5s; animation: dio-kenburns 16s ease-in-out infinite alternate; }
-.dio-still.drop { transition: none; opacity: 0; }
+.dio-still.show { opacity: 1; transform: scale(1); }
+.dio-still.fast { transition-duration: .15s; }
+.dio-still.under { opacity: 1; transform: scale(1); transition: none; }
 @keyframes dio-kenburns { from { transform: scale(1); } to { transform: scale(1.02); } }
-@media (prefers-reduced-motion: reduce) { .dio-still.show { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .dio-still { transition: none; transform: none; } }
 .dio-card .dio-level { background: rgba(255,255,255,.75); color: #0b0b0c; border-color: rgba(11,11,12,.1); }
 .dio-card .dio-level[aria-pressed="true"] { background: #0b0b0c; color: #fff; }
 .dio-card .dio-level-desc, .dio-card .dio-level-meta { color: #2a2a2e; }
