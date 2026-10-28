@@ -4,6 +4,7 @@
 import * as THREE from "./vendor/three.module.min.js";
 import { GLTFLoader } from "./vendor/GLTFLoader.js";
 import { MeshoptDecoder } from "./vendor/meshopt_decoder.module.js";
+import { createLive } from "./diorama-live.js";
 
 const section = document.getElementById("diorama");
 const stage = document.getElementById("dio-stage");
@@ -17,7 +18,7 @@ function init() {
   const small = Math.min(window.innerWidth, window.innerHeight) < 700;
   const lowPower = small || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || (navigator.deviceMemory && navigator.deviceMemory <= 4) || (navigator.connection && navigator.connection.saveData);
   const modelsBase = section.getAttribute("data-models") || "../assets/models/";
-  const MODEL_VERSION = "v3_2c";
+  const MODEL_VERSION = "v3_3";
   const RISKS = DATA.risks, PURDUE = DATA.purdue;
   const byN = {}; RISKS.forEach((r) => { byN[r.n] = r; });
 
@@ -26,13 +27,15 @@ function init() {
   const levelsEl = document.getElementById("dio-level-labels");
   const statusEl = stage.querySelector(".dio-loading");
   const hintEl = stage.querySelector(".dio-hint");
+  const toastEl = stage.querySelector(".dio-toast");
   const switchBtn = document.getElementById("dio-controls");
   const resetBtn = document.getElementById("dio-reset");
   const zoomIn = document.getElementById("dio-zoom-in");
   const zoomOut = document.getElementById("dio-zoom-out");
   const steps = Array.from(section.querySelectorAll(".dio-step"));
-  const levelBtns = Array.from(section.querySelectorAll(".dio-level"));
-  const levelCard = document.getElementById("dio-level-card");
+  const card = document.getElementById("dio-card");
+  const levelBtns = () => Array.from(section.querySelectorAll(".dio-level"));
+  const levelCards = () => Array.from(section.querySelectorAll(".dio-level-card"));
 
   function isDark() {
     const t = document.documentElement.getAttribute("data-theme");
@@ -50,7 +53,7 @@ function init() {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
+  renderer.toneMappingExposure = 1.15;
   const cv = renderer.domElement;
   cv.className = "dio-gl";
   cv.setAttribute("aria-hidden", "true");
@@ -68,9 +71,13 @@ function init() {
   Object.assign(sun.shadow.camera, { left: -32, right: 32, top: 24, bottom: -24, near: 10, far: 140 });
   sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.025; sun.shadow.radius = 3;
   scene.add(sun); scene.add(sun.target); sun.target.position.set(-6, 0, 2);
-  const hemi = new THREE.HemisphereLight(0xdfe9ff, 0xa9b58a, 1.05); scene.add(hemi);
+  const hemi = new THREE.HemisphereLight(0xe4edff, 0xb9c592, 1.15); scene.add(hemi);
   const fill = new THREE.DirectionalLight(0xcfe0ff, 0.45); fill.position.set(40, 20, -30); scene.add(fill);
   const FOG = { light: 0xe9e5dc, dark: 0x14161b };
+  const expo = { base: 1.15, value: 1 };            // exposure dips slightly while a risk is in focus
+  const focus = new THREE.SpotLight(0xfff1dc, 0, 60, Math.PI / 7, 0.7, 1.2); focus.castShadow = false;
+  scene.add(focus); scene.add(focus.target);
+  let live = null;
   scene.fog = new THREE.Fog(FOG.light, 110, 260);
 
   /* ---------- state */
@@ -82,6 +89,7 @@ function init() {
   const tweens = [];
   let mixer = null, root = null, levelRanges = {}, steamSprites = [], cloudSprites = [], walkers = [], pulses = [], strataSlab = null, dmzSlab = null, doorNode = null;
   const fadeMats = [];   // materials that fade in purdue mode
+  let setHideVisible = () => {};
   const observers = [];
 
   /* ---------- camera rig: target + azimuth + elevation + distance + fov, glided with eased tweens */
@@ -185,13 +193,13 @@ function init() {
     p.x = e.clientX; p.y = e.clientY;
     if (!st.ready) return;
     if (pointers.size === 1) {
-      const s = 2.4 / Math.max(1, cv.clientWidth);
-      goal.az -= dx * s * Math.PI; goal.el += dy * s * Math.PI * 0.8; clampGoal(); userMoved();
+      /* a full-width drag turns half a circle; a full-height drag tilts about a third */
+      goal.az -= dx / Math.max(1, cv.clientWidth) * Math.PI; goal.el += dy / Math.max(1, cv.clientHeight) * Math.PI * 0.35; clampGoal(); userMoved();
     } else if (pointers.size === 2) {
       const a = Array.from(pointers.values());
       const d = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y), mid = { x: (a[0].x + a[1].x) / 2, y: (a[0].y + a[1].y) / 2 };
       if (pinchDist > 0) goal.dist *= pinchDist / Math.max(1, d);
-      if (pinchMid) { const s = 2.4 / Math.max(1, cv.clientWidth); goal.az -= (mid.x - pinchMid.x) * s * Math.PI; goal.el += (mid.y - pinchMid.y) * s * Math.PI * 0.8; }
+      if (pinchMid) { goal.az -= (mid.x - pinchMid.x) / Math.max(1, cv.clientWidth) * Math.PI; goal.el += (mid.y - pinchMid.y) / Math.max(1, cv.clientHeight) * Math.PI * 0.35; }
       pinchDist = d; pinchMid = mid; clampGoal(); userMoved();
     }
   });
@@ -246,6 +254,7 @@ function init() {
     st.ready = false; glide = null; tweens.length = 0;
     observers.forEach((o) => o.disconnect()); observers.length = 0;
     if (mixer) { mixer.stopAllAction(); mixer = null; }
+    if (live) { live.dispose(); live = null; }
     scene.traverse((o) => {
       if (o.geometry) o.geometry.dispose();
       if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => { if (!m) return; Object.keys(m).forEach((k) => { if (m[k] && m[k].isTexture) m[k].dispose(); }); m.dispose(); });
@@ -268,6 +277,7 @@ function init() {
       else if (m.material && m.material.name.indexOf("Glow:") !== 0) m.material = m.material.clone();
     });
   }
+  function nodesByPrefix(name) { return Object.keys(nodes).filter((k) => k === name || k.indexOf(name + "_") === 0).map((k) => nodes[k]); }
   function parseExtra(v) { if (typeof v === "string") { try { return JSON.parse(v); } catch (e) { return v; } } return v; }
 
   function onLoaded(gltf) {
@@ -297,7 +307,7 @@ function init() {
     });
     if (!anyVertexColor) console.warn("[diorama] model has no vertex colours; using name-based tints for Glow parts");
     /* parts whose opacity is animated get their own copy of the shared materials */
-    ["dmz_walls_flat", "dmz_walls_segmented", "net_flat_lines", "net_segmented_lines", "landscape_apron", "trees_web"].forEach((n) => uniqueMaterials(nodes[n]));
+    ["dmz_walls_flat", "dmz_walls_segmented", "net_flat_lines", "net_segmented_lines", "landscape_apron", "trees_web"].forEach((n) => nodesByPrefix(n).forEach(uniqueMaterials));
 
     /* cameras from the Blender empties (eye position + extras.target); a wider lens closer in for interaction */
     const fallbackWide = { t: new THREE.Vector3(-10.5, 5.2, -0.8), az: 0.32, el: 0.62, dist: 62, fov: 26 };
@@ -314,9 +324,10 @@ function init() {
       else p = reframe(p, 30);
       cams[name] = p;
     });
-    cams.wide = cams.cam_wide || fallbackWide;
+    cams.wide = { t: new THREE.Vector3(0.5, 2.6, 0.8), az: 0.42, el: 0.70, dist: 86, fov: 26 };
+    cams.hero = cams.cam_wide || fallbackWide;
     /* the Purdue cross-section reads better from a lower angle, closer to the front corner */
-    cams.purdue = { t: new THREE.Vector3(3, -2.4, 2), az: 0.72, el: 0.25, dist: 54, fov: 26 };
+    cams.purdue = { t: new THREE.Vector3(3, -2.8, 1), az: 0.6, el: 0.3, dist: 76, fov: 26 };
     RISKS.forEach((r) => {
       if (cams[r.cam]) return;
       const h = nodes[r.hook]; if (!h) return;
@@ -346,10 +357,12 @@ function init() {
         dmzSlab.position.set(center.x, (dmz[0] + dmz[1]) / 2, center.z); dmzSlab.visible = false; dmzSlab.renderOrder = 4; scene.add(dmzSlab);
       }
     }
-    ["landscape_apron", "trees_web"].forEach((n) => {
-      const o = nodes[n]; if (!o) return;
+    const HIDE = ["landscape_apron", "trees_web"];
+    const hideNodes = () => HIDE.reduce((acc, n) => acc.concat(nodesByPrefix(n)), []);
+    hideNodes().forEach((o) => {
       o.traverse((m) => { if (m.isMesh) { const ms = Array.isArray(m.material) ? m.material : [m.material]; ms.forEach((mat) => { if (mat && fadeMats.indexOf(mat) < 0) { mat.userData.baseOpacity = mat.opacity; fadeMats.push(mat); } }); } });
     });
+    setHideVisible = (v) => hideNodes().forEach((o) => { o.visible = v; });
 
     /* steam + cloud as true billboards from the extras */
     buildSprites(nodes.steam_plume, "steam");
@@ -373,6 +386,8 @@ function init() {
 
     /* data pulses along the exported paths */
     buildPulses();
+    /* beacons, SCADA screens, fans, LEDs (only what the glb provides) */
+    try { live = createLive({ THREE, nodes, scene, nodesByPrefix, softTexture, lowPower, reduce }); console.info("[diorama] live parts", JSON.stringify(live.count)); } catch (err) { console.warn("[diorama] live parts failed", err); live = null; }
 
     /* fit the shadow camera and the orbit box to the site */
     const siteBox = new THREE.Box3();
@@ -386,6 +401,7 @@ function init() {
     applyTheme();
     buildMarkers();
     buildLevelLabels();
+    buildDots();
     applyControls(true, true);
     resize();
     const intro = fitForAspect(cams.wide);
@@ -413,6 +429,10 @@ function init() {
       m.emissive.set(0xffffff);
       /* the exporter drops the emissive factor; the Blender agent leaves the strength in extras */
       m.emissiveIntensity = +(base.userData && base.userData.emissive_strength_hint) || (base.emissive && base.emissive.getHex() ? base.emissiveIntensity : 2.5);
+      if (/^dmz_walls/.test(mesh.name)) m.emissiveIntensity = 1.3;
+      else if (/^(video_wall|engineering_workstation|scada)/.test(mesh.name)) m.emissiveIntensity = 1.25;
+      else if (/^static_world/.test(mesh.name)) m.emissiveIntensity = Math.min(m.emissiveIntensity, 1.6);
+      else m.emissiveIntensity = Math.min(m.emissiveIntensity, 2.0);
       m.onBeforeCompile = (shader) => {
         shader.fragmentShader = shader.fragmentShader.replace("#include <emissivemap_fragment>", "#include <emissivemap_fragment>\n#ifdef USE_COLOR\n\ttotalEmissiveRadiance *= vColor.rgb;\n#endif\n");
       };
@@ -456,7 +476,7 @@ function init() {
       sp.renderOrder = 10;
       group.add(sp);
       const rec = { sp, base: new THREE.Vector3(s[0], s[1], s[2]), size, phase: (i / count) };
-      if (kind === "steam") { rec.phase = i / count; steamSprites.push(rec); } else { cloudSprites.push(rec); mat.opacity = 0.92; }
+      if (kind === "steam") { rec.phase = i / count; steamSprites.push(rec); } else { rec.base.y += 7; sp.position.y += 7; sp.visible = false; cloudSprites.push(rec); mat.opacity = 0; }
     }
     if (kind === "steam") {
       const ex = node.userData;
@@ -555,16 +575,27 @@ function init() {
     if (doorNode) tween(doorNode.rotation, "y", on ? doorNode.userData.restY : doorNode.userData.restY - 1.25, dur ? 0.9 : 0);
     if (dmzSlab) { dmzSlab.visible = st.mode === MODE.PURDUE; tween(dmzSlab.material, "opacity", (!on && st.mode === MODE.PURDUE) ? 0.42 : 0, dur); }
     /* step column status lines */
-    steps.forEach((s) => {
+    section.querySelectorAll("[data-step]").forEach((s) => {
       const n = +s.getAttribute("data-step"), r = byN[n]; if (!r) return;
       const el = s.querySelector(".dio-ctl-text");
-      if (el) el.textContent = on ? "Control on: " + r.control : "Control off: " + r.control.toLowerCase() + " is missing. This risk is live.";
+      if (el) el.textContent = on ? "Controls on: this risk is covered." : r.off;
     });
+    if (live) live.setControls(on, tween);
+    if (!instant) {
+      const r = byN[st.active];
+      showToast(on ? (DATA.toast ? DATA.toast.on : "Controls on.") : (r ? r.off : (DATA.toast ? DATA.toast.off : "Controls off.")), on ? 4500 : 7000);
+    }
     updateMarkerLabels();
     refreshLevel();
     requestRender();
   }
   switchBtn && switchBtn.addEventListener("click", () => applyControls(!st.controls));
+  let toastTimer = 0;
+  function showToast(text, ms) {
+    if (!toastEl) return;
+    toastEl.textContent = text; toastEl.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove("show"), ms || 5000);
+  }
 
   /* ---------- tweens (tiny) */
   function tween(obj, prop, to, dur, done) {
@@ -647,7 +678,7 @@ function init() {
     const gap = 25;
     for (let i = 1; i < rows.length; i++) if (rows[i].y < rows[i - 1].y + gap) rows[i].y = rows[i - 1].y + gap;
     for (let i = rows.length - 2; i >= 0; i--) if (rows[i].y > rows[i + 1].y - gap) rows[i].y = rows[i + 1].y - gap;
-    rows.forEach((r) => { r.l.el.style.transform = "translate(" + r.x.toFixed(1) + "px," + r.y.toFixed(1) + "px) translate(0,-50%)"; });
+    rows.forEach((r) => { const flip = r.x > W - 150; r.l.el.classList.toggle("flip", flip); r.l.el.style.transform = "translate(" + r.x.toFixed(1) + "px," + r.y.toFixed(1) + "px) translate(" + (flip ? "-100%" : "0") + ",-50%)"; });
   }
   let hoverLevel = null;
   function setLevel(id, hover) {
@@ -656,7 +687,7 @@ function init() {
   }
   function refreshLevel() {
     const cur = hoverLevel || st.level;
-    levelBtns.forEach((b) => { const id = b.getAttribute("data-level"); b.setAttribute("aria-pressed", id === st.level ? "true" : "false"); b.classList.toggle("hot", id === cur); });
+    levelBtns().forEach((b) => { const id = b.getAttribute("data-level"); b.setAttribute("aria-pressed", id === st.level ? "true" : "false"); b.classList.toggle("hot", id === cur); });
     levelLabels.forEach((l) => l.el.classList.toggle("hot", l.id === cur));
     highlightLevel(cur);
     updateLevelCard(cur);
@@ -674,33 +705,28 @@ function init() {
     } else tween(strataSlab.material, "opacity", 0, dur, () => { strataSlab.visible = false; });
     /* lift the glow on the parts that live on this level */
     const lv = PURDUE.find((l) => l.id === id);
-    Object.keys(glowMats).forEach((name) => {
-      const m = glowMats[name];
-      const hot = !!(lv && lv.objects.some((o) => name.indexOf(o) === 0));
-      tween(m, "emissiveIntensity", hot ? m.userData.baseEmissive * 2.2 : m.userData.baseEmissive, dur);
-    });
+    if (st.mode === MODE.PURDUE) boostGlow(lv ? lv.objects : []);
   }
   function updateLevelCard(id) {
-    if (!levelCard) return;
     const cur = id !== undefined ? id : (hoverLevel || st.level);
     const lv = PURDUE.find((l) => l.id === cur);
-    if (!lv) {
-      levelCard.innerHTML = '<p class="dio-level-desc">Each level only talks to its neighbours. The DMZ in the middle is the one doorway between the office and the plant.</p>';
-      return;
+    let html;
+    if (!lv) html = '<p class="dio-level-desc">Each level only talks to its neighbours. The DMZ in the middle is the one doorway between the office and the plant.</p>';
+    else {
+      const risks = lv.risks.map((n) => '<a href="' + byN[n].slug + '">' + n + '</a>').join(" ");
+      const dmz = lv.id === "L3.5";
+      const status = st.controls ? '<span class="dio-ctl ok">Controls on</span>' : '<span class="dio-ctl bad">Controls off' + (dmz ? ": office IT connects straight to the plant" : "") + "</span>";
+      html = '<p class="sc-k">' + escapeHtml(lv.id) + " · " + escapeHtml(lv.name) + '</p><p class="dio-level-desc">' + escapeHtml(lv.desc) + '</p><p class="dio-level-meta">Risks here: ' + risks + " · " + status + "</p>";
     }
-    const risks = lv.risks.map((n) => '<a href="' + byN[n].slug + '">' + n + '</a>').join(" ");
-    const dmz = lv.id === "L3.5";
-    const status = st.controls ? '<span class="dio-ctl ok">Controls on</span>' : '<span class="dio-ctl bad">Controls off' + (dmz ? ": office IT connects straight to the plant" : "") + "</span>";
-    levelCard.innerHTML = '<p class="sc-k">' + escapeHtml(lv.id) + " · " + escapeHtml(lv.name) + '</p><p class="dio-level-desc">' + escapeHtml(lv.desc) + '</p><p class="dio-level-meta">Risks here: ' + risks + " · " + status + "</p>";
+    levelCards().forEach((el) => { if (el.innerHTML !== html) el.innerHTML = html; });
   }
-  levelBtns.forEach((b) => {
-    const id = b.getAttribute("data-level");
-    b.addEventListener("click", () => setLevel(id));
-    b.addEventListener("pointerenter", () => { if (!coarse) setLevel(id, true); });
-    b.addEventListener("pointerleave", () => { if (!coarse) { hoverLevel = null; refreshLevel(); } });
-    b.addEventListener("focus", () => setLevel(id, true));
-    b.addEventListener("blur", () => { hoverLevel = null; refreshLevel(); });
-  });
+  /* the step column and the floating card both hold level buttons; delegate */
+  const levelOf = (e) => { const b = e.target && e.target.closest && e.target.closest(".dio-level"); return b ? b.getAttribute("data-level") : null; };
+  section.addEventListener("click", (e) => { const id = levelOf(e); if (id) setLevel(id); });
+  section.addEventListener("pointerover", (e) => { const id = levelOf(e); if (id && !coarse && id !== hoverLevel) setLevel(id, true); });
+  section.addEventListener("pointerout", (e) => { if (coarse) return; const id = levelOf(e); if (id && !(e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(".dio-level"))) { hoverLevel = null; refreshLevel(); } });
+  section.addEventListener("focusin", (e) => { const id = levelOf(e); if (id) setLevel(id, true); });
+  section.addEventListener("focusout", (e) => { const id = levelOf(e); if (id) { hoverLevel = null; refreshLevel(); } });
   if (levelsEl) levelsEl.addEventListener("pointerleave", () => { if (!coarse) { hoverLevel = null; refreshLevel(); } });
 
   /* ---------- modes + steps */
@@ -713,10 +739,11 @@ function init() {
     fadeMats.forEach((m) => {
       if (m.userData.wasTransparent == null) m.userData.wasTransparent = m.transparent;
       if (!m.transparent) { m.transparent = true; m.needsUpdate = true; }
-      tween(m, "opacity", purdue ? 0 : (m.userData.baseOpacity == null ? 1 : m.userData.baseOpacity), dur, () => { ["landscape_apron", "trees_web"].forEach((n) => { if (nodes[n]) nodes[n].visible = !purdue; }); if (!purdue && !m.userData.wasTransparent) { m.transparent = false; m.needsUpdate = true; } });
+      tween(m, "opacity", purdue ? 0 : (m.userData.baseOpacity == null ? 1 : m.userData.baseOpacity), dur, () => { setHideVisible(!purdue); if (!purdue && !m.userData.wasTransparent) { m.transparent = false; m.needsUpdate = true; } });
     });
-    if (!purdue) ["landscape_apron", "trees_web"].forEach((n) => { if (nodes[n]) nodes[n].visible = true; });
+    if (!purdue) setHideVisible(true);
     if (dmzSlab) { dmzSlab.visible = purdue; tween(dmzSlab.material, "opacity", purdue && !st.controls ? 0.42 : 0, dur); }
+    cloudSprites.forEach((r) => { r.sp.visible = true; tween(r.sp.material, "opacity", purdue ? 0.9 : 0, dur, () => { r.sp.visible = purdue; }); });
     if (!purdue) { st.level = null; hoverLevel = null; refreshLevel(); } else { hoverLevel = null; refreshLevel(); }
     if (purdue) { scene.fog.near = 140; scene.fog.far = 330; } else { scene.fog.near = 110; scene.fog.far = 260; }
     requestRender();
@@ -726,10 +753,62 @@ function init() {
     section.setAttribute("data-active", n || "");
     markers.forEach((m) => { m.el.classList.toggle("on", m.n === n); m.el.classList.toggle("dim", n > 0 && m.n !== n); });
     updateMarkerLabels();
+    focusRisk(n);
+  }
+  function focusRisk(n) {
+    const r = byN[n], dur = reduce ? 0 : 0.7;
+    const h = r && nodes[r.hook];
+    if (h) {
+      const p = new THREE.Vector3(); h.getWorldPosition(p);
+      const cam = cams[r.cam] || {};
+      const radius = +(nodes[r.cam] && nodes[r.cam].userData.radius) || 3;
+      focus.target.position.set(p.x, 0, p.z);
+      focus.position.set(p.x + 3, Math.max(14, p.y + 12), p.z + 6);
+      focus.angle = Math.min(Math.PI / 5, Math.atan((radius * 1.6) / 14));
+      focus.distance = 60; void cam;
+      tween(focus, "intensity", 900, dur);
+      tween(expo, "value", 0.9, dur);
+    } else {
+      tween(focus, "intensity", 0, dur);
+      tween(expo, "value", 1, dur);
+    }
+    boostGlow(r ? r.objects : []);
+  }
+  function boostGlow(objects) {
+    Object.keys(glowMats).forEach((name) => {
+      const m = glowMats[name];
+      if (m.userData.live) return; // beacons and LEDs animate their own intensity
+      const hot = objects.some((o) => name === o || name.indexOf(o + "_") === 0);
+      tween(m, "emissiveIntensity", hot ? m.userData.baseEmissive * 1.9 : m.userData.baseEmissive, reduce ? 0 : 0.5);
+    });
+  }
+  function fillCard(k) {
+    if (!card) return;
+    const src = steps.find((s) => +s.getAttribute("data-step") === k);
+    if (!src) return;
+    card.setAttribute("data-step", k);
+    card.innerHTML = src.innerHTML;
+    card.scrollTop = 0;
+    if (!reduce && card.animate) card.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 350, easing: "cubic-bezier(.2,.7,.2,1)" });
+  }
+  let dots = [];
+  function buildDots() {
+    const hud = stage.querySelector(".dio-hud"); if (!hud) return;
+    const ol = document.createElement("ol"); ol.className = "dio-dots"; ol.setAttribute("aria-label", "Jump to");
+    steps.forEach((s) => {
+      const k = +s.getAttribute("data-step");
+      const li = document.createElement("li"); const b = document.createElement("button"); b.type = "button";
+      b.setAttribute("aria-label", k === 0 ? "Overview" : k === 11 ? "Purdue levels" : "Risk " + k);
+      b.addEventListener("click", () => goToStep(k, true));
+      li.appendChild(b); ol.appendChild(li); dots.push({ k, el: b });
+    });
+    hud.appendChild(ol);
   }
   function setStep(k, instant) {
     st.step = k;
     steps.forEach((s) => s.classList.toggle("on", +s.getAttribute("data-step") === k));
+    dots.forEach((d) => d.el.classList.toggle("on", d.k === k));
+    if (k !== +card.getAttribute("data-step") || !card.innerHTML) fillCard(k);
     if (!st.ready) return;
     const wasPurdue = st.mode === MODE.PURDUE;
     if (k === 11) {
@@ -771,19 +850,20 @@ function init() {
     }, { rootMargin: "-42% 0px -42% 0px", threshold: 0 });
     steps.forEach((s) => io.observe(s)); observers.push(io);
   }
-  section.querySelectorAll(".dio-view").forEach((b) => b.addEventListener("click", () => {
+  section.addEventListener("click", (e) => {
+    const b = e.target && e.target.closest && e.target.closest(".dio-view"); if (!b) return;
     const n = +b.getAttribute("data-view");
     setStep(n, reduce);
     stage.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest" });
     stage.focus({ preventScroll: true });
-  }));
+  });
 
   /* ---------- theme (day / dusk) */
   function applyTheme() {
     const dark = isDark();
-    renderer.toneMappingExposure = dark ? 0.78 : 1.0;
+    expo.base = dark ? 0.8 : 1.15; renderer.toneMappingExposure = expo.base * expo.value;
     sun.color.setHex(dark ? 0xffb37a : 0xffe3bf); sun.intensity = dark ? 2.2 : 3.1;
-    hemi.color.setHex(dark ? 0x7d8fb8 : 0xdfe9ff); hemi.groundColor.setHex(dark ? 0x3d4238 : 0xa9b58a); hemi.intensity = dark ? 0.55 : 1.05;
+    hemi.color.setHex(dark ? 0x7d8fb8 : 0xdfe9ff); hemi.groundColor.setHex(dark ? 0x3d4238 : 0xb9c592); hemi.intensity = dark ? 0.55 : 1.15;
     fill.intensity = dark ? 0.25 : 0.45;
     scene.fog.color.setHex(dark ? FOG.dark : FOG.light);
     requestRender();
@@ -836,8 +916,10 @@ function init() {
         });
         updateSteam(t);
         updatePulses(t, dt);
+        if (live) live.update(t, dt);
         busy = true;
-      } else if (!steamSprites.rested) { restSteam(); steamSprites.rested = true; updatePulses(0, 1); }
+      } else if (!steamSprites.rested) { restSteam(); steamSprites.rested = true; updatePulses(0, 1); if (live) live.rest(); }
+      renderer.toneMappingExposure = expo.base * expo.value;
       renderer.render(scene, camera);
       placeMarkers();
       placeLevelLabels();
@@ -853,5 +935,5 @@ function init() {
 
   function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 
-  window.CF_DIORAMA = { setStep, setControls: applyControls, resetView, destroy, pose, goal, cams, nodes, state: st };
+  window.CF_DIORAMA = { setStep, setControls: applyControls, resetView, destroy, pose, goal, cams, nodes, state: st, isGliding: () => !!glide, finishGlide: () => { if (glide) { glide.t = 1; stepGlide(0); } stepTweens(1000); requestRender(); }, info: () => renderer.info.render, setLevel };
 }

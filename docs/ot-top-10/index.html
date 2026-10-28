@@ -62,6 +62,8 @@
           <div class="dio-markers" id="dio-markers"></div>
           <div class="dio-hud">
             <button class="dio-switch" id="dio-controls" type="button" role="switch" aria-checked="true"><span class="dio-sw-lbl">Security controls</span><span class="dio-sw-track" aria-hidden="true"><span class="dio-sw-knob"></span></span><span class="dio-sw-state" aria-hidden="true">On</span></button>
+            <p class="dio-sw-help" aria-hidden="true">Switch off to see what an attacker gets</p>
+            <p class="dio-toast" role="status" aria-live="polite"></p>
             <div class="dio-tools">
               <button class="icon-btn" id="dio-zoom-in" type="button" aria-label="Zoom in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
               <button class="icon-btn" id="dio-zoom-out" type="button" aria-label="Zoom out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
@@ -70,6 +72,7 @@
             <p class="dio-hint" aria-hidden="true">Drag to look around · Pinch or use + / − to zoom</p>
             <p class="dio-loading" role="status">Loading 3D site…</p>
           </div>
+          <div class="dio-card" id="dio-card" data-step="0" aria-live="polite"></div>
         </div>
       </div>
       <ol class="dio-steps" id="dio-steps">
@@ -81,9 +84,9 @@
     <div class="section-head"><div><p class="kicker">The list</p><h2 id="list-h">The 10 risks</h2></div></div>
     <div class="shelf acc-ot"><div class="shelf-head"><span class="shelf-n">4</span><div><p class="kicker">OWASP ranking</p><h3>Top 4: fundamental</h3><p class="note">There was consensus that these are fundamental for OT security.</p></div></div><div class="grid three"><a class="card pcard acc-ot reveal" href="unknown-assets-and-admin-access.html" data-slug="unknown-assets-and-admin-access" data-part="ot">
   <span class="pcard-top"><span class="pcard-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/><path d="M10 8.7a2 2 0 1 1 2.8 1.9c-.5.2-.8.6-.8 1.1v.4"/><circle cx="12" cy="13.6" r=".6"/></svg></span><span class="pcard-num">01</span></span>
-  <span class="card-title">Unknown Assets and Unmanaged External Access</span>
-  <p>You cannot protect what you do not know you have.</p>
-  <span class="meta"><span class="tag">In the plant: The shed with a forgotten PC and a supplier&#x27;s 4G modem</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
+  <span class="card-title">Unknown Assets and Unmanaged External Remote Access</span>
+  <p>You cannot protect what you do not know you have. You cannot protect the remote access connectivity you don&#x27;t know about.</p>
+  <span class="meta"><span class="tag">In the plant: Engineering workstation or maintenance PC with a supplier&#x27;s 4G modem</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
 </a><a class="card pcard acc-ot reveal" href="accessible-devices-with-known-vulnerabilities.html" data-slug="accessible-devices-with-known-vulnerabilities" data-part="ot">
   <span class="pcard-top"><span class="pcard-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 8.5a3.5 3.5 0 0 1 7 0"/><rect x="7" y="8.5" width="10" height="11" rx="5"/><path d="M12 11v8M3 13h4M17 13h4M4 7.5l3.2 2M20 7.5l-3.2 2M4 19l3.2-2M20 19l-3.2-2"/></svg></span><span class="pcard-num">02</span></span>
   <span class="card-title">Devices with Known Vulnerabilities/Issues</span>
@@ -92,12 +95,12 @@
 </a><a class="card pcard acc-ot reveal" href="inadequate_supply_chain_management.html" data-slug="inadequate_supply_chain_management" data-part="ot">
   <span class="pcard-top"><span class="pcard-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6h11v10h-11z"/><path d="M13.5 9.5h4l3 3.5v3h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span><span class="pcard-num">03</span></span>
   <span class="card-title">Inadequate Supplier/Supply Chain Management</span>
-  <p>Attackers sometimes come in through the people you trust most.</p>
-  <span class="meta"><span class="tag">In the plant: The supplier&#x27;s van at the gate</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
+  <p>Attackers sometimes come in through the people and equipment you trust most.</p>
+  <span class="meta"><span class="tag">In the plant: Vulnerable supplier&#x27;s equipment</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
 </a><a class="card pcard acc-ot reveal" href="loss-of-availability.html" data-slug="loss-of-availability" data-part="ot">
   <span class="pcard-top"><span class="pcard-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l2.5-6 4 12 3-9 1.5 3H22"/></svg></span><span class="pcard-num">04</span></span>
-  <span class="card-title">Loss of Availability</span>
-  <p>In OT, if it stops (or lies), people can get hurt.</p>
+  <span class="card-title">Loss of Availability / Denial of Service / Sabotage</span>
+  <p>In OT, if it stops (or lies), people can get hurt or the Company can lose millions of $$. Imagine a power cut due to a cyber attack.</p>
   <span class="meta"><span class="tag">In the plant: The production line that must never stop</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
 </a></div></div><div class="shelf acc-ot"><div class="shelf-head"><span class="shelf-n">5</span><div><p class="kicker">OWASP ranking</p><h3>Similar high importance</h3><p class="note">Items 5 to 9 were all deemed to be of similar high importance.</p></div></div><div class="grid three"><a class="card pcard acc-ot reveal" href="insufficient-access-control.html" data-slug="insufficient-access-control" data-part="ot">
   <span class="pcard-top"><span class="pcard-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8.5 6.5h7v3h-7z"/><circle cx="9" cy="13" r=".8"/><circle cx="12" cy="13" r=".8"/><circle cx="15" cy="13" r=".8"/><circle cx="9" cy="16.5" r=".8"/><circle cx="12" cy="16.5" r=".8"/><circle cx="15" cy="16.5" r=".8"/></svg></span><span class="pcard-num">05</span></span>
@@ -107,27 +110,27 @@
 </a><a class="card pcard acc-ot reveal" href="missing-incident-detection-reaction-capabilities.html" data-slug="missing-incident-detection-reaction-capabilities" data-part="ot">
   <span class="pcard-top"><span class="pcard-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path d="M12 2v1.5M12 20.5V22"/></svg></span><span class="pcard-num">06</span></span>
   <span class="card-title">Missing Incident Detection/Reaction Capabilities</span>
-  <p>The longer an intruder goes unnoticed, the worse it gets.</p>
-  <span class="meta"><span class="tag">In the plant: The camera and the screens nobody watches</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
+  <p>The longer an intruder goes unnoticed, the worse it gets. What can you do, if you do notice or detect?</p>
+  <span class="meta"><span class="tag">In the plant: The camera and the screens nobody watches or you don&#x27;t have</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
 </a><a class="card pcard acc-ot reveal" href="broken-zone-and-conduits-design.html" data-slug="broken-zone-and-conduits-design" data-part="ot">
   <span class="pcard-top"><span class="pcard-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="7" height="7" rx="1"/><rect x="14.5" y="4" width="7" height="7" rx="1"/><rect x="8.5" y="15" width="7" height="6" rx="1"/><path d="M9.5 7.5h5M6 11v2.5h6V15M18 11v2.5h-6"/></svg></span><span class="pcard-num">07</span></span>
-  <span class="card-title">Broken Zones and Conduits Design</span>
-  <p>Split the site into rooms with controlled doorways, not one big open hall.</p>
+  <span class="card-title">Incomplete Segregation</span>
+  <p>Incorrect or Incomplete Segregation of IT and OT (Industrial) Environments can often lead to OT devices being compromised easily. Flat networks are bad!</p>
   <span class="meta"><span class="tag">In the plant: The wall between office IT and the plant</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
 </a><a class="card pcard acc-ot reveal" href="missing-awareness.html" data-slug="missing-awareness" data-part="ot">
   <span class="pcard-top"><span class="pcard-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.3 1 2.2h5.2c0-.9.4-1.7 1-2.2A6 6 0 0 0 12 3z"/><path d="M12 7v4M12 13v.2"/></svg></span><span class="pcard-num">08</span></span>
-  <span class="card-title">Missing Awareness</span>
-  <p>The best lock is useless if nobody knows it is there, or why to use it.</p>
-  <span class="meta"><span class="tag">In the plant: The contractor on site</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
+  <span class="card-title">Missing Cybersecurity Training &amp; Awareness</span>
+  <p>The best lock is useless if nobody knows it is there, or why to use it. Are your employees, contractors and suppliers trained? Do they follow policies and procedures?</p>
+  <span class="meta"><span class="tag">In the plant: The untrained contractor on site</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
 </a><a class="card pcard acc-ot reveal" href="components-with-insufficient-security-capabilities.html" data-slug="components-with-insufficient-security-capabilities" data-part="ot">
   <span class="pcard-top"><span class="pcard-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v5M11 3v5"/><rect x="5" y="8" width="8" height="6" rx="1.5"/><path d="M9 14v2a4 4 0 0 0 4 4h3a3 3 0 0 0 3-3v-1"/><path d="M17 12l4 4M21 12l-4 4"/></svg></span><span class="pcard-num">09</span></span>
   <span class="card-title">Components/Protocols with Insufficient Security Capabilities</span>
-  <p>Do not build tomorrow&#x27;s site on yesterday&#x27;s insecure parts.</p>
-  <span class="meta"><span class="tag">In the plant: The old radio link on the tanks</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
+  <p>Can your control systems authenticate users and devices they communicate with? Can they reject communication with unauthenticated devices?</p>
+  <span class="meta"><span class="tag">In the plant: Control protocols that cannot authenticate</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
 </a></div></div><div class="shelf acc-ot"><div class="shelf-head"><span class="shelf-n">1</span><div><p class="kicker">OWASP ranking</p><h3>The final item</h3><p class="note">Not a security issue by itself, but it would have prevented many incidents.</p></div></div><div class="grid three"><a class="card pcard acc-ot reveal" href="missing-hardening.html" data-slug="missing-hardening" data-part="ot">
   <span class="pcard-top"><span class="pcard-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.5 8.6-8 10-4.5-1.4-8-5-8-10v-6z"/><path d="M12 8v7M8.5 11.5h7"/></svg></span><span class="pcard-num">10</span></span>
-  <span class="card-title">Missing Hardening</span>
-  <p>Switch off what you do not need, and add a few extra locks.</p>
+  <span class="card-title">Missing Endpoint Hardening</span>
+  <p>Switch off what you do not need, and add a few extra locks. Are your endpoints, SCADA servers, Operator workstations hardened?</p>
   <span class="meta"><span class="tag">In the plant: The server rack with open USB ports</span><span class="done-badge"><svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>Done</span></span>
 </a></div></div>
   </section>
