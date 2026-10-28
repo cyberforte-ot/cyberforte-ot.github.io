@@ -8,7 +8,7 @@ export function createPurdue(ctx) {
   const BY_NAME = {
     L5: ["cloud_L5", "data_line_cloud"], L4: ["office", "enterprise", "it_servers"], "L3.5": ["firewall_it", "firewall_ot", "dmz_walls_segmented", "dmz_walls_flat", "dmz_hut"],
     L3: ["server_rack_usb", "leds_racks", "historian"], L2: ["video_wall", "scada_screens", "engineering_workstation", "console", "operator_hmi"],
-    L1: ["plc_cabinet", "leds_plc", "plc"], L0: ["supplier_skid", "pump", "valve", "transmitter", "sensor", "instrument", "fan_"],
+    L1: ["plc_cabinet", "leds_plc", "plc"], L0: ["supplier_skid", "pump", "valve", "transmitter", "sensor", "instrument"],
   };
   const FIXED_BOX = { L4: new THREE.Box3(new THREE.Vector3(12, 0, -8), new THREE.Vector3(21, 12, 2)) };
   const SHORT = { L5: "Cloud", L4: "Enterprise IT", "L3.5": "Industrial DMZ", L3: "Data acquisition", L2: "Supervisory", L1: "Control", L0: "Sensors and actuators" };
