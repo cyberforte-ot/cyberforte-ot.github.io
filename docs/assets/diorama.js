@@ -182,7 +182,7 @@ function init() {
   cv.style.touchAction = "pan-y";
   cv.addEventListener("pointerdown", (e) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
-    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, intent: e.pointerType === "mouse" ? "orbit" : null });
     if (pointers.size === 2) { const p = Array.from(pointers.values()); pinchDist = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y); pinchMid = { x: (p[0].x + p[1].x) / 2, y: (p[0].y + p[1].y) / 2 }; }
     cv.setPointerCapture && cv.setPointerCapture(e.pointerId);
     stage.classList.add("dragging");
@@ -193,6 +193,9 @@ function init() {
     p.x = e.clientX; p.y = e.clientY;
     if (!st.ready) return;
     if (pointers.size === 1) {
+      /* one finger: a sideways drag orbits, an up-and-down drag is left to the page scroll */
+      if (!p.intent) { const ddx = e.clientX - p.sx, ddy = e.clientY - p.sy; if (Math.hypot(ddx, ddy) < 8) return; p.intent = Math.abs(ddx) > Math.abs(ddy) * 1.2 ? "orbit" : "scroll"; }
+      if (p.intent !== "orbit") return;
       /* a full-width drag turns half a circle; a full-height drag tilts about a third */
       goal.az -= dx / Math.max(1, cv.clientWidth) * Math.PI; goal.el += dy / Math.max(1, cv.clientHeight) * Math.PI * 0.35; clampGoal(); userMoved();
     } else if (pointers.size === 2) {
