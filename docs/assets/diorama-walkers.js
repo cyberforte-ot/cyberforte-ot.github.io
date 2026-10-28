@@ -28,6 +28,9 @@ export function createWalkers(ctx) {
     return d.normalize();
   }
 
+  /* the nine idle people share one mesh and one looping clip */
+  const idleGroup = clipByName.people_idle;
+  if (idleGroup && mixer) { const a = mixer.clipAction(idleGroup); a.play(); }
   Object.keys(nodes).forEach((name) => {
     const m = name.match(/^person_(.+?)_rig$/); if (!m) return;
     const rig = nodes[name], key = m[1];

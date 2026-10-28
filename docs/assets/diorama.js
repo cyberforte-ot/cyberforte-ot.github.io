@@ -8,6 +8,7 @@ import { createLive } from "./diorama-live.js";
 import { RoomEnvironment } from "./vendor/RoomEnvironment.js";
 import { createWalkers } from "./diorama-walkers.js";
 import { createPurdue } from "./diorama-purdue.js";
+import { createTrees } from "./diorama-trees.js";
 
 const section = document.getElementById("diorama");
 const stage = document.getElementById("dio-stage");
@@ -21,7 +22,7 @@ function init() {
   const small = Math.min(window.innerWidth, window.innerHeight) < 700;
   const lowPower = small || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || (navigator.deviceMemory && navigator.deviceMemory <= 4) || (navigator.connection && navigator.connection.saveData);
   const modelsBase = section.getAttribute("data-models") || "../assets/models/";
-  const MODEL_VERSION = "v3_3";
+  const MODEL_VERSION = "v3_4";
   const RISKS = DATA.risks, PURDUE = DATA.purdue;
   const byN = {}; RISKS.forEach((r) => { byN[r.n] = r; });
 
@@ -100,6 +101,7 @@ function init() {
   const tweens = [];
   let mixer = null, root = null, levelRanges = {}, steamSprites = [], cloudSprites = [], people = null, pulses = [], strataSlab = null, dmzSlab = null, doorNode = null;
   let cloudLineMats = [];
+  let trees = null;
   const CLOUD_CLIP_Y = 12.5;
   const cloudClip = new THREE.Plane(new THREE.Vector3(0, -1, 0), CLOUD_CLIP_Y);
   const fadeMats = [];   // materials that fade in purdue mode
@@ -322,6 +324,13 @@ function init() {
         if (m.name === "SteamSpriteWeb") { o.visible = false; }
         if (m.name === "LeafAtlasWeb") { m.alphaTest = Math.max(m.alphaTest || 0, 0.45); m.side = THREE.DoubleSide; }
         if (m.name === "GlassWeb") { m.depthWrite = false; m.roughness = 0.12; }
+        if ((o.userData && o.userData.unlit) || m.name === "GroundBakeWeb" || m.name === "ImpostorWeb") {
+          /* baked or pre-lit textures: render unlit so they are not lit twice */
+          const u = new THREE.MeshBasicMaterial({ map: m.map || m.emissiveMap || null, color: 0xffffff, vertexColors: !!o.geometry.attributes.color, transparent: !!m.transparent, alphaTest: m.name === "ImpostorWeb" ? Math.max(m.alphaTest || 0, 0.5) : (m.alphaTest || 0), side: m.side, fog: true, toneMapped: true });
+          u.name = m.name; u.userData = Object.assign({}, m.userData);
+          if (Array.isArray(o.material)) o.material[i] = u; else o.material = u;
+          o.castShadow = m.name !== "GroundBakeWeb"; o.receiveShadow = m.name === "GroundBakeWeb";
+        }
         if (m.name === "DataCyanWeb" || m.name === "DataFlatWeb") { m.transparent = true; m.toneMapped = false; m.emissiveIntensity = Math.max(1, m.emissiveIntensity || 1) * 0.55; }
       });
     });
@@ -396,6 +405,17 @@ function init() {
       o.traverse((m) => { if (m.isMesh) { const ms = Array.isArray(m.material) ? m.material : [m.material]; ms.forEach((mat) => { if (mat && fadeMats.indexOf(mat) < 0) { mat.userData.baseOpacity = mat.opacity; fadeMats.push(mat); } }); } });
     });
     setHideVisible = (v) => hideNodes().forEach((o) => { o.visible = v; });
+
+    /* tree impostors: instanced billboards from the atlas + instance extras (the placeholder mesh is hidden) */
+    const treeNode = nodes.trees_impostor;
+    if (treeNode) {
+      try {
+        const atlas = parseExtra(treeNode.userData.impostor_atlas), inst = parseExtra(treeNode.userData.instances);
+        let tex = null; treeNode.traverse((m) => { if (!tex && m.isMesh) { const mm = Array.isArray(m.material) ? m.material[0] : m.material; tex = mm && (mm.map || mm.emissiveMap); } });
+        trees = (atlas && Array.isArray(inst)) ? createTrees({ THREE, atlas, instances: inst, texture: tex }) : null;
+        if (trees) { treeNode.visible = false; scene.add(trees.mesh); nodes.trees_web_impostors = trees.mesh; trees.setFog(scene.fog.color, scene.fog.near, scene.fog.far); console.info("[diorama] trees", trees.count); }
+      } catch (err) { console.warn("[diorama] trees failed", err); trees = null; }
+    }
 
     /* steam + cloud as true billboards from the extras */
     buildSprites(nodes.steam_plume, "steam");
@@ -546,7 +566,9 @@ function init() {
         const paths = parseExtra(o.userData.paths);
         if (!paths || typeof paths !== "object") return;
         Object.keys(paths).forEach((k) => {
-          const pts = paths[k].map((p) => new THREE.Vector3(p[0], p[1], p[2]));
+          const entry = paths[k], raw = Array.isArray(entry) ? entry : (entry && entry.path);
+          if (!Array.isArray(raw)) return;
+          const pts = raw.map((p) => new THREE.Vector3(p[0], p[1], p[2]));
           if (pts.length < 2) return;
           const c = new THREE.CatmullRomCurve3(pts, false, "centripetal", 0.5);
           const len = c.getLength();
@@ -1014,6 +1036,7 @@ function init() {
         busy = true;
       } else if (!steamSprites.rested) { restSteam(); steamSprites.rested = true; updatePulses(0, 1); if (live) live.rest(); }
 
+      if (trees) { trees.mat.uniforms.uOpacity.value = trees.mat.opacity; trees.mat.transparent = trees.mat.opacity < 1; trees.setFog(scene.fog.color, scene.fog.near, scene.fog.far); }
       renderer.render(scene, camera);
       placeMarkers();
       placeLevelLabels();
