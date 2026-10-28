@@ -38,7 +38,7 @@ function init() {
   const STILLS_BASE = (section.getAttribute("data-stills") || "../assets/img/risk/");
   const stillImgs = [0, 1].map(() => { const im = document.createElement("img"); im.className = "dio-still"; im.alt = ""; im.decoding = "async"; im.setAttribute("aria-hidden", "true"); return im; });
   const stills = { cur: -1, shown: null, missing: {}, loaded: {}, pending: null, manifest: null };
-  let stillArm = 0;
+  let stillArm = 0, idleSince = 0;
   fetch(STILLS_BASE + "manifest.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).then((m) => { stills.manifest = Array.isArray(m) ? m : (m && m.files) || []; }).catch(() => { stills.manifest = []; });
   const switchBtn = document.getElementById("dio-controls");
   const layersBtn = document.getElementById("dio-layers");
@@ -520,8 +520,7 @@ function init() {
     const posterEl = stage.querySelector(".dio-poster");
     const dropPoster = () => { if (!posterEl || posterEl.hidden) return; stage.classList.add("live"); setTimeout(() => { posterEl.hidden = true; }, reduce ? 0 : 900); };
     stills.onFirstShow = dropPoster;                 // the wide still replaces the poster seamlessly
-    ["pointerdown", "wheel", "keydown"].forEach((ev) => cv.addEventListener(ev, dropPoster, { once: true, passive: true }));
-    stage.addEventListener("keydown", dropPoster, { once: true });
+    cv.addEventListener("pointermove", (e) => { if (pointers.size) dropPoster(); });   // an orbit drag, not a tap or a page scroll
     setTimeout(dropPoster, 6000);                    // and in any case once the still has had time to load
     section.setAttribute("data-live", "1");
     if (statusEl) statusEl.textContent = "";
@@ -733,7 +732,8 @@ function init() {
 
   /* ---------- stills */
   function stillKey() {
-    if (st.mode !== MODE.SITE || st.userView || glide) return null;
+    if (st.mode !== MODE.SITE || glide) return null;
+    if (st.userView && !atCanonicalPose()) return null;
     const id = st.active ? "risk_" + String(st.active).padStart(2, "0") : "wide";
     return id + "-" + (st.controls ? "on" : "off") + "-" + (aspect < 1 ? "mobile" : "desktop");
   }
@@ -756,6 +756,19 @@ function init() {
     stills.cur = next; stills.shown = key;
   }
   function hideStill() { if (stills.shown === null) return; stillImgs.forEach((im) => { im.classList.remove("show"); im.classList.add("drop"); im.hidden = true; im.classList.remove("drop"); }); stills.shown = null; }
+  function atCanonicalPose() {
+    if (glide || pointers.size) return false;
+    const p = st.mode === MODE.PURDUE ? null : (st.active ? cams[byN[st.active].cam] : cams.wide);
+    if (!p) return false;
+    const q = fitForAspect(p);
+    return Math.abs(pose.az - q.az) < 0.02 && Math.abs(pose.el - q.el) < 0.02 && Math.abs(pose.dist - q.dist) < q.dist * 0.03 && pose.t.distanceTo(q.t) < 0.5;
+  }
+  function stillIdleTick(now) {
+    if (!st.ready || st.mode !== MODE.SITE) return;
+    if (!atCanonicalPose()) { idleSince = 0; return; }
+    if (!idleSince) idleSince = now;
+    if (now - idleSince > 1200 && stills.shown !== stillKey()) { st.userView = false; syncStill(); }
+  }
   function syncStill() {
     const key = stillKey();
     if (!key) { hideStill(); return; }
@@ -1125,11 +1138,12 @@ function init() {
       } else if (!steamSprites.rested) { restSteam(); steamSprites.rested = true; updatePulses(0, 1); if (live) live.rest(); }
 
       if (trees) { trees.mat.uniforms.uOpacity.value = trees.mat.opacity; trees.mat.transparent = trees.mat.opacity < 1; trees.setFog(scene.fog.color, scene.fog.near, scene.fog.far); trees.setLight(sunDirTmp.subVectors(sun.position, sun.target.position), sun.color, sun.intensity, hemi.color, hemi.groundColor, hemi.intensity); }
+      stillIdleTick(now);
       renderer.render(scene, camera);
       placeMarkers();
       placeLevelLabels();
     }
-    running = busy || needs;
+    running = busy || needs || (st.ready && st.mode === MODE.SITE && stills.shown !== stillKey() && idleSince > 0);
     if (running) requestAnimationFrame(frame);
   }
   if ("IntersectionObserver" in window) {
