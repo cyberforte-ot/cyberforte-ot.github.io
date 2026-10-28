@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OT10. Missing Hardening | CyberForte</title>
-<meta name="description" content="Switch off what you do not need, and add a few extra locks.">
+<title>OT10. Missing Endpoint Hardening | CyberForte</title>
+<meta name="description" content="Switch off what you do not need, and add a few extra locks. Are your endpoints, SCADA servers, Operator workstations hardened?">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/missing-hardening.html">
-<meta property="og:title" content="OT10. Missing Hardening | CyberForte">
-<meta property="og:description" content="Switch off what you do not need, and add a few extra locks.">
+<meta property="og:title" content="OT10. Missing Endpoint Hardening | CyberForte">
+<meta property="og:description" content="Switch off what you do not need, and add a few extra locks. Are your endpoints, SCADA servers, Operator workstations hardened?">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
@@ -37,10 +37,10 @@
   <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">OWASP OT Top 10</a> <span aria-hidden="true">/</span> Risk 10</p>
   <header class="article-head acc-ot">
     <div class="ah-text">
-      <div class="eyebrow rise">OT Top 10 · Risk 10 of 10</div>
-      <h1 class="rise d1">Missing Hardening</h1>
-      <p class="tagline rise d2">Switch off what you do not need, and add a few extra locks.</p>
-      <div class="tags rise d3"><span class="tag acc">Would have prevented many incidents</span><span class="tag">In the plant: The server rack with open USB ports</span></div>
+      <div class="eyebrow rise">OT risk 10 of 10 · The server rack with open USB ports</div>
+      <h1 class="rise d1">Missing Endpoint Hardening</h1>
+      <p class="tagline rise d2">Switch off what you do not need, and add a few extra locks. Are your endpoints, <abbr title="supervisory control and data acquisition">SCADA</abbr> servers, Operator workstations hardened?</p>
+      <div class="tags rise d3"><span class="tag acc">Would have prevented many incidents</span></div>
     </div>
     <div class="art acc-ot" aria-hidden="true">
   <div class="art-grid"></div>
@@ -53,7 +53,7 @@
     <aside class="rail" aria-label="On this page">
   <div class="rail-inner">
     <p class="rail-h">On this page</p>
-    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#questions">Questions to ask</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
     <div class="rail-prog"><div class="mini-bar"><span data-part-bar="ot"></span></div><p><b data-part-done="ot">0</b> of 10 risks done</p></div>
   </div>
 </aside>
@@ -61,7 +61,13 @@
       <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
         <h2 id="pw-h">What it is, in plain words</h2>
-        <p class="first">Hardening does not fix a specific bug. It makes the attacker&#x27;s job much harder: remove unused services, close unused ports, disable default accounts, and add extra layers like firewalls and allow-listing.</p><p>OWASP included it because the data they gathered showed missing hardening was a common part of successful attacks. In OT, where you cannot always patch quickly, hardening buys you safe time.</p>
+        <p class="first">Endpoints are the computers and devices on your network: supervisory control and data acquisition (SCADA) servers, operator and engineering workstations, and the like. Hardening does not fix a specific bug. It makes the attacker&#x27;s job much harder: remove unused services, close unused ports, disable default accounts, and add extra layers like firewalls and allow-listing.</p><p>OWASP included it because the data they gathered showed missing hardening was a common part of successful attacks. In operational technology (OT), where you cannot always patch quickly, hardening buys you safe time.</p>
+      </section>
+      <section class="panel lists-panel reveal" id="questions" aria-label="Questions to ask and what is typically missing">
+        <div class="lists">
+          <div><h3>Questions to ask</h3><p class="note">Put these to your own site, and answer honestly.</p><ul><li>Are your endpoints, SCADA servers and operator workstations hardened to a named guide?</li><li>Are unused services, ports and interfaces, including USB and debug ports, switched off?</li><li>Have default accounts and passwords been disabled or changed?</li><li>Who checks that hardening is still in place after a maintenance visit?</li><li>Can only approved applications run on your critical machines?</li></ul></div>
+          <div><h3>What is typically missing</h3><p class="note">Common shortcomings, drawn from the OWASP entry.</p><ul><li>No named hardening guide, such as CIS Benchmarks or the vendor&#x27;s own guide, applied.</li><li>Unused services, ports and USB interfaces left open.</li><li>Default accounts and passwords still in place.</li><li>Hardening undone during maintenance and never checked again.</li><li>Tenders that do not ask integrators for a documented hardening concept.</li></ul></div>
+        </div>
       </section>
       <section class="panel lists-panel reveal" id="why" aria-label="Why it matters and how to reduce the risk">
         <div class="lists">
