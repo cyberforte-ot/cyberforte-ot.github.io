@@ -15,10 +15,13 @@ export function createTrees(ctx) {
   geo.index = quad.index; geo.setAttribute("position", quad.getAttribute("position")); geo.setAttribute("uv", quad.getAttribute("uv"));
   const pos = new Float32Array(n * 3), inst = new Float32Array(n * 4);
   instances.forEach((it, i) => {
-    const v = variants[it.row != null ? it.row : (it.variant || 0)] || variants[0] || {};
+    const vi = it.variant != null ? it.variant : (it.row || 0);
+    const v = variants[vi] || variants[0] || {};
     pos[i * 3] = it.pos_yup[0]; pos[i * 3 + 1] = it.pos_yup[1]; pos[i * 3 + 2] = it.pos_yup[2];
-    inst[i * 4] = (v.size_m || 4.5) * (it.scale || 1); inst[i * 4 + 1] = (v.top_size_m || v.size_m || 4.5) * (it.scale || 1);
-    inst[i * 4 + 2] = it.row != null ? it.row : (it.variant || 0); inst[i * 4 + 3] = it.tint == null ? 1 : it.tint;
+    const sc = it.scale || 1;
+    inst[i * 4] = (v.diameter_m || v.size_m || 4.5) * sc;
+    inst[i * 4 + 1] = hemi ? (v.centre_height_m != null ? v.centre_height_m : (v.diameter_m || 4.5) * 0.5) * sc : (v.top_size_m || v.size_m || 4.5) * sc;
+    inst[i * 4 + 2] = vi; inst[i * 4 + 3] = it.tint == null ? 1 : it.tint;
   });
   geo.setAttribute("iPos", new THREE.InstancedBufferAttribute(pos, 3));
   geo.setAttribute("iData", new THREE.InstancedBufferAttribute(inst, 4));
@@ -41,10 +44,9 @@ export function createTrees(ctx) {
   let material;
   if (hemi && grid >= 2) {
     /* ---- hemi-octahedral: frames laid out grid×grid per variant row block */
-    const framesPerRow = +atlas.cols || grid, rowsPerVariant = +atlas.rows_per_variant || grid;
-    const vRows = +atlas.variant_rows || variants.length || 1;
+    const nVariants = Math.max(1, variants.length || +atlas.variant_count || 5);
     material = new THREE.ShaderMaterial({
-      uniforms: { map: { value: texture }, uGrid: { value: grid }, uCols: { value: framesPerRow }, uVRows: { value: vRows }, uRowsPer: { value: rowsPerVariant }, uOpacity: { value: 1 }, uFlip: { value: new THREE.Vector2(+(atlas.flip_x || 0), +(atlas.flip_y || 0)) }, fogColor: { value: new THREE.Color(0xe4ecf1) }, fogNear: { value: 120 }, fogFar: { value: 300 } },
+      uniforms: { map: { value: texture }, uGrid: { value: grid }, uVariants: { value: nVariants }, uOpacity: { value: 1 }, uFlip: { value: new THREE.Vector2(+(atlas.flip_x || 0), +(atlas.flip_y || 0)) }, fogColor: { value: new THREE.Color(0xe4ecf1) }, fogNear: { value: 120 }, fogFar: { value: 300 } },
       vertexShader: `
         attribute vec3 iPos; attribute vec4 iData;
         uniform float uGrid;
@@ -55,7 +57,7 @@ export function createTrees(ctx) {
           vec3 right = normalize(cross(vec3(0.0, 1.0, 0.0), d));
           vec3 up = cross(d, right);
           float size = iData.x;
-          vec3 centre = iPos + vec3(0.0, size * 0.5, 0.0);
+          vec3 centre = iPos + vec3(0.0, iData.y, 0.0);
           vec3 p = centre + right * (position.x * size) + up * (position.y * size);
           vLocal = position.xy; vFrame = d; vW = p; vSize = size; vRow = iData.z; vTint = iData.w;
           vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -63,11 +65,12 @@ export function createTrees(ctx) {
           gl_Position = projectionMatrix * mv;
         }`,
       fragmentShader: `
-        uniform float uGrid, uCols, uVRows, uRowsPer; uniform vec2 uFlip;
+        uniform float uGrid, uVariants; uniform vec2 uFlip;
         varying vec2 vLocal; varying vec3 vFrame; varying vec3 vW; varying float vSize; varying float vRow;
         ${common}
-        vec2 encode(vec3 d) { d /= dot(abs(d), vec3(1.0)); return vec2(d.x + d.z, d.x - d.z) * 0.5 + 0.5; }
-        vec3 decode(vec2 uv) { vec2 f = uv * 2.0 - 1.0; vec3 d = vec3((f.x + f.y) * 0.5, 0.0, (f.x - f.y) * 0.5); d.y = 1.0 - abs(d.x) - abs(d.z); return normalize(d); }
+        /* from the atlas extras: Blender (x, y, z-up) = three (x, -z, y) */
+        vec2 encode(vec3 d) { float bx = d.x, by = -d.z, bz = max(d.y, 0.0); float s = abs(bx) + abs(by) + bz; float ox = bx / s, oy = by / s; float a = ox + oy, b = ox - oy; return vec2((a + 1.0) * 0.5, (b + 1.0) * 0.5); }
+        vec3 decode(vec2 uv) { float a = 2.0 * uv.x - 1.0, b = 2.0 * uv.y - 1.0; float ox = (a + b) * 0.5, oy = (a - b) * 0.5; return normalize(vec3(ox, 1.0 - abs(ox) - abs(oy), -oy)); }
         vec4 frameSample(vec2 cell, vec3 fd) {
           /* project the billboard point onto this frame's plane and sample its cell */
           vec3 fx = normalize(cross(vec3(0.0, 1.0, 0.0), fd)); vec3 fy = cross(fd, fx);
@@ -78,20 +81,19 @@ export function createTrees(ctx) {
           float d2 = dot(world, fd); px += 0.0 * d2;                     // (parallax ignored: flat cards)
           vec2 local = clamp(vec2(px, py) + 0.5, 0.001, 0.999);
           if (uFlip.x > 0.5) local.x = 1.0 - local.x; if (uFlip.y > 0.5) local.y = 1.0 - local.y;
-          float blockRow = vRow * uRowsPer;
-          vec2 uv = vec2((cell.x + local.x) / uCols, (blockRow + cell.y + (1.0 - local.y)) / (uVRows * uRowsPer));
+          vec2 uv = vec2((vRow * uGrid + cell.x + local.x) / (uVariants * uGrid), (cell.y + (1.0 - local.y)) / uGrid);
           return texture2D(map, uv);
         }
         void main() {
-          vec2 g = encode(vFrame) * (uGrid - 1.0);
+          vec2 g = clamp(encode(vFrame) * uGrid - 0.5, 0.0, uGrid - 1.0);
           vec2 c0 = floor(g); vec2 f = g - c0;
           vec2 cA = c0, cB, cC; vec3 w;
           if (f.x + f.y < 1.0) { cB = c0 + vec2(1.0, 0.0); cC = c0 + vec2(0.0, 1.0); w = vec3(1.0 - f.x - f.y, f.x, f.y); }
           else { cA = c0 + vec2(1.0, 1.0); cB = c0 + vec2(1.0, 0.0); cC = c0 + vec2(0.0, 1.0); w = vec3(f.x + f.y - 1.0, 1.0 - f.y, 1.0 - f.x); }
           cA = min(cA, uGrid - 1.0); cB = min(cB, uGrid - 1.0); cC = min(cC, uGrid - 1.0);
-          vec4 a = frameSample(cA, decode(cA / (uGrid - 1.0)));
-          vec4 b = frameSample(cB, decode(cB / (uGrid - 1.0)));
-          vec4 c = frameSample(cC, decode(cC / (uGrid - 1.0)));
+          vec4 a = frameSample(cA, decode((cA + 0.5) / uGrid));
+          vec4 b = frameSample(cB, decode((cB + 0.5) / uGrid));
+          vec4 c = frameSample(cC, decode((cC + 0.5) / uGrid));
           vec4 s = a * w.x + b * w.y + c * w.z;
           float asum = max(s.a, 0.0001);
           s.rgb = (a.rgb * a.a * w.x + b.rgb * b.a * w.y + c.rgb * c.a * w.z) / asum;   // alpha-weighted colour
