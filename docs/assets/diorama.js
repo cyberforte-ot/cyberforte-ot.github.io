@@ -714,7 +714,7 @@ function init() {
     const cur = id !== undefined ? id : (hoverLevel || st.level);
     const lv = PURDUE.find((l) => l.id === cur);
     let html;
-    if (!lv) html = '<p class="dio-level-desc">Each level only talks to its neighbours. The DMZ in the middle is the one doorway between the office and the plant.</p>';
+    if (!lv) html = '<p class="dio-level-desc">Pick a level to see what lives there and which of the ten risks touch it.</p>';
     else {
       const risks = lv.risks.map((n) => '<a href="' + byN[n].slug + '">' + n + '</a>').join(" ");
       const dmz = lv.id === "L3.5";
