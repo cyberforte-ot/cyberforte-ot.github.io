@@ -70,7 +70,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; }
-@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+@media (prefers-reduced-motion: no-preference) { html {  } }
 body {
   margin: 0; background: var(--bg); color: var(--text);
   font-family: var(--font); font-size: 17px; line-height: 1.65;
@@ -756,7 +756,8 @@ figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
 .dio-ll.hot b { color: #fff; }
 /* step column */
 .dio-steps { list-style: none; margin: 0; padding: 0; }
-.dio-step { min-height: 56vh; display: flex; flex-direction: column; justify-content: center; padding: 20px 0; transition: opacity .5s var(--ease), transform .6s var(--ease); }
+.dio-step { min-height: 90vh; min-height: 90svh; display: flex; flex-direction: column; justify-content: center; padding: 20px 0; scroll-snap-align: center; scroll-snap-stop: always; transition: opacity .5s var(--ease), transform .6s var(--ease); }
+html:has(.dio[data-live="1"]) { scroll-snap-type: y proximity; }
 .dio[data-live="1"] .dio-step { opacity: .4; transform: translateY(8px); }
 .dio[data-live="1"] .dio-step.on { opacity: 1; transform: none; }
 .dio-step h3 { font-size: 23px; margin: 0 0 8px; letter-spacing: -.012em; }
@@ -834,7 +835,7 @@ figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
   .dio-grid { display: block; }
   .dio-stage { height: calc(100vh - var(--dio-top)); height: calc(100svh - var(--dio-top)); }
   .dio-steps { padding: 0; }
-  .dio-step { min-height: 62vh; visibility: hidden; opacity: 0 !important; transform: none !important; pointer-events: none; }
+  .dio-step { min-height: 100vh; min-height: 100svh; visibility: hidden; opacity: 0 !important; transform: none !important; pointer-events: none; }
   .dio-step-intro { min-height: 34vh; }
   .dio-step-purdue { min-height: 110vh; }
   .dio[data-live="1"] .dio-card { display: block; }

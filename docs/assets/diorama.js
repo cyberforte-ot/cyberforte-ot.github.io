@@ -1032,7 +1032,7 @@ function init() {
   function goToStep(n, scroll) {
     const el = steps.find((s) => +s.getAttribute("data-step") === n);
     if (scroll && el) {
-      suppressIO = performance.now() + 900;
+      suppressIO = performance.now() + 900; pendingStep = n;
       el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
     }
     setStep(n, reduce);
@@ -1044,35 +1044,20 @@ function init() {
     return best;
   }
   let suppressIO = 0;
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver((ents) => {
-      ents.forEach((en) => {
-        if (!en.isIntersecting) return;
-        const k = +en.target.getAttribute("data-step");
-        if (performance.now() < suppressIO && k !== st.step) return;
-        if (k !== st.step) setStep(k);
-      });
-    }, { rootMargin: "-42% 0px -42% 0px", threshold: 0 });
-    steps.forEach((s) => io.observe(s)); observers.push(io);
+  /* scroll tracking: nearest step to the viewport centre, settled for ~120 ms, one setStep per settled position */
+  let scrollRaf = 0, settleTimer = 0, pendingStep = -1;
+  function onScroll() {
+    if (scrollRaf) return;
+    scrollRaf = requestAnimationFrame(() => {
+      scrollRaf = 0;
+      const k = currentStepFromScroll();
+      if (k === pendingStep) return;
+      pendingStep = k;
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(() => { if (performance.now() < suppressIO && pendingStep !== st.step) return; if (pendingStep !== st.step) setStep(pendingStep); }, 120);
+    });
   }
-  if (card) card.addEventListener("click", (e) => {
-    const t = e.target;
-    if (t.closest(".dio-card-hide")) { card.classList.add("hidden"); stage.focus({ preventScroll: true }); }
-    else if (t.closest(".dio-card-more")) { const open = !card.classList.contains("expanded"); card.classList.toggle("expanded", open); t.closest(".dio-card-more").setAttribute("aria-expanded", open ? "true" : "false"); t.closest(".dio-card-more").textContent = open ? "Less" : "More"; }
-  });
-  /* a plain tap on the scene (no drag) hides the card; the markers, dots or a new step bring it back */
-  let tapStart = null;
-  cv.addEventListener("pointerdown", (e) => { tapStart = { x: e.clientX, y: e.clientY, t: performance.now() }; });
-  cv.addEventListener("pointerup", (e) => {
-    const tap = tapStart && Math.hypot(e.clientX - tapStart.x, e.clientY - tapStart.y) < 6 && performance.now() - tapStart.t < 400;
-    tapStart = null; if (!tap) return;
-    if (st.mode === MODE.PURDUE && purdue) {
-      const r = cv.getBoundingClientRect();
-      const id = purdue.pick(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1, camera);
-      if (id) { hoverLevel = null; st.level = id; refreshLevel(); card && card.classList.remove("hidden"); return; }
-    }
-    if (card && !card.classList.contains("hidden")) card.classList.add("hidden");
-  });
+  window.addEventListener("scroll", onScroll, { passive: true });
   section.addEventListener("click", (e) => {
     const b = e.target && e.target.closest && e.target.closest(".dio-view"); if (!b) return;
     const n = +b.getAttribute("data-view");
