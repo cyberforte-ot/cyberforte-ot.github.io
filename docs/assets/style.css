@@ -670,7 +670,7 @@ figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
 .dio-poster { position: absolute; inset: 0; margin: 0; transition: opacity 1.2s var(--ease); pointer-events: none; background: #e4ecf1; }
 .dio-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .dio-stage[data-state="ready"] .dio-gl { opacity: 1; }
-.dio-stage[data-state="ready"] .dio-poster { opacity: 0; }
+.dio-stage[data-state="ready"].live .dio-poster { opacity: 0; }
 .dio-fallback { display: none; position: absolute; inset: 0; background: var(--sc-sky1); }
 .dio-fallback .scene-svg { width: 100%; height: 100%; display: block; }
 .dio-fallback .spots a { position: absolute; transform: translate(-50%, -50%); width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; background: var(--red); color: #fff; font: 700 12px/1 var(--font); display: grid; place-items: center; text-decoration: none; box-shadow: 0 4px 14px rgba(237, 28, 36, .4); }
@@ -812,6 +812,7 @@ figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
 .dio-card[data-step="11"] .dio-tag { display: block; }
 .dio-card[data-step="11"] .dio-tag-sub { display: none; }
 /* pre-rendered stills crossfade over the live view when the camera is at rest */
+.dio-poster { z-index: 2; }
 .dio-still { z-index: 1; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; opacity: 0; transition: opacity .6s var(--ease); pointer-events: none; will-change: opacity, transform; }
 .dio-still[hidden], .dio-poster[hidden] { display: none; }
 .dio-still.show { opacity: 1; animation: dio-kenburns 16s ease-in-out infinite alternate; }

@@ -516,7 +516,12 @@ function init() {
     Object.assign(goal, { az: pose.az, el: pose.el, dist: pose.dist, fov: pose.fov }); goal.t.copy(pose.t);
     st.ready = true;
     stage.setAttribute("data-state", "ready");
-    const posterEl = stage.querySelector(".dio-poster"); if (posterEl) setTimeout(() => { posterEl.hidden = true; }, reduce ? 0 : 1400);
+    const posterEl = stage.querySelector(".dio-poster");
+    const dropPoster = () => { if (!posterEl || posterEl.hidden) return; stage.classList.add("live"); setTimeout(() => { posterEl.hidden = true; }, reduce ? 0 : 900); };
+    stills.onFirstShow = dropPoster;                 // the wide still replaces the poster seamlessly
+    ["pointerdown", "wheel", "keydown"].forEach((ev) => cv.addEventListener(ev, dropPoster, { once: true, passive: true }));
+    stage.addEventListener("keydown", dropPoster, { once: true });
+    setTimeout(dropPoster, 6000);                    // and in any case once the still has had time to load
     section.setAttribute("data-live", "1");
     if (statusEl) statusEl.textContent = "";
     setStep(currentStepFromScroll());
@@ -745,6 +750,7 @@ function init() {
     if (!stills.loaded[key]) { preloadStill(key); return; }
     const next = (stills.cur + 1) % 2, im = stillImgs[next];
     im.hidden = false; im.src = stillUrl(key);
+    if (stills.onFirstShow) { const f = stills.onFirstShow; stills.onFirstShow = null; f(); }
     im.classList.add("show"); stillImgs[stills.cur === -1 ? 1 : stills.cur].classList.remove("show");
     stills.cur = next; stills.shown = key;
   }
