@@ -17,7 +17,7 @@ function init() {
   const small = Math.min(window.innerWidth, window.innerHeight) < 700;
   const lowPower = small || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || (navigator.deviceMemory && navigator.deviceMemory <= 4) || (navigator.connection && navigator.connection.saveData);
   const modelsBase = section.getAttribute("data-models") || "../assets/models/";
-  const MODEL_VERSION = "v3_2";
+  const MODEL_VERSION = "v3_2c";
   const RISKS = DATA.risks, PURDUE = DATA.purdue;
   const byN = {}; RISKS.forEach((r) => { byN[r.n] = r; });
 
@@ -411,7 +411,8 @@ function init() {
     if (hasVertexColor) {
       m.vertexColors = true;
       m.emissive.set(0xffffff);
-      m.emissiveIntensity = base.emissiveIntensity || 3;
+      /* the exporter drops the emissive factor; the Blender agent leaves the strength in extras */
+      m.emissiveIntensity = +(base.userData && base.userData.emissive_strength_hint) || (base.emissive && base.emissive.getHex() ? base.emissiveIntensity : 2.5);
       m.onBeforeCompile = (shader) => {
         shader.fragmentShader = shader.fragmentShader.replace("#include <emissivemap_fragment>", "#include <emissivemap_fragment>\n#ifdef USE_COLOR\n\ttotalEmissiveRadiance *= vColor.rgb;\n#endif\n");
       };
