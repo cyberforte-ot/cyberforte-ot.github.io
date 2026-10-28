@@ -37,11 +37,11 @@
       where: "Vulnerable supplier's equipment",
       title: "Inadequate Supplier/Supply Chain Management",
       tag: "Attackers sometimes come in through the people and equipment you trust most.",
-      look: "A supplier's equipment skid in the yard (a pre-built unit delivered with its own computer inside), and the supplier's van that brought it.",
+      look: "A supplier's equipment skid in the yard: a pre-built unit delivered with its own computer inside, plugged straight into the plant.",
       wrong: "If the supplier's kit or laptop is already infected, the attack arrives with the delivery, through a door you trust.",
       control: "Security requirements in supplier contracts, checks on what suppliers bring in, and supervision while they work.",
       off: "Controls off: the supplier's equipment connects unchecked. Whatever it carries comes with it.",
-      objects: ["supplier_skid", "supplier_van"], level: "L5" },
+      objects: ["supplier_skid"], level: "L5" },
     { n: 4, slug: "loss-of-availability.html", hook: "risk_04", cam: "cam_risk_04",
       where: "The production line that must never stop",
       title: "Loss of Availability / Denial of Service / Sabotage",
@@ -159,10 +159,13 @@
     '<p class="sc-k">Purdue reference architecture</p><h3>Seven levels, one site.</h3>' +
     '<p class="dio-tag">' + esc(PURDUE_INTRO) + '</p>' +
     '<p class="dio-tag dio-tag-sub">The landscape lifts away to show the layers under the site. Hover or tap a level.</p>' +
-    '<ol class="dio-levels" aria-label="Purdue levels">';
+    '<ol class="dio-levels" aria-label="Purdue levels">' +
+    '<li class="dio-level-row"><button class="dio-level dio-level-all" type="button" data-level="all" aria-pressed="true"><b>All</b><span>All levels: the stack</span><small>Seven plates beside the site, each linked to its equipment.</small></button></li>';
   PURDUE.forEach(function (l) {
-    html += '<li><button class="dio-level" type="button" data-level="' + l.id + '" aria-pressed="false"><b>' + esc(l.id) + '</b><span>' + esc(l.name) + '</span></button></li>';
+    var short = l.desc.replace(/^Level [\d.]+, [^:]+: /, "");
+    html += '<li class="dio-level-row"><button class="dio-level" type="button" data-level="' + l.id + '" aria-pressed="false"><b>' + esc(l.id) + '</b><span>' + esc(l.name) + '</span><small>' + esc(short) + '</small></button>' +
+      '<span class="dio-chips"><span class="dio-chips-k">Risks here</span>' + l.risks.map(function (n) { return '<button class="dio-chip dio-view" type="button" data-view="' + n + '" aria-label="Go to risk ' + n + '">' + n + '</button>'; }).join("") + '</span></li>';
   });
-  html += '</ol><div class="dio-level-card" aria-live="polite"><p class="dio-level-desc">Pick a level to see what lives there and which of the ten risks touch it.</p></div></li>';
+  html += '</ol><div class="dio-level-card" aria-live="polite"><p class="dio-level-desc">Pick a level to light up its equipment in the scene, or tap the equipment itself.</p></div></li>';
   steps.innerHTML = html;
 })();

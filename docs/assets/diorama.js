@@ -5,6 +5,9 @@ import * as THREE from "./vendor/three.module.min.js";
 import { GLTFLoader } from "./vendor/GLTFLoader.js";
 import { MeshoptDecoder } from "./vendor/meshopt_decoder.module.js";
 import { createLive } from "./diorama-live.js";
+import { RoomEnvironment } from "./vendor/RoomEnvironment.js";
+import { createWalkers } from "./diorama-walkers.js";
+import { createPurdue } from "./diorama-purdue.js";
 
 const section = document.getElementById("diorama");
 const stage = document.getElementById("dio-stage");
@@ -28,7 +31,14 @@ function init() {
   const statusEl = stage.querySelector(".dio-loading");
   const hintEl = stage.querySelector(".dio-hint");
   const toastEl = stage.querySelector(".dio-toast");
+  /* pre-rendered photoreal stills (Blender) shown when the camera is at rest on a known view; live 3D otherwise */
+  const STILLS_BASE = (section.getAttribute("data-stills") || "../assets/img/risk/");
+  const stillImgs = [0, 1].map(() => { const im = document.createElement("img"); im.className = "dio-still"; im.alt = ""; im.decoding = "async"; im.setAttribute("aria-hidden", "true"); return im; });
+  const stills = { cur: -1, shown: null, missing: {}, loaded: {}, pending: null, manifest: null };
+  fetch(STILLS_BASE + "manifest.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).then((m) => { stills.manifest = Array.isArray(m) ? m : (m && m.files) || []; }).catch(() => { stills.manifest = []; });
   const switchBtn = document.getElementById("dio-controls");
+  const layersBtn = document.getElementById("dio-layers");
+  let purdue = null;
   const resetBtn = document.getElementById("dio-reset");
   const zoomIn = document.getElementById("dio-zoom-in");
   const zoomOut = document.getElementById("dio-zoom-out");
@@ -53,32 +63,33 @@ function init() {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  renderer.toneMappingExposure = 1.08;
   const cv = renderer.domElement;
   cv.className = "dio-gl";
   cv.setAttribute("aria-hidden", "true");
   canvasWrap.appendChild(cv);
+  stillImgs.forEach((im) => canvasWrap.appendChild(im));
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(28, 16 / 9, 0.5, 600);
   scene.add(camera);
 
-  /* ---------- light: warm low sun, soft sky bounce, haze */
-  const sun = new THREE.DirectionalLight(0xffe3bf, 3.1);
-  sun.position.set(-34, 42, 18);
+  /* ---------- light: bright warm daylight, the same in every site theme (matches the Blender renders) */
+  const sun = new THREE.DirectionalLight(0xfff1d8, 2.7);
+  sun.position.set(-26, 44, 38);                    // about 40 degrees up, from the front-left, shadows fall back and right
   sun.castShadow = true;
   sun.shadow.mapSize.set(lowPower ? 1024 : 2048, lowPower ? 1024 : 2048);
-  Object.assign(sun.shadow.camera, { left: -32, right: 32, top: 24, bottom: -24, near: 10, far: 140 });
-  sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.025; sun.shadow.radius = 3;
-  scene.add(sun); scene.add(sun.target); sun.target.position.set(-6, 0, 2);
-  const hemi = new THREE.HemisphereLight(0xe4edff, 0xb9c592, 1.15); scene.add(hemi);
-  const fill = new THREE.DirectionalLight(0xcfe0ff, 0.45); fill.position.set(40, 20, -30); scene.add(fill);
-  const FOG = { light: 0xe9e5dc, dark: 0x14161b };
-  const expo = { base: 1.15, value: 1 };            // exposure dips slightly while a risk is in focus
-  const focus = new THREE.SpotLight(0xfff1dc, 0, 60, Math.PI / 7, 0.7, 1.2); focus.castShadow = false;
-  scene.add(focus); scene.add(focus.target);
+  Object.assign(sun.shadow.camera, { left: -34, right: 34, top: 26, bottom: -26, near: 10, far: 160 });
+  sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.03; sun.shadow.radius = 4;
+  scene.add(sun); scene.add(sun.target); sun.target.position.set(-4, 0, 2);
+  const hemi = new THREE.HemisphereLight(0xdfeaff, 0x9fc25a, 1.25); scene.add(hemi);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  pmrem.dispose();
+  const FOG = 0xe4ecf1;                             // pale sky haze, never dark
+  scene.fog = new THREE.Fog(FOG, 120, 300);
+  const expo = { base: 1.0, value: 1 };
   let live = null;
-  scene.fog = new THREE.Fog(FOG.light, 110, 260);
 
   /* ---------- state */
   const MODE = { SITE: "site", PURDUE: "purdue" };
@@ -87,7 +98,10 @@ function init() {
   const cams = {};       // cam name -> pose
   const glowMats = {};   // name -> cloned Glow material for controllable parts
   const tweens = [];
-  let mixer = null, root = null, levelRanges = {}, steamSprites = [], cloudSprites = [], walkers = [], pulses = [], strataSlab = null, dmzSlab = null, doorNode = null;
+  let mixer = null, root = null, levelRanges = {}, steamSprites = [], cloudSprites = [], people = null, pulses = [], strataSlab = null, dmzSlab = null, doorNode = null;
+  let cloudLineMats = [];
+  const CLOUD_CLIP_Y = 12.5;
+  const cloudClip = new THREE.Plane(new THREE.Vector3(0, -1, 0), CLOUD_CLIP_Y);
   const fadeMats = [];   // materials that fade in purdue mode
   let setHideVisible = () => {};
   const observers = [];
@@ -130,10 +144,10 @@ function init() {
     const target = fitForAspect(p);
     const interrupted = !!glide;
     if (reduce || opts.instant) {
-      glide = null;
+      glide = null; hideStill();
       pose.t.copy(target.t); pose.az = target.az; pose.el = target.el; pose.dist = target.dist; pose.fov = target.fov;
       Object.assign(goal, { az: pose.az, el: pose.el, dist: pose.dist, fov: pose.fov }); goal.t.copy(pose.t);
-      requestRender(); return;
+      requestRender(); setTimeout(syncStill, 50); return;
     }
     const from = { t: pose.t.clone(), az: pose.az, el: pose.el, dist: pose.dist, fov: pose.fov };
     const dT = from.t.distanceTo(target.t);
@@ -153,7 +167,7 @@ function init() {
     pose.dist = a.dist + (b.dist - a.dist) * k + bump * glide.lift;
     pose.fov = a.fov + (b.fov - a.fov) * k;
     Object.assign(goal, { az: pose.az, el: pose.el, dist: pose.dist, fov: pose.fov }); goal.t.copy(pose.t);
-    if (glide.t >= 1) glide = null;
+    if (glide.t >= 1) { glide = null; syncStill(); }
     return true;
   }
   function stepFollow(dt) {
@@ -173,6 +187,7 @@ function init() {
   }
   function userMoved() {
     if (glide) { glide = null; }
+    hideStill();
     st.userView = true;
     if (hintEl && !hintEl.classList.contains("gone")) hintEl.classList.add("gone");
     requestRender();
@@ -311,6 +326,7 @@ function init() {
       });
     });
     if (!anyVertexColor) console.warn("[diorama] model has no vertex colours; using name-based tints for Glow parts");
+    root.traverse((o) => { if (!o.isMesh) return; (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => { if (m && m.isMeshStandardMaterial) { m.envMapIntensity = m.name === "GlassWeb" ? 1.0 : 0.55; } }); });
     /* parts whose opacity is animated get their own copy of the shared materials */
     ["dmz_walls_flat", "dmz_walls_segmented", "net_flat_lines", "net_segmented_lines", "landscape_apron", "trees_web"].forEach((n) => nodesByPrefix(n).forEach(uniqueMaterials));
 
@@ -342,7 +358,7 @@ function init() {
     const OVERRIDE = {
       cam_risk_02: { t: [-13.3, 1.0, 0.75], az: -0.75, el: 0.7, dist: 16 },    // PLC cabinets in front, pipe rack behind, from the yard
       cam_risk_04: { t: [-11.6, 4.0, -7.2], az: 0.45, el: 0.5, dist: 27 },     // the open south face of the turbine hall, turbine inside
-      cam_risk_08: { t: [-16.4, 1.0, 8.4], az: -1.45, el: 0.42, dist: 14 },    // contractor in front, van behind him
+      cam_risk_08: { t: [-16.4, 1.0, 8.4], az: -1.45, el: 0.42, dist: 14 },    // contractor in front, the plant behind him
     };
     RISKS.forEach((r) => {
       const c = cams[r.cam]; if (!c) return;
@@ -385,21 +401,15 @@ function init() {
     buildSprites(nodes.steam_plume, "steam");
     buildSprites(nodes.cloud_L5, "cloud");
 
-    /* walkers: play the clips, then stroll along small loops near where they stand */
-    if (gltf.animations && gltf.animations.length) {
-      mixer = new THREE.AnimationMixer(root);
-      gltf.animations.forEach((clip) => { if (/walk/i.test(clip.name)) { const a = mixer.clipAction(clip); a.play(); a.timeScale = 0.95 + Math.random() * 0.1; } });
-    }
-    Object.keys(nodes).forEach((name) => {
-      if (!/^person_.*_rig$/.test(name)) return;
-      const rig = nodes[name];
-      const base = rig.position.clone();
-      const r = 1.6 + Math.random() * 0.9, rot = Math.random() * Math.PI * 2;
-      const pts = [];
-      for (let i = 0; i < 4; i++) { const a = rot + i * Math.PI / 2; pts.push(new THREE.Vector3(base.x + Math.cos(a) * r * (0.7 + 0.3 * (i % 2)), base.y, base.z + Math.sin(a) * r)); }
-      const curve = new THREE.CatmullRomCurve3(pts, true, "centripetal");
-      walkers.push({ rig, curve, len: curve.getLength(), u: Math.random(), speed: 0.85 + Math.random() * 0.2, dir: Math.random() < 0.5 ? 1 : -1 });
-    });
+    /* people: authored walk paths from the glb, idle otherwise (no generated loops) */
+    if (gltf.animations && gltf.animations.length) mixer = new THREE.AnimationMixer(root);
+    try { people = createWalkers({ THREE, nodes, mixer, clips: gltf.animations || [], reduce }); console.info("[diorama] people", JSON.stringify(people.count)); } catch (err) { console.warn("[diorama] people failed", err); people = null; }
+    /* the office-to-cloud line only makes sense in the Purdue chapter: clip whatever rises above the office roof */
+    renderer.localClippingEnabled = true;
+    cloudLineMats = [];
+    nodesByPrefix("data_lines_always").forEach((o) => o.traverse((m) => { if (m.isMesh) (Array.isArray(m.material) ? m.material : [m.material]).forEach((mat) => { if (mat && cloudLineMats.indexOf(mat) < 0) cloudLineMats.push(mat); }); }));
+    cloudLineMats.forEach((mat) => { mat.clippingPlanes = [cloudClip]; mat.clipShadows = true; mat.needsUpdate = true; });
+    if (nodes.data_line_cloud) nodes.data_line_cloud.visible = false;
 
     /* data pulses along the exported paths */
     buildPulses();
@@ -417,8 +427,14 @@ function init() {
 
     applyTheme();
     buildMarkers();
-    buildLevelLabels();
     buildDots();
+    try {
+      purdue = createPurdue({ THREE, scene, nodes, nodesByPrefix, tween, reduce, PURDUE, glowOf, cloudAnchor: () => { const c = new THREE.Vector3(); if (cloudSprites.length) { cloudSprites.forEach((r) => c.add(r.base)); c.divideScalar(cloudSprites.length); } return c; }, onLevelPose: (p) => { if (p) { st.userView = false; glideTo(p); } } });
+      cams.purdue = purdue.framing(null);
+      console.info("[diorama] purdue levels", JSON.stringify(purdue.counts));
+    } catch (err) { console.warn("[diorama] purdue failed", err); purdue = null; }
+    if (strataSlab) strataSlab.visible = false;
+    if (nodes.purdue_strata) nodes.purdue_strata.traverse((m) => { if (m.isMesh) { const mats = Array.isArray(m.material) ? m.material : [m.material]; mats.forEach((mat) => { if (mat) { mat.transparent = true; mat.opacity = 0.35; mat.needsUpdate = true; } }); } });
     applyControls(true, true);
     resize();
     const intro = fitForAspect(cams.wide);
@@ -558,6 +574,7 @@ function init() {
       g.items.forEach((it, i) => {
         if (!reduce) it.u = (it.u + dt * 1.9 / it.len) % 1;
         it.c.getPointAt(Math.min(0.9999, it.u), pv);
+        if (st.mode !== MODE.PURDUE && pv.y > CLOUD_CLIP_Y) pv.y = -1000;
         arr[i * 3] = pv.x; arr[i * 3 + 1] = pv.y; arr[i * 3 + 2] = pv.z;
       });
       g.pts.geometry.attributes.position.needsUpdate = true;
@@ -598,6 +615,8 @@ function init() {
       if (el) el.textContent = on ? "Controls on: this risk is covered." : r.off;
     });
     if (live) live.setControls(on, tween);
+    if (purdue) purdue.setControls(on);
+    syncStill();
     if (!instant) {
       const r = byN[st.active];
       showToast(on ? (DATA.toast ? DATA.toast.on : "Controls on.") : (r ? r.off : (DATA.toast ? DATA.toast.off : "Controls off.")), on ? 4500 : 7000);
@@ -612,6 +631,43 @@ function init() {
     if (!toastEl) return;
     toastEl.textContent = text; toastEl.classList.add("show");
     clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl.classList.remove("show"), ms || 5000);
+  }
+
+  /* ---------- stills */
+  function stillKey() {
+    if (st.mode !== MODE.SITE || st.userView || glide) return null;
+    const id = st.active ? "risk_" + String(st.active).padStart(2, "0") : "wide";
+    return id + "-" + (st.controls ? "on" : "off") + "-" + (aspect < 1 ? "mobile" : "desktop");
+  }
+  function stillUrl(key) { return STILLS_BASE + key + ".webp"; }
+  function preloadStill(key) {
+    if (!key || stills.missing[key] || stills.loaded[key]) return;
+    if (!stills.manifest || stills.manifest.indexOf(key + ".webp") < 0) return;
+    const im = new Image(); im.decoding = "async";
+    im.onload = () => { stills.loaded[key] = true; if (stillKey() === key) showStill(key); };
+    im.onerror = () => { stills.missing[key] = true; };
+    im.src = stillUrl(key);
+  }
+  function showStill(key) {
+    if (stills.shown === key) return;
+    if (!stills.loaded[key]) { preloadStill(key); return; }
+    const next = (stills.cur + 1) % 2, im = stillImgs[next];
+    im.src = stillUrl(key);
+    im.classList.add("show"); stillImgs[stills.cur === -1 ? 1 : stills.cur].classList.remove("show");
+    stills.cur = next; stills.shown = key;
+  }
+  function hideStill() { if (stills.shown === null) return; stillImgs.forEach((im) => im.classList.remove("show")); stills.shown = null; }
+  function syncStill() {
+    const key = stillKey();
+    if (!key) { hideStill(); return; }
+    if (stills.loaded[key]) showStill(key); else { hideStill(); preloadStill(key); }
+  }
+  /* approach: preload the neighbours of the current step so the still is ready on arrival */
+  function preloadAround(k) {
+    const keys = [];
+    [k - 1, k, k + 1].forEach((n) => { if (n === 0) keys.push("wide"); else if (n >= 1 && n <= 10) keys.push("risk_" + String(n).padStart(2, "0")); });
+    const v = aspect < 1 ? "mobile" : "desktop";
+    keys.forEach((id) => { preloadStill(id + "-on-" + v); preloadStill(id + "-off-" + v); });
   }
 
   /* ---------- tweens (tiny) */
@@ -714,27 +770,24 @@ function init() {
     if (hover) hoverLevel = id; else { hoverLevel = null; st.level = (st.level === id) ? null : id; }
     refreshLevel();
   }
+  /* Layers button: enter or leave the Purdue view from anywhere */
+  if (layersBtn) layersBtn.addEventListener("click", () => {
+    if (st.mode === MODE.PURDUE) { setStep(st.step === 11 ? 0 : st.step); if (st.step === 11) goToStep(0, true); }
+    else { fillCard(11); card && card.classList.remove("hidden"); setActive(0); setMode(MODE.PURDUE); lastLevelShown = undefined; st.level = null; refreshLevel(); glideTo(cams.purdue); }
+  });
   function refreshLevel() {
     const cur = hoverLevel || st.level;
-    levelBtns().forEach((b) => { const id = b.getAttribute("data-level"); b.setAttribute("aria-pressed", id === st.level ? "true" : "false"); b.classList.toggle("hot", id === cur); });
+    levelBtns().forEach((b) => { const id = b.getAttribute("data-level"); const pressed = id === "all" ? (!st.level && !hoverLevel) : id === st.level; b.setAttribute("aria-pressed", pressed ? "true" : "false"); b.classList.toggle("hot", id === cur); });
     levelLabels.forEach((l) => l.el.classList.toggle("hot", l.id === cur));
     highlightLevel(cur);
     updateLevelCard(cur);
   }
+  let lastLevelShown = undefined;
   function highlightLevel(id) {
-    if (!strataSlab) return;
-    const rng = id ? levelRanges[id] : null;
-    const dur = reduce ? 0 : 0.35;
-    if (rng && st.mode === MODE.PURDUE) {
-      strataSlab.visible = true;
-      strataSlab.scale.y = Math.max(0.2, (rng[1] - rng[0]) / 0.7);
-      strataSlab.position.y = (rng[0] + rng[1]) / 2;
-      strataSlab.material.color.set(id === "L3.5" && !st.controls ? 0xff3b40 : 0xed1c24);
-      tween(strataSlab.material, "opacity", 0.34, dur);
-    } else tween(strataSlab.material, "opacity", 0, dur, () => { strataSlab.visible = false; });
-    /* lift the glow on the parts that live on this level */
-    const lv = PURDUE.find((l) => l.id === id);
-    if (st.mode === MODE.PURDUE) boostGlow(lv ? lv.objects : []);
+    if (!purdue || st.mode !== MODE.PURDUE) return;
+    if (id === lastLevelShown) return;
+    lastLevelShown = id;
+    purdue.setLevel(id || null, hoverLevel && !st.level);   // hover previews without moving the camera; a pick glides
   }
   function updateLevelCard(id) {
     const cur = id !== undefined ? id : (hoverLevel || st.level);
@@ -751,7 +804,7 @@ function init() {
   }
   /* the step column and the floating card both hold level buttons; delegate */
   const levelOf = (e) => { const b = e.target && e.target.closest && e.target.closest(".dio-level"); return b ? b.getAttribute("data-level") : null; };
-  section.addEventListener("click", (e) => { const id = levelOf(e); if (id) setLevel(id); });
+  section.addEventListener("click", (e) => { const id = levelOf(e); if (id === "all") { hoverLevel = null; st.level = null; lastLevelShown = undefined; refreshLevel(); if (purdue) { st.userView = false; glideTo(purdue.framing(null)); } } else if (id) setLevel(id); });
   section.addEventListener("pointerover", (e) => { const id = levelOf(e); if (id && !coarse && id !== hoverLevel) setLevel(id, true); });
   section.addEventListener("pointerout", (e) => { if (coarse) return; const id = levelOf(e); if (id && !(e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(".dio-level"))) { hoverLevel = null; refreshLevel(); } });
   section.addEventListener("focusin", (e) => { const id = levelOf(e); if (id) setLevel(id, true); });
@@ -763,18 +816,23 @@ function init() {
     if (st.mode === mode) return;
     st.mode = mode;
     section.setAttribute("data-mode", mode);
-    const purdue = mode === MODE.PURDUE;
+    const purdueMode = mode === MODE.PURDUE;
     const dur = reduce ? 0 : 0.8;
     fadeMats.forEach((m) => {
       if (m.userData.wasTransparent == null) m.userData.wasTransparent = m.transparent;
       if (!m.transparent) { m.transparent = true; m.needsUpdate = true; }
-      tween(m, "opacity", purdue ? 0 : (m.userData.baseOpacity == null ? 1 : m.userData.baseOpacity), dur, () => { setHideVisible(!purdue); if (!purdue && !m.userData.wasTransparent) { m.transparent = false; m.needsUpdate = true; } });
+      tween(m, "opacity", purdueMode ? 0 : (m.userData.baseOpacity == null ? 1 : m.userData.baseOpacity), dur, () => { setHideVisible(!purdueMode); if (!purdueMode && !m.userData.wasTransparent) { m.transparent = false; m.needsUpdate = true; } });
     });
-    if (!purdue) setHideVisible(true);
-    if (dmzSlab) { dmzSlab.visible = purdue; tween(dmzSlab.material, "opacity", purdue && !st.controls ? 0.42 : 0, dur); }
-    cloudSprites.forEach((r) => { r.sp.visible = true; tween(r.sp.material, "opacity", purdue ? 0.9 : 0, dur, () => { r.sp.visible = purdue; }); });
-    if (!purdue) { st.level = null; hoverLevel = null; refreshLevel(); } else { hoverLevel = null; refreshLevel(); }
-    if (purdue) { scene.fog.near = 140; scene.fog.far = 330; } else { scene.fog.near = 110; scene.fog.far = 260; }
+    if (!purdueMode) setHideVisible(true);
+    if (dmzSlab) { dmzSlab.visible = false; }
+    cloudSprites.forEach((r) => { r.sp.visible = true; tween(r.sp.material, "opacity", purdueMode ? 0.9 : 0, dur, () => { r.sp.visible = purdueMode; }); });
+    cloudLineMats.forEach((mat) => { mat.clippingPlanes = purdueMode ? null : [cloudClip]; mat.needsUpdate = true; });
+    if (nodes.data_line_cloud) nodes.data_line_cloud.visible = purdueMode;
+    if (purdue) { if (purdueMode) purdue.enter(); else purdue.exit(); }
+    if (!purdueMode) { st.level = null; hoverLevel = null; refreshLevel(); } else { hoverLevel = null; refreshLevel(); }
+    if (purdueMode) { scene.fog.near = 150; scene.fog.far = 360; } else { scene.fog.near = 120; scene.fog.far = 300; }
+    if (layersBtn) layersBtn.setAttribute("aria-pressed", purdueMode ? "true" : "false");
+    hideStill();
     requestRender();
   }
   function setActive(n) {
@@ -785,23 +843,25 @@ function init() {
     focusRisk(n);
   }
   function focusRisk(n) {
-    const r = byN[n], dur = reduce ? 0 : 0.7;
-    const h = r && nodes[r.hook];
-    if (h) {
-      const p = new THREE.Vector3(); h.getWorldPosition(p);
-      const cam = cams[r.cam] || {};
-      const radius = +(nodes[r.cam] && nodes[r.cam].userData.radius) || 3;
-      focus.target.position.set(p.x, 0, p.z);
-      focus.position.set(p.x + 3, Math.max(14, p.y + 12), p.z + 6);
-      focus.angle = Math.min(Math.PI / 5, Math.atan((radius * 1.6) / 14));
-      focus.distance = 60; void cam;
-      tween(focus, "intensity", 900, dur);
-      tween(expo, "value", 0.9, dur);
-    } else {
-      tween(focus, "intensity", 0, dur);
-      tween(expo, "value", 1, dur);
-    }
+    const r = byN[n];
     boostGlow(r ? r.objects : []);
+    outline(r ? r.objects : []);
+  }
+  /* a thin red rim (inverted hull) around the selected risk's parts */
+  const outlines = new Map();
+  const NO_OUTLINE = /leds|scada|lines|dmz_walls|beacon|cloud|steam|person/;
+  function outline(objects) {
+    const want = new Set();
+    objects.forEach((name) => { if (!NO_OUTLINE.test(name)) nodesByPrefix(name).forEach((o) => o.traverse((m) => { if (m.isMesh && !m.isSkinnedMesh && !NO_OUTLINE.test(m.name)) want.add(m); })); });
+    want.forEach((m) => {
+      if (!outlines.has(m)) {
+        const hull = new THREE.Mesh(m.geometry, new THREE.MeshBasicMaterial({ color: 0xed1c24, side: THREE.BackSide, transparent: true, opacity: 0, depthWrite: false, toneMapped: false, fog: false }));
+        hull.scale.setScalar(1.035); hull.renderOrder = 2; hull.castShadow = false; hull.receiveShadow = false; hull.visible = false;
+        m.add(hull); outlines.set(m, hull);
+      }
+      const hull = outlines.get(m); hull.visible = true; tween(hull.material, "opacity", 0.85, reduce ? 0 : 0.4);
+    });
+    outlines.forEach((hull, m) => { if (!want.has(m)) tween(hull.material, "opacity", 0, reduce ? 0 : 0.3, () => { hull.visible = false; }); });
   }
   function boostGlow(objects) {
     Object.keys(glowMats).forEach((name) => {
@@ -816,7 +876,8 @@ function init() {
     const src = steps.find((s) => +s.getAttribute("data-step") === k);
     if (!src) return;
     card.setAttribute("data-step", k);
-    card.innerHTML = src.innerHTML;
+    card.innerHTML = src.innerHTML + '<button class="dio-card-hide" type="button" aria-label="Hide this card">Hide</button>' + (k >= 1 && k <= 10 ? '<button class="dio-card-more link-btn" type="button" aria-expanded="false">More</button>' : "");
+    card.classList.remove("expanded", "hidden");
     card.scrollTop = 0;
     if (!reduce && card.animate) card.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 350, easing: "cubic-bezier(.2,.7,.2,1)" });
   }
@@ -837,11 +898,12 @@ function init() {
     st.step = k;
     steps.forEach((s) => s.classList.toggle("on", +s.getAttribute("data-step") === k));
     dots.forEach((d) => d.el.classList.toggle("on", d.k === k));
-    if (k !== +card.getAttribute("data-step") || !card.innerHTML) fillCard(k);
+    if (k !== +card.getAttribute("data-step") || !card.innerHTML) fillCard(k); else card.classList.remove("hidden");
+    preloadAround(k); hideStill();
     if (!st.ready) return;
     const wasPurdue = st.mode === MODE.PURDUE;
     if (k === 11) {
-      setActive(0); setMode(MODE.PURDUE);
+      setActive(0); setMode(MODE.PURDUE); lastLevelShown = undefined; st.level = null; refreshLevel();
       glideTo(cams.purdue, { instant: instant || reduce });
     } else if (k >= 1 && k <= 10) {
       setMode(MODE.SITE); setActive(k);
@@ -879,6 +941,24 @@ function init() {
     }, { rootMargin: "-42% 0px -42% 0px", threshold: 0 });
     steps.forEach((s) => io.observe(s)); observers.push(io);
   }
+  if (card) card.addEventListener("click", (e) => {
+    const t = e.target;
+    if (t.closest(".dio-card-hide")) { card.classList.add("hidden"); stage.focus({ preventScroll: true }); }
+    else if (t.closest(".dio-card-more")) { const open = !card.classList.contains("expanded"); card.classList.toggle("expanded", open); t.closest(".dio-card-more").setAttribute("aria-expanded", open ? "true" : "false"); t.closest(".dio-card-more").textContent = open ? "Less" : "More"; }
+  });
+  /* a plain tap on the scene (no drag) hides the card; the markers, dots or a new step bring it back */
+  let tapStart = null;
+  cv.addEventListener("pointerdown", (e) => { tapStart = { x: e.clientX, y: e.clientY, t: performance.now() }; });
+  cv.addEventListener("pointerup", (e) => {
+    const tap = tapStart && Math.hypot(e.clientX - tapStart.x, e.clientY - tapStart.y) < 6 && performance.now() - tapStart.t < 400;
+    tapStart = null; if (!tap) return;
+    if (st.mode === MODE.PURDUE && purdue) {
+      const r = cv.getBoundingClientRect();
+      const id = purdue.pick(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1, camera);
+      if (id) { hoverLevel = null; st.level = id; refreshLevel(); card && card.classList.remove("hidden"); return; }
+    }
+    if (card && !card.classList.contains("hidden")) card.classList.add("hidden");
+  });
   section.addEventListener("click", (e) => {
     const b = e.target && e.target.closest && e.target.closest(".dio-view"); if (!b) return;
     const n = +b.getAttribute("data-view");
@@ -888,17 +968,7 @@ function init() {
   });
 
   /* ---------- theme (day / dusk) */
-  function applyTheme() {
-    const dark = isDark();
-    expo.base = dark ? 0.8 : 1.15; renderer.toneMappingExposure = expo.base * expo.value;
-    sun.color.setHex(dark ? 0xffb37a : 0xffe3bf); sun.intensity = dark ? 2.2 : 3.1;
-    hemi.color.setHex(dark ? 0x7d8fb8 : 0xdfe9ff); hemi.groundColor.setHex(dark ? 0x3d4238 : 0xb9c592); hemi.intensity = dark ? 0.55 : 1.15;
-    fill.intensity = dark ? 0.25 : 0.45;
-    scene.fog.color.setHex(dark ? FOG.dark : FOG.light);
-    requestRender();
-  }
-  const mo = new MutationObserver(applyTheme); mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] }); observers.push(mo);
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme);
+  function applyTheme() { /* daylight in every theme: nothing to switch */ requestRender(); }
 
   /* ---------- sizing */
   function resize() {
@@ -936,19 +1006,14 @@ function init() {
       applyPose(pose);
       if (animate) {
         t += dt;
+        if (people) people.update(dt);
         if (mixer) mixer.update(dt);
-        walkers.forEach((w) => {
-          w.u = (w.u + w.dir * dt * w.speed / w.len + 1) % 1;
-          const p = w.curve.getPointAt(w.u), tan = w.curve.getTangentAt(w.u).multiplyScalar(w.dir);
-          w.rig.position.copy(p);
-          w.rig.rotation.y = Math.atan2(tan.x, tan.z);
-        });
         updateSteam(t);
         updatePulses(t, dt);
         if (live) live.update(t, dt);
         busy = true;
       } else if (!steamSprites.rested) { restSteam(); steamSprites.rested = true; updatePulses(0, 1); if (live) live.rest(); }
-      renderer.toneMappingExposure = expo.base * expo.value;
+
       renderer.render(scene, camera);
       placeMarkers();
       placeLevelLabels();
