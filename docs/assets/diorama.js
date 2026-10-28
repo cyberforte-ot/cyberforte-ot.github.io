@@ -112,7 +112,9 @@ function init() {
   }
   function fitForAspect(p) {
     const q = { t: p.t.clone(), az: p.az, el: p.el, dist: p.dist, fov: p.fov };
-    if (aspect < DESIGN_ASPECT) q.dist *= Math.pow(DESIGN_ASPECT / aspect, 0.85);
+    if (aspect < DESIGN_ASPECT) q.dist *= Math.pow(DESIGN_ASPECT / aspect, 0.72);
+    /* desktop: the card sits bottom-left, so keep the subject centre-right by aiming a little to its left */
+    if (p.side && aspect >= 1.3) q.t.add(new THREE.Vector3(Math.cos(p.az), 0, -Math.sin(p.az)).multiplyScalar(-q.dist * 0.16));
     return q;
   }
   function applyPose(p) {
@@ -327,7 +329,7 @@ function init() {
       else p = reframe(p, 30);
       cams[name] = p;
     });
-    cams.wide = { t: new THREE.Vector3(0.5, 2.6, 0.8), az: 0.42, el: 0.70, dist: 86, fov: 26 };
+    cams.wide = { t: new THREE.Vector3(-0.5, 2.0, 1.0), az: 0.45, el: 0.72, dist: 72, fov: 26 };
     cams.hero = cams.cam_wide || fallbackWide;
     /* the Purdue cross-section reads better from a lower angle, closer to the front corner */
     cams.purdue = { t: new THREE.Vector3(3, -2.8, 1), az: 0.6, el: 0.3, dist: 76, fov: 26 };
@@ -337,7 +339,19 @@ function init() {
       const t = new THREE.Vector3(); h.getWorldPosition(t); t.y = Math.max(0.8, t.y - 1.6);
       cams[r.cam] = { t, az: 0.5, el: 0.55, dist: 11, fov: 30 };
     });
-    RISKS.forEach((r) => { if (cams[r.cam]) cams[r.cam].el = Math.max(cams[r.cam].el, LIM.elMin); });
+    const OVERRIDE = {
+      cam_risk_02: { t: [-13.3, 1.0, 0.75], az: -0.75, el: 0.7, dist: 16 },    // PLC cabinets in front, pipe rack behind, from the yard
+      cam_risk_04: { t: [-11.6, 4.0, -7.2], az: 0.45, el: 0.5, dist: 27 },     // the open south face of the turbine hall, turbine inside
+      cam_risk_08: { t: [-16.4, 1.0, 8.4], az: -1.45, el: 0.42, dist: 14 },    // contractor in front, van behind him
+    };
+    RISKS.forEach((r) => {
+      const c = cams[r.cam]; if (!c) return;
+      const o = OVERRIDE[r.cam];
+      if (o) { c.t.set(o.t[0], o.t[1], o.t[2]); c.az = o.az; c.el = o.el; c.dist = o.dist; }
+      else c.dist *= 1.32;
+      c.el = Math.max(c.el, LIM.elMin);
+      c.side = true;
+    });
 
     /* network states */
     doorNode = nodes.control_room_door || null;
@@ -645,14 +659,26 @@ function init() {
     if (!markers.length) return;
     const W = cv.clientWidth, H = cv.clientHeight;
     const camPos = camera.position;
-    markers.forEach((m) => {
+    const rows = markers.map((m) => {
       v3.copy(m.world).project(camera);
-      const behind = v3.z > 1;
-      const x = (v3.x + 1) / 2 * W, y = (1 - v3.y) / 2 * H;
       const d = camPos.distanceTo(m.world);
-      const s = THREE.MathUtils.clamp(1.25 - d / 90, 0.78, 1.08);
-      m.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-50%,-50%) scale(" + s.toFixed(3) + ")";
-      m.el.classList.toggle("off", behind || x < -20 || x > W + 20 || y < -20 || y > H + 20);
+      return { m, x: (v3.x + 1) / 2 * W, y: (1 - v3.y) / 2 * H, behind: v3.z > 1, s: THREE.MathUtils.clamp(1.25 - d / 90, 0.78, 1.08) };
+    });
+    /* nudge markers apart so numbers never sit on top of each other; the active one stays put */
+    const minD = W < 700 ? 28 : 32;
+    for (let it = 0; it < 3; it++) for (let i = 0; i < rows.length; i++) for (let j = i + 1; j < rows.length; j++) {
+      const a = rows[i], b = rows[j]; if (a.behind || b.behind) continue;
+      let dx = b.x - a.x, dy = b.y - a.y; let d = Math.hypot(dx, dy);
+      if (d >= minD) continue;
+      if (d < 0.01) { dx = 1; dy = 0; d = 1; }
+      const push = (minD - d) / 2, ux = dx / d, uy = dy / d;
+      const aFixed = a.m.n === st.active, bFixed = b.m.n === st.active;
+      if (!aFixed) { a.x -= ux * push * (bFixed ? 2 : 1); a.y -= uy * push * (bFixed ? 2 : 1); }
+      if (!bFixed) { b.x += ux * push * (aFixed ? 2 : 1); b.y += uy * push * (aFixed ? 2 : 1); }
+    }
+    rows.forEach((r) => {
+      r.m.el.style.transform = "translate(" + r.x.toFixed(1) + "px," + r.y.toFixed(1) + "px) translate(-50%,-50%) scale(" + r.s.toFixed(3) + ")";
+      r.m.el.classList.toggle("off", r.behind || r.x < -20 || r.x > W + 20 || r.y < -20 || r.y > H + 20);
     });
   }
 
