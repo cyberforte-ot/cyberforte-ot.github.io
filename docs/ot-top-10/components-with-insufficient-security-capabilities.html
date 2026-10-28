@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OT9. Components/Protocols with Insufficient Security Capabilities | CyberForte</title>
-<meta name="description" content="Do not build tomorrow&#x27;s site on yesterday&#x27;s insecure parts.">
+<meta name="description" content="Can your control systems authenticate users and devices they communicate with? Can they reject communication with unauthenticated devices?">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/components-with-insufficient-security-capabilities.html">
 <meta property="og:title" content="OT9. Components/Protocols with Insufficient Security Capabilities | CyberForte">
-<meta property="og:description" content="Do not build tomorrow&#x27;s site on yesterday&#x27;s insecure parts.">
+<meta property="og:description" content="Can your control systems authenticate users and devices they communicate with? Can they reject communication with unauthenticated devices?">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
@@ -37,10 +37,10 @@
   <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">OWASP OT Top 10</a> <span aria-hidden="true">/</span> Risk 9</p>
   <header class="article-head acc-ot">
     <div class="ah-text">
-      <div class="eyebrow rise">OT Top 10 · Risk 9 of 10</div>
+      <div class="eyebrow rise">OT risk 9 of 10 · Control protocols that cannot authenticate</div>
       <h1 class="rise d1">Components/Protocols with Insufficient Security Capabilities</h1>
-      <p class="tagline rise d2">Do not build tomorrow&#x27;s site on yesterday&#x27;s insecure parts.</p>
-      <div class="tags rise d3"><span class="tag acc">Similar high importance</span><span class="tag">In the plant: The old radio link on the tanks</span></div>
+      <p class="tagline rise d2">Can your control systems authenticate users and devices they communicate with? Can they reject communication with unauthenticated devices?</p>
+      <div class="tags rise d3"><span class="tag acc">Similar high importance</span></div>
     </div>
     <div class="art acc-ot" aria-hidden="true">
   <div class="art-grid"></div>
@@ -53,7 +53,7 @@
     <aside class="rail" aria-label="On this page">
   <div class="rail-inner">
     <p class="rail-h">On this page</p>
-    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#questions">Questions to ask</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
     <div class="rail-prog"><div class="mini-bar"><span data-part-bar="ot"></span></div><p><b data-part-done="ot">0</b> of 10 risks done</p></div>
   </div>
 </aside>
@@ -61,7 +61,13 @@
       <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
         <h2 id="pw-h">What it is, in plain words</h2>
-        <p class="first">Some equipment and protocols were designed before security was a concern: no proper login, no protection against tampered messages. Over decades, almost every OT site ends up with some of this legacy.</p><p>OWASP&#x27;s advice is to avoid choosing such components and protocols for new work, and to pick parts that can be updated and leave room for future security features. Where you are stuck with legacy, isolate it, watch it and add compensating controls around it.</p>
+        <p class="first">Some equipment and protocols were designed before security was a concern: no proper login, no way to check who is sending a command, no protection against tampered messages. Over decades, almost every operational technology (OT) site ends up with some of this legacy.</p><p>OWASP&#x27;s advice is to avoid choosing such components and protocols for new work, and to pick parts that can be updated and leave room for future security features. Where you are stuck with legacy, isolate it, watch it and add compensating controls around it.</p>
+      </section>
+      <section class="panel lists-panel reveal" id="questions" aria-label="Questions to ask and what is typically missing">
+        <div class="lists">
+          <div><h3>Questions to ask</h3><p class="note">Put these to your own site, and answer honestly.</p><ul><li>Can your control systems authenticate the users and devices they talk to?</li><li>Can they reject commands from a device that has not authenticated?</li><li>Which of your protocols accept any well-formed command from anyone who can reach them?</li><li>Can the components you are buying today be updated to support future security features?</li><li>Where legacy kit must stay, what isolates it, and who watches it?</li></ul></div>
+          <div><h3>What is typically missing</h3><p class="note">Common shortcomings, drawn from the OWASP entry.</p><ul><li>Protocols without authentication or integrity protection, so forged or tampered messages are accepted.</li><li>Components that cannot be updated or patched.</li><li>New projects that reuse legacy kit or legacy protocols because it is cheaper.</li><li>No compensating controls and no replacement plan for the legacy that remains.</li></ul></div>
+        </div>
       </section>
       <section class="panel lists-panel reveal" id="why" aria-label="Why it matters and how to reduce the risk">
         <div class="lists">

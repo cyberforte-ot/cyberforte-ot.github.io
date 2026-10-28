@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OT4. Loss of Availability | CyberForte</title>
-<meta name="description" content="In OT, if it stops (or lies), people can get hurt.">
+<title>OT4. Loss of Availability / Denial of Service / Sabotage | CyberForte</title>
+<meta name="description" content="In OT, if it stops (or lies), people can get hurt or the Company can lose millions of $$. Imagine a power cut due to a cyber attack.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/loss-of-availability.html">
-<meta property="og:title" content="OT4. Loss of Availability | CyberForte">
-<meta property="og:description" content="In OT, if it stops (or lies), people can get hurt.">
+<meta property="og:title" content="OT4. Loss of Availability / Denial of Service / Sabotage | CyberForte">
+<meta property="og:description" content="In OT, if it stops (or lies), people can get hurt or the Company can lose millions of $$. Imagine a power cut due to a cyber attack.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
@@ -37,10 +37,10 @@
   <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">OWASP OT Top 10</a> <span aria-hidden="true">/</span> Risk 4</p>
   <header class="article-head acc-ot">
     <div class="ah-text">
-      <div class="eyebrow rise">OT Top 10 · Risk 4 of 10</div>
-      <h1 class="rise d1">Loss of Availability</h1>
-      <p class="tagline rise d2">In OT, if it stops (or lies), people can get hurt.</p>
-      <div class="tags rise d3"><span class="tag acc">Top 4: fundamental</span><span class="tag">In the plant: The production line that must never stop</span></div>
+      <div class="eyebrow rise">OT risk 4 of 10 · The production line that must never stop</div>
+      <h1 class="rise d1">Loss of Availability / Denial of Service / Sabotage</h1>
+      <p class="tagline rise d2">In <abbr title="operational technology">OT</abbr>, if it stops (or lies), people can get hurt or the Company can lose millions of $$. Imagine a power cut due to a cyber attack.</p>
+      <div class="tags rise d3"><span class="tag acc">Top 4: fundamental</span></div>
     </div>
     <div class="art acc-ot" aria-hidden="true">
   <div class="art-grid"></div>
@@ -53,7 +53,7 @@
     <aside class="rail" aria-label="On this page">
   <div class="rail-inner">
     <p class="rail-h">On this page</p>
-    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#questions">Questions to ask</a></li><li><a href="#why">Why it matters</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
     <div class="rail-prog"><div class="mini-bar"><span data-part-bar="ot"></span></div><p><b data-part-done="ot">0</b> of 10 risks done</p></div>
   </div>
 </aside>
@@ -61,7 +61,13 @@
       <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
         <h2 id="pw-h">What it is, in plain words</h2>
-        <p class="first">For an office laptop, downtime is annoying. For a production line, a water plant or a building&#x27;s safety systems, it can be dangerous. Availability is usually the top priority in OT.</p><p>OWASP makes a subtle point: integrity is part of availability. If a sensor keeps working but reports fake readings, the system is &quot;up&quot; but no longer doing its job. Even well-meant updates can knock things over, as the 2024 CrowdStrike outage showed.</p>
+        <p class="first">For an office laptop, downtime is annoying. For a production line, a water plant, a power grid or a building&#x27;s safety systems, it can be dangerous. Availability is usually the top priority in operational technology (OT). Denial-of-service (DoS) attacks try to stop systems by flooding or exhausting them; sabotage tries to make the process fail or behave wrongly.</p><p>OWASP makes a subtle point: integrity is part of availability. If a sensor keeps working but reports fake readings, the system is &quot;up&quot; but no longer doing its job. Even well-meant updates can knock things over, as the 2024 CrowdStrike outage showed.</p>
+      </section>
+      <section class="panel lists-panel reveal" id="questions" aria-label="Questions to ask and what is typically missing">
+        <div class="lists">
+          <div><h3>Questions to ask</h3><p class="note">Put these to your own site, and answer honestly.</p><ul><li>Which processes must never stop, and what could stop them?</li><li>If a key system failed or was attacked, how long could you keep running, and how would you recover?</li><li>Would you know if a sensor or controller kept running but reported false values?</li><li>Have you tested your failover, or is it only written down?</li><li>Are updates, including updates to security tools, tested before they reach critical systems?</li></ul></div>
+          <div><h3>What is typically missing</h3><p class="note">Common shortcomings, drawn from the OWASP entry.</p><ul><li>Risk thinking that covers outages but not fake or tampered data.</li><li>Redundancy and failover that exist on paper but have never been tested.</li><li>Updates pushed straight to critical systems without testing and staging.</li><li>Scans and tools run against fragile devices without care: OWASP notes anecdotal evidence of OT devices crashing during network scans.</li></ul></div>
+        </div>
       </section>
       <section class="panel lists-panel reveal" id="why" aria-label="Why it matters and how to reduce the risk">
         <div class="lists">

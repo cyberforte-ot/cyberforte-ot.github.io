@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OT1. Unknown Assets and Unmanaged External Access | CyberForte</title>
-<meta name="description" content="You cannot protect what you do not know you have.">
+<title>OT1. Unknown Assets and Unmanaged External Remote Access | CyberForte</title>
+<meta name="description" content="You cannot protect what you do not know you have. You cannot protect the remote access connectivity you don&#x27;t know about.">
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="https://cyberforte-ot.github.io/ot-top-10/unknown-assets-and-admin-access.html">
-<meta property="og:title" content="OT1. Unknown Assets and Unmanaged External Access | CyberForte">
-<meta property="og:description" content="You cannot protect what you do not know you have.">
+<meta property="og:title" content="OT1. Unknown Assets and Unmanaged External Remote Access | CyberForte">
+<meta property="og:description" content="You cannot protect what you do not know you have. You cannot protect the remote access connectivity you don&#x27;t know about.">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
@@ -37,10 +37,10 @@
   <p class="crumbs"><a href="../index.html">Home</a> <span aria-hidden="true">/</span> <a href="index.html">OWASP OT Top 10</a> <span aria-hidden="true">/</span> Risk 1</p>
   <header class="article-head acc-ot">
     <div class="ah-text">
-      <div class="eyebrow rise">OT Top 10 · Risk 1 of 10</div>
-      <h1 class="rise d1">Unknown Assets and Unmanaged External Access</h1>
-      <p class="tagline rise d2">You cannot protect what you do not know you have.</p>
-      <div class="tags rise d3"><span class="tag acc">Top 4: fundamental</span><span class="tag">In the plant: The shed with a forgotten PC and a supplier&#x27;s 4G modem</span></div>
+      <div class="eyebrow rise">OT risk 1 of 10 · Engineering workstation or maintenance PC with a supplier&#x27;s 4G modem</div>
+      <h1 class="rise d1">Unknown Assets and Unmanaged External Remote Access</h1>
+      <p class="tagline rise d2">You cannot protect what you do not know you have. You cannot protect the remote access connectivity you don&#x27;t know about.</p>
+      <div class="tags rise d3"><span class="tag acc">Top 4: fundamental</span></div>
     </div>
     <div class="art acc-ot" aria-hidden="true">
   <div class="art-grid"></div>
@@ -53,7 +53,7 @@
     <aside class="rail" aria-label="On this page">
   <div class="rail-inner">
     <p class="rail-h">On this page</p>
-    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#why">Why it matters</a></li><li><a href="#example">Real-world example</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
+    <ol class="rail-list"><li><a href="#plain-words">In plain words</a></li><li><a href="#questions">Questions to ask</a></li><li><a href="#why">Why it matters</a></li><li><a href="#example">Real-world example</a></li><li><a href="#checklist">Practical checklist</a></li><li><a href="#original">Original text</a></li><li class="sub"><a href="#o-description">Description</a></li><li class="sub"><a href="#o-rationale">Rationale</a></li><li class="sub"><a href="#o-known-attacks-examples">Known Attacks/Examples</a></li><li class="sub"><a href="#o-mitigation-countermeasures">Mitigation/Countermeasures</a></li><li class="sub"><a href="#o-next-actionable-steps">Next Actionable Steps</a></li><li class="sub"><a href="#o-references">References</a></li></ol>
     <div class="rail-prog"><div class="mini-bar"><span data-part-bar="ot"></span></div><p><b data-part-done="ot">0</b> of 10 risks done</p></div>
   </div>
 </aside>
@@ -61,7 +61,13 @@
       <section class="panel summary reveal" id="plain-words" aria-labelledby="pw-h">
         <div class="panel-label"><span class="dot" aria-hidden="true"></span>CyberForte's summary · adapted from OWASP</div>
         <h2 id="pw-h">What it is, in plain words</h2>
-        <p class="first">Every site has kit that nobody has written down: an old PC under a desk, a remote-access tool a supplier installed years ago, a maintenance VPN account nobody uses any more. OWASP calls this the biggest threat, because unknown things are never patched, never watched and never locked.</p><p>The cure starts simple. Walk the site with a notebook if you need to, list every device and every way in from outside, and make documenting changes part of how you work.</p>
+        <p class="first">Every operational technology (OT) site has kit that nobody has written down: an engineering workstation or maintenance PC with a supplier&#x27;s 4G modem plugged in, a remote-access tool a supplier installed years ago, a maintenance virtual private network (VPN) account nobody uses any more. OWASP calls this the biggest threat, because unknown things are never patched, never watched and never locked.</p><p>The cure starts simple. Walk the site with a notebook if you need to, list every device and every way in from outside, and make documenting changes part of how you work. Pay special attention to remote access: a modem or remote-access tool nobody knows about is a door nobody is guarding.</p>
+      </section>
+      <section class="panel lists-panel reveal" id="questions" aria-label="Questions to ask and what is typically missing">
+        <div class="lists">
+          <div><h3>Questions to ask</h3><p class="note">Put these to your own site, and answer honestly.</p><ul><li>Do you have an up-to-date list of every device on each site, including software versions?</li><li>Do you know every way into your OT network from outside, including supplier modems, VPNs and remote-access tools such as TeamViewer?</li><li>Who owns each remote access route, and who approves each use of it?</li><li>Would you notice if a new device, or a new 4G modem, appeared on the network tomorrow?</li><li>Are supplier and maintenance accounts removed when they are no longer needed?</li></ul></div>
+          <div><h3>What is typically missing</h3><p class="note">Common shortcomings, drawn from the OWASP entry.</p><ul><li>No complete inventory: legacy systems, unmanaged devices and unauthorised connections are not on any list.</li><li>Undocumented services, such as remote access solutions, cloud services and third-party applications.</li><li>External maintenance accounts kept open for convenience, with nobody managing them.</li><li>Documentation that is not updated when something changes on site.</li></ul></div>
+        </div>
       </section>
       <section class="panel lists-panel reveal" id="why" aria-label="Why it matters and how to reduce the risk">
         <div class="lists">

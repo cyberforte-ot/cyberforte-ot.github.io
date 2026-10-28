@@ -306,19 +306,25 @@
       io.observe(scene);
     }
     void otDone;
-    // Upgrade to the real-time 3D plant when WebGL and ES modules are available (SVG stays as fallback)
-    var gl = false;
-    try { var c = document.createElement("canvas"); var ctx = window.WebGLRenderingContext && (c.getContext("webgl2") || c.getContext("webgl")); gl = !!ctx; var lose = ctx && ctx.getExtension("WEBGL_lose_context"); if (lose) lose.loseContext(); } catch (e) { gl = false; }
-    if (gl && location.protocol !== "file:" && "noModule" in document.createElement("script")) {
-      var load3d = function () {
-        if (load3d.done) return; load3d.done = true;
-        var m = document.createElement("script"); m.type = "module"; m.src = base + "assets/plant3d.js"; document.head.appendChild(m);
+  }
+
+  /* ---------- OT diorama: load the 3D module when the stage is near the viewport (poster shows until then) */
+  var dio = document.getElementById("diorama");
+  if (dio) {
+    var dioStage = document.getElementById("dio-stage"), dioGl = false;
+    try { var dc = document.createElement("canvas"); var dctx = window.WebGLRenderingContext && (dc.getContext("webgl2") || dc.getContext("webgl")); dioGl = !!dctx; var dlose = dctx && dctx.getExtension("WEBGL_lose_context"); if (dlose) dlose.loseContext(); } catch (e) { dioGl = false; }
+    if (dioGl && location.protocol !== "file:" && "noModule" in document.createElement("script")) {
+      var loadDio = function () {
+        if (loadDio.done) return; loadDio.done = true;
+        var dm = document.createElement("script"); dm.type = "module"; dm.src = base + "assets/diorama.js";
+        dm.onerror = function () { if (dioStage) dioStage.setAttribute("data-state", "fallback"); };
+        document.head.appendChild(dm);
       };
       if ("IntersectionObserver" in window) {
-        var lo = new IntersectionObserver(function (ents) { if (ents[0].isIntersecting) { load3d(); lo.disconnect(); } }, { rootMargin: "300px" });
-        lo.observe(scene);
-      } else load3d();
-    }
+        var dlo = new IntersectionObserver(function (ents) { if (ents[0].isIntersecting) { loadDio(); dlo.disconnect(); } }, { rootMargin: "600px" });
+        dlo.observe(dio);
+      } else loadDio();
+    } else if (dioStage) dioStage.setAttribute("data-state", "fallback");
   }
 
   /* ---------- Story */
