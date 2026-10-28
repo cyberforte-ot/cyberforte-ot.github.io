@@ -30,30 +30,32 @@ export function createTrees(ctx) {
 
   const common = `
     uniform sampler2D map; uniform float uOpacity; uniform vec3 fogColor; uniform float fogNear, fogFar;
-    varying float vTint; varying float vFog;
-    float bayer(vec2 p) { // 4x4 ordered dither in [0,1)
-      vec2 q = floor(mod(p, 4.0)); float i = q.x + q.y * 4.0;
-      float m = mod(i, 2.0) * 8.0 + mod(floor(i / 2.0), 2.0) * 4.0 + mod(floor(i / 4.0), 2.0) * 2.0 + mod(floor(i / 8.0), 2.0);
-      return (m + 0.5) / 16.0; }
+    uniform vec3 uSunDir, uSunColor, uSkyColor, uGroundColor; uniform float uSunI, uHemiI;
+    varying float vTint; varying float vFog; varying vec2 vLit;   // vLit: (sun-facing 0..1, height 0..1)
     vec4 finish(vec4 c) {
-      if (c.a < 0.25 + 0.5 * bayer(gl_FragCoord.xy) * 0.6) discard;
-      vec3 rgb = c.rgb * vTint;
+      if (c.a < 0.5) discard;
+      /* lit like the rest of the scene: hemisphere term by height, sun term by which side faces the sun */
+      vec3 hemi = mix(uGroundColor, uSkyColor, vLit.y) * uHemiI;
+      vec3 sunL = uSunColor * uSunI * (0.35 + 0.65 * vLit.x) * (0.55 + 0.45 * vLit.y);
+      vec3 rgb = c.rgb * vTint * (hemi + sunL) * 0.5;
       rgb = mix(rgb, fogColor, smoothstep(fogNear, fogFar, vFog));
-      return vec4(rgb, uOpacity); }`;
+      return vec4(rgb, c.a); }`;
+  const lightUniforms = () => ({ uSunDir: { value: new THREE.Vector3(-0.45, 0.72, 0.53) }, uSunColor: { value: new THREE.Color(0xffe4c4) }, uSkyColor: { value: new THREE.Color(0xc8dcff) }, uGroundColor: { value: new THREE.Color(0xa6a07a) }, uSunI: { value: 3.2 }, uHemiI: { value: 0.6 } });
 
   let material;
   if (hemi && grid >= 2) {
     /* ---- hemi-octahedral: frames laid out grid×grid per variant row block */
     const nVariants = Math.max(1, variants.length || +atlas.variant_count || 5);
     material = new THREE.ShaderMaterial({
-      uniforms: { map: { value: texture }, uGrid: { value: grid }, uVariants: { value: nVariants }, uOpacity: { value: 1 }, uFlip: { value: new THREE.Vector2(+(atlas.flip_x || 0), +(atlas.flip_y || 0)) }, fogColor: { value: new THREE.Color(0xe4ecf1) }, fogNear: { value: 120 }, fogFar: { value: 300 } },
+      uniforms: Object.assign({ map: { value: texture }, uGrid: { value: grid }, uVariants: { value: nVariants }, uOpacity: { value: 1 }, uFlip: { value: new THREE.Vector2(+(atlas.flip_x || 0), +(atlas.flip_y || 0)) }, fogColor: { value: new THREE.Color(0xece6da) }, fogNear: { value: 40 }, fogFar: { value: 140 } }, lightUniforms()),
       vertexShader: `
         attribute vec3 iPos; attribute vec4 iData;
-        uniform float uGrid;
-        varying vec2 vLocal; varying float vTint; varying float vFog; varying vec3 vFrame; varying vec3 vW; varying float vSize; varying float vRow;
+        uniform float uGrid; uniform vec3 uSunDir;
+        varying vec2 vLocal; varying float vTint; varying float vFog; varying vec3 vFrame; varying vec3 vW; varying float vSize; varying float vRow; varying vec2 vLit;
         void main() {
           vec3 toCam = cameraPosition - iPos;
           vec3 d = normalize(toCam); d.y = max(d.y, 0.02);
+          vLit = vec2(0.5 + 0.5 * dot(normalize(vec3(d.x, 0.0, d.z)), normalize(vec3(uSunDir.x, 0.0, uSunDir.z))), position.y + 0.5);
           vec3 right = normalize(cross(vec3(0.0, 1.0, 0.0), d));
           vec3 up = cross(d, right);
           float size = iData.x;
@@ -82,7 +84,7 @@ export function createTrees(ctx) {
           vec2 local = clamp(vec2(px, py) + 0.5, 0.001, 0.999);
           if (uFlip.x > 0.5) local.x = 1.0 - local.x; if (uFlip.y > 0.5) local.y = 1.0 - local.y;
           vec2 uv = vec2((vRow * uGrid + cell.x + local.x) / (uVariants * uGrid), (cell.y + (1.0 - local.y)) / uGrid);
-          return texture2D(map, uv);
+          return texture2D(map, uv, -0.5);
         }
         void main() {
           vec2 g = clamp(encode(vFrame) * uGrid - 0.5, 0.0, uGrid - 1.0);
@@ -91,12 +93,20 @@ export function createTrees(ctx) {
           if (f.x + f.y < 1.0) { cB = c0 + vec2(1.0, 0.0); cC = c0 + vec2(0.0, 1.0); w = vec3(1.0 - f.x - f.y, f.x, f.y); }
           else { cA = c0 + vec2(1.0, 1.0); cB = c0 + vec2(1.0, 0.0); cC = c0 + vec2(0.0, 1.0); w = vec3(f.x + f.y - 1.0, 1.0 - f.y, 1.0 - f.x); }
           cA = min(cA, uGrid - 1.0); cB = min(cB, uGrid - 1.0); cC = min(cC, uGrid - 1.0);
-          vec4 a = frameSample(cA, decode((cA + 0.5) / uGrid));
-          vec4 b = frameSample(cB, decode((cB + 0.5) / uGrid));
-          vec4 c = frameSample(cC, decode((cC + 0.5) / uGrid));
-          vec4 s = a * w.x + b * w.y + c * w.z;
-          float asum = max(s.a, 0.0001);
-          s.rgb = (a.rgb * a.a * w.x + b.rgb * b.a * w.y + c.rgb * c.a * w.z) / asum;   // alpha-weighted colour
+          /* nearest frame alone unless the view sits near a frame boundary, then blend the three */
+          float wmax = max(w.x, max(w.y, w.z));
+          vec4 s;
+          if (wmax > 0.72) {
+            vec2 cn = w.x >= w.y && w.x >= w.z ? cA : (w.y >= w.z ? cB : cC);
+            s = frameSample(cn, decode((cn + 0.5) / uGrid));
+          } else {
+            vec4 a = frameSample(cA, decode((cA + 0.5) / uGrid));
+            vec4 b = frameSample(cB, decode((cB + 0.5) / uGrid));
+            vec4 c = frameSample(cC, decode((cC + 0.5) / uGrid));
+            s = a * w.x + b * w.y + c * w.z;
+            float asum = max(s.a, 0.0001);
+            s.rgb = (a.rgb * a.a * w.x + b.rgb * b.a * w.y + c.rgb * c.a * w.z) / asum;
+          }
           gl_FragColor = finish(s);
           #include <tonemapping_fragment>
           #include <colorspace_fragment>
@@ -107,13 +117,14 @@ export function createTrees(ctx) {
     /* ---- 8 azimuth views + top strip (nearest view) */
     const views = atlas.views || 8, cols = atlas.cols || 9, rows = atlas.rows || 9;
     material = new THREE.ShaderMaterial({
-      uniforms: { map: { value: texture }, uCols: { value: cols }, uRows: { value: rows }, uViews: { value: views }, uOpacity: { value: 1 }, fogColor: { value: new THREE.Color(0xe4ecf1) }, fogNear: { value: 120 }, fogFar: { value: 300 } },
+      uniforms: Object.assign({ map: { value: texture }, uCols: { value: cols }, uRows: { value: rows }, uViews: { value: views }, uOpacity: { value: 1 }, fogColor: { value: new THREE.Color(0xece6da) }, fogNear: { value: 40 }, fogFar: { value: 140 } }, lightUniforms()),
       vertexShader: `
         attribute vec3 iPos; attribute vec4 iData;
-        uniform float uCols, uRows, uViews;
-        varying vec2 vUv; varying float vTint; varying float vFog;
+        uniform float uCols, uRows, uViews; uniform vec3 uSunDir;
+        varying vec2 vUv; varying float vTint; varying float vFog; varying vec2 vLit;
         void main() {
           vec3 toCam = cameraPosition - iPos;
+          vLit = vec2(0.5 + 0.5 * dot(normalize(vec3(toCam.x, 0.0, toCam.z)), normalize(vec3(uSunDir.x, 0.0, uSunDir.z))), position.y + 0.5);
           float az = atan(toCam.x, toCam.z);
           float el = atan(toCam.y, length(toCam.xz));
           bool top = el > 1.22;
@@ -138,9 +149,12 @@ export function createTrees(ctx) {
       transparent: false, depthWrite: true, side: THREE.DoubleSide, alphaToCoverage: true,
     });
   }
+  material.alphaToCoverage = true;
   material.name = "ImpostorInstanced"; material.toneMapped = true;
   const mesh = new THREE.Mesh(geo, material);
   mesh.frustumCulled = false; mesh.castShadow = false; mesh.receiveShadow = false; mesh.name = "trees_web_impostors";
   const box = new THREE.Box3(); instances.forEach((it) => box.expandByPoint(new THREE.Vector3(it.pos_yup[0], it.pos_yup[1], it.pos_yup[2])));
-  return { mesh, mat: material, count: n, box, hemi: hemi && grid >= 2, setFog(color, near, far) { material.uniforms.fogColor.value.copy(color); material.uniforms.fogNear.value = near; material.uniforms.fogFar.value = far; } };
+  return { mesh, mat: material, count: n, box, hemi: hemi && grid >= 2,
+    setFog(color, near, far) { material.uniforms.fogColor.value.copy(color); material.uniforms.fogNear.value = near; material.uniforms.fogFar.value = far; },
+    setLight(sunDir, sunColor, sunI, skyColor, groundColor, hemiI) { const u = material.uniforms; u.uSunDir.value.copy(sunDir).normalize(); u.uSunColor.value.copy(sunColor); u.uSunI.value = sunI; u.uSkyColor.value.copy(skyColor); u.uGroundColor.value.copy(groundColor); u.uHemiI.value = hemiI; } };
 }

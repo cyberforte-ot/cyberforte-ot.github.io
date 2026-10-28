@@ -6,6 +6,7 @@ import { GLTFLoader } from "./vendor/GLTFLoader.js";
 import { MeshoptDecoder } from "./vendor/meshopt_decoder.module.js";
 import { createLive } from "./diorama-live.js";
 import { RoomEnvironment } from "./vendor/RoomEnvironment.js";
+import { RGBELoader } from "./vendor/RGBELoader.js";
 import { createWalkers } from "./diorama-walkers.js";
 import { createPurdue } from "./diorama-purdue.js";
 import { createTrees } from "./diorama-trees.js";
@@ -20,7 +21,8 @@ function init() {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const coarse = window.matchMedia("(pointer: coarse)").matches;
   const small = Math.min(window.innerWidth, window.innerHeight) < 700;
-  const lowPower = small || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || (navigator.deviceMemory && navigator.deviceMemory <= 4) || (navigator.connection && navigator.connection.saveData);
+  const lowPower = small || !!(navigator.connection && navigator.connection.saveData);
+  const TONE = (new URLSearchParams(location.search).get("tone") || "aces").toLowerCase();
   const modelsBase = section.getAttribute("data-models") || "../assets/models/";
   const MODEL_VERSION = "v3_5";
   const RISKS = DATA.risks, PURDUE = DATA.purdue;
@@ -59,12 +61,13 @@ function init() {
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
   } catch (e) { stage.setAttribute("data-state", "fallback"); console.warn("[diorama] WebGL is not available"); return; }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.5 : 2));
+  const dprCap = { value: Math.min(window.devicePixelRatio || 1, lowPower ? 1.5 : 2) };
+  renderer.setPixelRatio(dprCap.value);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.08;
+  renderer.toneMapping = TONE === "agx" ? THREE.AgXToneMapping : THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
   const cv = renderer.domElement;
   cv.className = "dio-gl";
   cv.setAttribute("aria-hidden", "true");
@@ -76,19 +79,33 @@ function init() {
   scene.add(camera);
 
   /* ---------- light: bright warm daylight, the same in every site theme (matches the Blender renders) */
-  const sun = new THREE.DirectionalLight(0xfff1d8, 2.7);
-  sun.position.set(-26, 44, 38);                    // about 40 degrees up, from the front-left, shadows fall back and right
+  const sun = new THREE.DirectionalLight(0xffe4c4, 3.2);
+  sun.position.set(-26, 44, 38);                    // overridden by the glb's sun_dir_yup when present
   sun.castShadow = true;
-  sun.shadow.mapSize.set(lowPower ? 1024 : 2048, lowPower ? 1024 : 2048);
-  Object.assign(sun.shadow.camera, { left: -34, right: 34, top: 26, bottom: -26, near: 10, far: 160 });
-  sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.03; sun.shadow.radius = 4;
+  sun.shadow.mapSize.set(lowPower ? 2048 : 4096, lowPower ? 2048 : 4096);
+  Object.assign(sun.shadow.camera, { left: -30, right: 30, top: 30, bottom: -30, near: 10, far: 160 });
+  sun.shadow.bias = -0.0003; sun.shadow.normalBias = 0.02;
   scene.add(sun); scene.add(sun.target); sun.target.position.set(-4, 0, 2);
-  const hemi = new THREE.HemisphereLight(0xdfeaff, 0x9fc25a, 1.25); scene.add(hemi);
+  const hemi = new THREE.HemisphereLight(0xc8dcff, 0xa6a07a, 0.6); scene.add(hemi);
   const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  pmrem.dispose();
-  const FOG = 0xe4ecf1;                             // pale sky haze, never dark
-  scene.fog = new THREE.Fog(FOG, 120, 300);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;   // until sky_env loads
+  const FOG = 0xece6da;                             // warm, pale haze
+  scene.fog = new THREE.Fog(FOG, 40, 140);
+  /* sky environment from the model folder (hdr or webp/jpg equirect), through PMREM */
+  (function loadSky() {
+    const tryNext = (list) => {
+      if (!list.length) { pmrem.dispose(); return; }
+      const url = modelsBase + list[0];
+      const done = (tex) => { tex.mapping = THREE.EquirectangularReflectionMapping; const env = pmrem.fromEquirectangular(tex).texture; scene.environment = env; tex.dispose(); pmrem.dispose(); applyEnvIntensity(); requestRender(); };
+      if (/\.hdr$/i.test(url)) new RGBELoader().load(url, done, undefined, () => tryNext(list.slice(1)));
+      else new THREE.TextureLoader().load(url, (t) => { t.colorSpace = THREE.SRGBColorSpace; done(t); }, undefined, () => tryNext(list.slice(1)));
+    };
+    tryNext(["sky_env.hdr", "sky_env.webp", "sky_env.jpg", "sky_env.png"]);
+  })();
+  function applyEnvIntensity() {
+    if (!root) return;
+    root.traverse((o) => { if (!o.isMesh) return; (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => { if (m && m.isMeshStandardMaterial) m.envMapIntensity = (m.name === "GlassWeb" || m.metalness > 0.3) ? 0.8 : 0.35; }); });
+  }
   const expo = { base: 1.0, value: 1 };
   let live = null;
 
@@ -102,6 +119,7 @@ function init() {
   let mixer = null, root = null, levelRanges = {}, steamSprites = [], cloudSprites = [], people = null, pulses = [], strataSlab = null, dmzSlab = null, doorNode = null;
   let cloudLineMats = [];
   let trees = null;
+  const sunDirTmp = new THREE.Vector3();
   const CLOUD_CLIP_Y = 12.5;
   const cloudClip = new THREE.Plane(new THREE.Vector3(0, -1, 0), CLOUD_CLIP_Y);
   const fadeMats = [];   // materials that fade in purdue mode
@@ -363,7 +381,10 @@ function init() {
       });
     });
     if (!anyVertexColor) console.warn("[diorama] model has no vertex colours; using name-based tints for Glow parts");
-    root.traverse((o) => { if (!o.isMesh) return; (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => { if (m && m.isMeshStandardMaterial) { m.envMapIntensity = m.name === "GlassWeb" ? 1.0 : 0.55; } }); });
+    applyEnvIntensity();
+    /* sun direction from the model, so live shadows line up with the baked ones */
+    const sd = parseExtra((gltf.scene.userData && gltf.scene.userData.sun_dir_yup) || (gltf.userData && gltf.userData.sun_dir_yup) || (root.userData && root.userData.sun_dir_yup));
+    if (Array.isArray(sd) && sd.length === 3) { const v = new THREE.Vector3(sd[0], sd[1], sd[2]).normalize(); if (v.y < 0) v.negate(); sun.position.copy(v.multiplyScalar(60)).add(sun.target.position); }
     /* parts whose opacity is animated get their own copy of the shared materials */
     ["dmz_walls_flat", "dmz_walls_segmented", "net_flat_lines", "net_segmented_lines", "landscape_apron", "trees_web"].forEach((n) => nodesByPrefix(n).forEach(uniqueMaterials));
 
@@ -469,6 +490,9 @@ function init() {
     ["static_world", "dmz_walls_segmented", "purdue_strata"].forEach((n) => { if (nodes[n]) siteBox.expandByObject(nodes[n]); });
     if (!siteBox.isEmpty()) {
       const c = new THREE.Vector3(); siteBox.getCenter(c);
+      const r = siteBox.getSize(new THREE.Vector3()).length() * 0.5;
+      sun.target.position.set(c.x, 0, c.z); sun.position.sub(new THREE.Vector3(-4, 0, 2)).add(new THREE.Vector3(c.x, 0, c.z));
+      Object.assign(sun.shadow.camera, { left: -r, right: r, top: r, bottom: -r, near: 5, far: 200 }); sun.shadow.camera.updateProjectionMatrix();
       LIM.box.min.set(Math.max(-34, siteBox.min.x - 6), -6, Math.max(-22, siteBox.min.z - 6));
       LIM.box.max.set(Math.min(34, siteBox.max.x + 6), 16, Math.min(24, siteBox.max.z + 6));
     }
@@ -490,6 +514,7 @@ function init() {
     Object.assign(goal, { az: pose.az, el: pose.el, dist: pose.dist, fov: pose.fov }); goal.t.copy(pose.t);
     st.ready = true;
     stage.setAttribute("data-state", "ready");
+    const posterEl = stage.querySelector(".dio-poster"); if (posterEl) setTimeout(() => { posterEl.hidden = true; }, reduce ? 0 : 1400);
     section.setAttribute("data-live", "1");
     if (statusEl) statusEl.textContent = "";
     setStep(currentStepFromScroll());
@@ -538,15 +563,30 @@ function init() {
     steamTex = new THREE.CanvasTexture(c); steamTex.colorSpace = THREE.SRGBColorSpace;
     return steamTex;
   }
+  let steamTexCache = null;
+  function steamTexture() {
+    if (steamTexCache) return steamTexCache;
+    const c = document.createElement("canvas"); c.width = c.height = 256; const g = c.getContext("2d");
+    const img = g.createImageData(256, 256); const d = img.data;
+    const h = (x, y) => { const v = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453; return v - Math.floor(v); };
+    for (let y = 0; y < 256; y++) for (let x = 0; x < 256; x++) {
+      const dx = (x - 128) / 128, dy = (y - 128) / 128, r = Math.sqrt(dx * dx + dy * dy);
+      const n = 0.6 * h(x >> 4, y >> 4) + 0.3 * h(x >> 3, y >> 3) + 0.1 * h(x >> 1, y >> 1);
+      const a = Math.max(0, 1 - r) * (0.55 + 0.45 * n);
+      const i = (y * 256 + x) * 4; d[i] = d[i + 1] = d[i + 2] = 255; d[i + 3] = Math.round(255 * Math.pow(a, 1.4));
+    }
+    g.putImageData(img, 0, 0);
+    steamTexCache = new THREE.CanvasTexture(c); steamTexCache.colorSpace = THREE.SRGBColorSpace; return steamTexCache;
+  }
   function buildSprites(node, kind) {
     if (!node) return;
     const list = parseExtra(node.userData.sprites_yup);
     if (!Array.isArray(list)) return;
     let map = null;
     node.traverse((m) => { if (m.isMesh && m.material && m.material.map) map = m.material.map; });
-    const tex = map || softTexture();
+    const tex = kind === "steam" ? steamTexture() : (map || softTexture());
     const group = new THREE.Group(); group.name = kind + "_sprites"; scene.add(group);
-    const count = kind === "steam" ? (lowPower ? 7 : 10) : list.length;
+    const count = kind === "steam" ? (lowPower ? 14 : 24) : list.length;
     for (let i = 0; i < count; i++) {
       const s = list[i % list.length];
       const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.0, depthWrite: false, color: kind === "steam" ? 0xffffff : 0xf6f9ff, fog: true });
@@ -573,7 +613,7 @@ function init() {
       r.sp.position.set(r.base.x + Math.sin(t * 0.35 + r.phase * 7) * 0.5 + p * cfg.drift[0] * 2.2, y + (r.base.y - cfg.baseY) * 0.25, r.base.z + Math.cos(t * 0.3 + r.phase * 5) * 0.35 - p * cfg.drift[1] * 2.0);
       const s = r.size * (0.55 + p * 1.1);
       r.sp.scale.set(s, s, 1);
-      r.sp.material.opacity = 0.75 * Math.sin(Math.PI * Math.min(1, p * 1.25)) * (1 - p * 0.35);
+      r.sp.material.opacity = 0.95 * Math.min(1, p * 6.0) * (1 - Math.pow(p, 1.6));   // quick fade-in above the rim, long fade-out
       r.sp.material.rotation = r.phase * 6.28 + t * 0.05;
     });
     cloudSprites.forEach((r, i) => { r.sp.position.y = r.base.y + Math.sin(t * (2 * Math.PI / 10) + i * 1.3) * 0.35; r.sp.position.x = r.base.x + Math.sin(t * 0.17 + i) * 0.25; });
@@ -702,11 +742,11 @@ function init() {
     if (stills.shown === key) return;
     if (!stills.loaded[key]) { preloadStill(key); return; }
     const next = (stills.cur + 1) % 2, im = stillImgs[next];
-    im.src = stillUrl(key);
+    im.hidden = false; im.src = stillUrl(key);
     im.classList.add("show"); stillImgs[stills.cur === -1 ? 1 : stills.cur].classList.remove("show");
     stills.cur = next; stills.shown = key;
   }
-  function hideStill() { if (stills.shown === null) return; stillImgs.forEach((im) => im.classList.remove("show")); stills.shown = null; }
+  function hideStill() { if (stills.shown === null) return; stillImgs.forEach((im) => { im.classList.remove("show"); setTimeout(() => { if (!im.classList.contains("show")) im.hidden = true; }, 700); }); stills.shown = null; }
   function syncStill() {
     const key = stillKey();
     if (!key) { hideStill(); return; }
@@ -1042,7 +1082,7 @@ function init() {
     const W = Math.max(1, Math.round(r.width)), H = Math.max(1, Math.round(r.height));
     aspect = W / H;
     camera.aspect = aspect; camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lowPower ? 1.5 : 2));
+    renderer.setPixelRatio(dprCap.value);
     renderer.setSize(W, H, false);
     if (st.ready && glide) {
       /* orientation change mid-glide: re-fit the destination for the new aspect */
@@ -1059,10 +1099,20 @@ function init() {
   /* ---------- loop: render on demand, animate while visible */
   let needs = true, running = false, visible = true, last = performance.now(), t = 0;
   function requestRender() { needs = true; if (!running) { running = true; requestAnimationFrame(frame); } }
+  const perf = { frames: 0, t0: 0, bad: 0 };
+  function adaptDpr(now) {
+    if (!perf.t0) { perf.t0 = now; perf.frames = 0; return; }
+    perf.frames++;
+    if (now - perf.t0 < 2000) return;
+    const fps = perf.frames / ((now - perf.t0) / 1000); perf.t0 = now; perf.frames = 0;
+    if (fps < 45 && dprCap.value > 1) { if (++perf.bad >= 2) { perf.bad = 0; dprCap.value = Math.max(1, dprCap.value - 0.25); renderer.setPixelRatio(dprCap.value); resize(); console.info("[diorama] dpr", dprCap.value, "after", fps.toFixed(0), "fps"); } }
+    else perf.bad = 0;
+  }
   function frame(now) {
     needs = false;
     if (destroyed) { running = false; return; }
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if (st.ready && !reduce && visible && !document.hidden) adaptDpr(now); else perf.t0 = 0;
     const animate = st.ready && !reduce && visible && !document.hidden;
     let busy = false;
     if (st.ready) {
@@ -1080,7 +1130,7 @@ function init() {
         busy = true;
       } else if (!steamSprites.rested) { restSteam(); steamSprites.rested = true; updatePulses(0, 1); if (live) live.rest(); }
 
-      if (trees) { trees.mat.uniforms.uOpacity.value = trees.mat.opacity; trees.mat.transparent = trees.mat.opacity < 1; trees.setFog(scene.fog.color, scene.fog.near, scene.fog.far); }
+      if (trees) { trees.mat.uniforms.uOpacity.value = trees.mat.opacity; trees.mat.transparent = trees.mat.opacity < 1; trees.setFog(scene.fog.color, scene.fog.near, scene.fog.far); trees.setLight(sunDirTmp.subVectors(sun.position, sun.target.position), sun.color, sun.intensity, hemi.color, hemi.groundColor, hemi.intensity); }
       renderer.render(scene, camera);
       placeMarkers();
       placeLevelLabels();
