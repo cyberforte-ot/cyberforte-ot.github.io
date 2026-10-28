@@ -680,7 +680,8 @@ figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
 .dio-stage[data-state="ready"] .dio-loading, .dio-stage[data-state="fallback"] .dio-loading { opacity: 0; pointer-events: none; }
 /* markers */
 .dio-markers, .dio-level-labels { z-index: 3; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .6s var(--ease) .25s; }
-.dio-stage[data-state="ready"] .dio-markers { opacity: 1; }
+.dio-stage[data-state="ready"] .dio-markers { opacity: 1; transition: opacity .25s var(--ease); }
+.dio-stage[data-state="ready"] .dio-markers.gliding { opacity: 0; transition: opacity .06s linear; pointer-events: none; }
 .dio[data-mode="purdue"] .dio-markers { opacity: 0; transition-delay: 0s; }
 .dio[data-mode="purdue"] .dio-markers .dio-marker { pointer-events: none; }
 .dio[data-mode="purdue"] .dio-level-labels { opacity: 1; }
