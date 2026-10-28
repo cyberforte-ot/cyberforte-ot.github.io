@@ -39,13 +39,18 @@ export function createTrees(ctx) {
     varying float vTint; varying float vFog; varying vec2 vLit;   // vLit: (sun-facing 0..1, height 0..1)
     vec4 finish(vec4 c, vec4 nrm) {
       if (c.a < 0.5) discard;
+      /* the atlas's transparent texels are white, so mip levels whiten the edges and the whole canopy at a distance:
+         undo the bleed by removing the white that the alpha says was mixed in */
+      c.rgb = clamp((c.rgb - (1.0 - c.a)) / max(c.a, 0.2), 0.0, 1.0);
       vec3 lit;
       if (uHasNormal > 0.5 && nrm.a > 0.2) {
         /* world-space canopy normal from the atlas (Blender Z-up -> three Y-up: x, z, -y); the colour atlas already carries AO */
         vec3 nb = nrm.rgb * 2.0 - 1.0; vec3 nw = normalize(vec3(nb.x, nb.z, -nb.y));
         float nd = max(dot(nw, normalize(uSunDir)), 0.0);
-        vec3 hemi = mix(uGroundColor, uSkyColor, nw.y * 0.5 + 0.5) * uHemiI;
-        lit = c.rgb * vTint * (hemi + uSunColor * uSunI * (0.18 + 0.82 * nd)) * 0.42;
+        /* the colour atlas is already lit with AO baked in: the normal only modulates (never brightens past the atlas) */
+        vec3 sunTint = uSunColor / max(max(uSunColor.r, uSunColor.g), max(uSunColor.b, 0.001));
+        vec3 skyTint = mix(uGroundColor, uSkyColor, nw.y * 0.5 + 0.5); skyTint /= max(max(skyTint.r, skyTint.g), max(skyTint.b, 0.001));
+        lit = c.rgb * vTint * (0.55 + 0.45 * nd) * mix(vec3(1.0), sunTint, 0.35 * nd) * mix(vec3(1.0), skyTint, 0.15);
       } else {
         vec3 hemi = mix(uGroundColor, uSkyColor, vLit.y) * uHemiI;
         vec3 sunL = uSunColor * uSunI * (0.35 + 0.65 * vLit.x) * (0.55 + 0.45 * vLit.y);

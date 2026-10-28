@@ -90,7 +90,7 @@ function init() {
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;   // until sky_env loads
   const FOG = 0xece6da;                             // warm, pale haze
-  scene.fog = new THREE.Fog(FOG, 40, 140);
+  scene.fog = new THREE.Fog(FOG, 90, 260);     // the site sits 60-140 m from the wide camera; 40-140 whitened the far trees
   /* sky environment from the model folder (hdr or webp/jpg equirect), through PMREM */
   (function loadSky() {
     const tryNext = (list) => {
@@ -938,7 +938,7 @@ function init() {
     if (nodes.data_line_cloud) nodes.data_line_cloud.visible = purdueMode;
     if (purdue) { if (purdueMode) purdue.enter(); else purdue.exit(); }
     if (!purdueMode) { st.level = null; hoverLevel = null; refreshLevel(); } else { hoverLevel = null; refreshLevel(); }
-    if (purdueMode) { scene.fog.near = 150; scene.fog.far = 360; } else { scene.fog.near = 120; scene.fog.far = 300; }
+    if (purdueMode) { scene.fog.near = 150; scene.fog.far = 360; } else { scene.fog.near = 90; scene.fog.far = 260; }
     if (layersBtn) layersBtn.setAttribute("aria-pressed", purdueMode ? "true" : "false");
     hideStill();
     requestRender();
