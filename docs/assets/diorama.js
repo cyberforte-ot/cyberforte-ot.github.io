@@ -176,6 +176,7 @@ function init() {
     const dur = opts.dur || THREE.MathUtils.clamp(1.1 + dT * 0.028, 1.2, 1.8);
     target.az = shortestAz(from.az, target.az);
     glide = { from, to: target, src: p, t: 0, dur, ease: interrupted ? easeOut : easeInOut, lift: THREE.MathUtils.clamp(dT * 0.5, 0, 12) * (opts.lift === false ? 0 : 1) };
+    if (markersEl) markersEl.classList.add("gliding");
     requestRender();
   }
   function stepGlide(dt) {
@@ -189,7 +190,7 @@ function init() {
     pose.dist = a.dist + (b.dist - a.dist) * k + bump * glide.lift;
     pose.fov = a.fov + (b.fov - a.fov) * k;
     Object.assign(goal, { az: pose.az, el: pose.el, dist: pose.dist, fov: pose.fov }); goal.t.copy(pose.t);
-    if (glide.t >= 1) { glide = null; clearTimeout(stillArm); stillArm = setTimeout(syncStill, 260); }
+    if (glide.t >= 1) { glide = null; clearTimeout(stillArm); stillArm = setTimeout(syncStill, 260); applyPose(pose); placeMarkers(); if (markersEl) markersEl.classList.remove("gliding"); }
     return true;
   }
   function stepFollow(dt) {
@@ -208,7 +209,7 @@ function init() {
     goal.t.clamp(LIM.box.min, LIM.box.max);
   }
   function userMoved() {
-    if (glide) { glide = null; }
+    if (glide) { glide = null; if (markersEl) markersEl.classList.remove("gliding"); }
     stills.target = null; hideStill();
     st.userView = true;
     if (hintEl && !hintEl.classList.contains("gone")) hintEl.classList.add("gone");
@@ -844,7 +845,7 @@ function init() {
     });
   }
   function placeMarkers() {
-    if (!markers.length) return;
+    if (!markers.length || (glide && !pointers.size)) return;   // frozen during a glide
     const W = cv.clientWidth, H = cv.clientHeight;
     const camPos = camera.position;
     const rows = markers.map((m) => {
@@ -904,7 +905,7 @@ function init() {
     });
   }
   function placeLevelLabels() {
-    if (st.mode !== MODE.PURDUE) return;
+    if (st.mode !== MODE.PURDUE || glide) return;
     const W = cv.clientWidth, H = cv.clientHeight;
     const rows = levelLabels.map((l) => { v3.copy(l.world).project(camera); return { l, x: (v3.x + 1) / 2 * W, y: (1 - v3.y) / 2 * H }; });
     rows.sort((a, b) => a.y - b.y);
