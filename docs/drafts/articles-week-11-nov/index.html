@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>CyberForte Suggested Articles</title>
+<style>
+@font-face{font-family:"Montserrat";src:url("montserrat-latin.woff2") format("woff2");font-weight:100 900;font-display:swap}
+:root{
+  --red:#c8102e;--red-dark:#a00d25;--ink:#1a2233;--head:#333333;--text:#3a3f4a;--muted:#606060;
+  --line:#e4e6eb;--bg:#f5f6f8;--card:#ffffff;--radius:6px;
+  --shadow:0 1px 2px rgba(26,34,51,.05),0 6px 20px rgba(26,34,51,.06);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--red)}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:16px;padding-right:16px}
+
+/* site bar */
+.bar{background:#fff;border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}
+.bar img{height:34px;width:auto}
+.draft-flag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);border:1.5px solid var(--red);padding:5px 10px;border-radius:999px;white-space:nowrap}
+
+/* page title band (like the CyberForte page-title) */
+.band{background:
+   radial-gradient(90% 140% at 100% 0%,rgba(200,16,46,.30),transparent 60%),
+   linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/32px 32px,
+   linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/32px 32px,
+   var(--ink);
+  color:#fff;text-align:center;padding:48px 0 44px;border-bottom:3px solid var(--red)}
+.band h1{font-size:clamp(26px,5.6vw,40px);line-height:1.18;font-weight:700;margin:0 0 10px;letter-spacing:-.01em}
+.band p{margin:0 auto;color:#c9cfdb;font-size:15px;max-width:52ch}
+
+/* blog grid */
+.list{padding:40px 0 72px}
+.list h2.sec{font-size:clamp(24px,4.5vw,32px);font-weight:700;color:var(--head);margin:0 0 24px}
+.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:28px}
+@media (min-width:680px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1040px){.grid{grid-template-columns:repeat(3,1fr);gap:32px}}
+.card{display:flex;flex-direction:column;gap:14px;height:100%;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;padding-bottom:22px}
+.card .media{aspect-ratio:16/10}
+.card .pad{padding:0 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.card h3{font-size:22px;line-height:1.3;font-weight:700;letter-spacing:.3px;color:var(--head);margin:0}
+.card h3 a{color:inherit;text-decoration:none}
+.card h3 a:hover{color:var(--red)}
+.card h3 a::after{content:"";position:absolute;inset:0}
+.card{position:relative;transition:transform .18s ease,box-shadow .18s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(26,34,51,.07),0 14px 32px rgba(26,34,51,.10)}
+.card:focus-within{outline:3px solid var(--red);outline-offset:3px}
+.card h3 a:focus-visible{outline:none}
+.excerpt{color:var(--muted);font-size:15.5px;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.more{margin-top:auto;font-weight:700;font-size:16px;letter-spacing:.3px;color:var(--red)}
+
+/* post info row (author, date, category) */
+.info{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--muted);font-size:14px}
+.info li{display:inline-flex;align-items:center;gap:6px}
+.info svg{width:15px;height:15px;color:var(--red);flex:none}
+.info .draft{font-weight:700;color:var(--red)}
+
+/* A/B headline switch */
+.sec-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin:0 0 24px}
+.sec-row .sec{margin:0}
+.ab-note{margin:0;display:flex;align-items:center;gap:10px;font-size:14.5px;font-weight:500;color:var(--head);background:#fff;border:1px solid var(--line);border-left:3px solid var(--red);padding:10px 14px;border-radius:6px}
+.ab-mark{font-size:11px;font-weight:800;letter-spacing:.08em;color:#fff;background:var(--ink);padding:3px 7px;border-radius:4px}
+.ab{position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;align-self:flex-start}
+.ab-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ab-seg{display:inline-flex;background:#eef0f3;border-radius:999px;padding:3px}
+.ab-seg button{font:inherit;font-size:12.5px;font-weight:700;min-width:34px;min-height:30px;padding:0 12px;border:0;border-radius:999px;background:transparent;color:var(--muted);cursor:pointer;transition:background .15s,color .15s}
+.ab-seg button:hover{color:var(--head)}
+.ab-seg button[aria-pressed="true"]{background:#fff;color:var(--red);box-shadow:0 1px 3px rgba(26,34,51,.15)}
+.chip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.chip.technical{background:#eceff4;color:var(--ink)}
+.chip.service{background:#fdecef;color:var(--red)}
+.standfirst{font-style:italic;font-size:clamp(18px,2.6vw,20px);line-height:1.55;color:var(--head);margin:0 0 18px}
+.hookbox{margin:22px 0 4px;background:#fff7f8;border:1px solid #f3c6ce;border-left:4px solid var(--red);border-radius:6px;padding:16px 18px}
+.hookbox h2{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.hookbox p{margin:0 0 14px;font-size:16px;line-height:1.6;color:var(--head);white-space:pre-wrap;overflow-wrap:break-word}
+.btn.sm{min-height:38px;font-size:13.5px;padding:0 14px}
+.a-switch{margin:4px 0 2px}
+
+/* media + placeholder */
+.media{position:relative;background:var(--ink);overflow:hidden}
+.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#8f99ad;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  background:radial-gradient(120% 90% at 85% 0%,rgba(200,16,46,.28),transparent 55%),linear-gradient(160deg,#1f2940,#121826)}
+.ph svg{width:30px;height:30px;opacity:.7}
+.media img{z-index:1}
+
+/* article view */
+.article{display:none;background:#fff;padding-bottom:72px}
+body.reading .article{display:block}
+body.reading .list,body.reading .band{display:none}
+.topnav{border-bottom:1px solid var(--line)}
+.topnav .wrap{display:flex;align-items:center;min-height:52px}
+.back{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;color:var(--head);text-decoration:none;padding:8px 4px;margin-left:-4px}
+.back:hover{color:var(--red)}
+.back svg{width:18px;height:18px}
+.hero{aspect-ratio:16/9;max-height:min(62vh,640px);width:100%}
+@supports not (aspect-ratio:1){.hero{height:56vw}}
+.measure{max-width:760px;margin:0 auto;padding:0 16px}
+.a-head{padding:36px 0 8px}
+.a-head h1{font-size:clamp(28px,5.2vw,42px);line-height:1.18;font-weight:700;color:var(--head);margin:14px 0 16px;letter-spacing:-.01em}
+.cat{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--red);padding:5px 10px;border-radius:3px;text-decoration:none}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 4px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:6px;font:inherit;font-weight:700;font-size:14.5px;cursor:pointer;text-decoration:none;border:1.5px solid var(--ink);background:#fff;color:var(--ink);transition:background .15s,color .15s,border-color .15s}
+.btn:hover{background:var(--ink);color:#fff}
+.btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+.btn.primary:hover{background:var(--red-dark);border-color:var(--red-dark)}
+.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.btn svg{width:17px;height:17px;flex:none}
+.wc{align-self:center;margin-left:auto;color:var(--muted);font-size:13px}
+@media (max-width:560px){.tools .btn{flex:1 1 100%}.wc{margin-left:0}}
+
+/* article typography */
+.prose{font-size:18px;line-height:1.75;color:var(--text);padding-top:18px;overflow-wrap:break-word}
+.prose > *:first-child{margin-top:0}
+.prose p{margin:0 0 1.15em}
+.prose h2{font-size:clamp(22px,3.6vw,27px);line-height:1.3;color:var(--head);font-weight:700;margin:2em 0 .6em}
+.prose h3{font-size:clamp(19px,3vw,21px);line-height:1.35;color:var(--head);font-weight:700;margin:1.6em 0 .5em}
+.prose ul{margin:0 0 1.25em;padding-left:1.3em}
+.prose li{margin:0 0 .5em;padding-left:.2em}
+.prose li::marker{color:var(--red)}
+.prose strong{color:var(--head)}
+.prose a{color:var(--red);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.prose a:hover{text-decoration-thickness:2px}
+.prose > p:first-child em:only-child{font-size:1.06em;color:var(--head)}
+@media (max-width:480px){.prose{font-size:17px}}
+
+.sources{margin-top:40px;padding-top:24px;border-top:3px solid var(--ink)}
+.sources h2{font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--head);margin:0 0 14px}
+.sources ol{margin:0;padding-left:1.4em;display:grid;gap:10px;font-size:15px;line-height:1.5}
+.sources a{color:var(--head);font-weight:600;text-decoration:none;overflow-wrap:anywhere}
+.sources a:hover{color:var(--red);text-decoration:underline}
+.sources small{display:block;color:var(--muted);font-size:12.5px}
+.endnav{margin-top:40px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--ink);color:#fff;font-weight:700;padding:12px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:10;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+footer{background:var(--ink);color:#aeb6c6;padding:22px 0;font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <img src="logo.png" alt="CyberForte" width="164" height="34">
+    <span class="draft-flag">Drafts</span>
+  </div>
+</header>
+
+<section class="band">
+  <div class="wrap">
+    <h1>Suggested articles for review: week of 11 November</h1>
+    <p>Drafts for Arun to review before publishing. Based on real, confirmed incidents.</p>
+  </div>
+</section>
+
+<main id="main">
+  <section class="list wrap" aria-labelledby="sec-title">
+    <div class="sec-row"><h2 class="sec" id="sec-title">Blogs</h2><p class="ab-note"><span class="ab-mark" aria-hidden="true">A/B</span>Each article has two headline options. Pick the one you prefer.</p></div>
+    <ul class="grid" id="grid"></ul>
+  </section>
+  <article class="article" id="article" tabindex="-1"></article>
+</main>
+
+<footer><div class="wrap">CyberForte. Draft articles, not yet published.</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const ARTICLES = [
+ {
+  "id": 1,
+  "category": "Technical",
+  "headline_a": "Boston Scientific's factories stopped, and its filings don't say how",
+  "headline_b": "Would your line keep running if its IT links went down?",
+  "hook": "Boston Scientific's 8-K says the incident hit its ability to manufacture and ship customer orders. It doesn't say how.",
+  "standfirst": "A production stop can come from IT, not from a hacked machine. The filings do not say which it was, and that is the lesson.",
+  "excerpt": "Boston Scientific identified a cyber incident on 25 August 2026. Its filing says it affected manufacturing and shipping. Here is what the company has confirmed, what it has not said, and the lesson for any plant that depends on IT.",
+  "sources": [
+   {
+    "title": "SEC Form 8-K, Boston Scientific, 7 September 2026 (cybersecurity incident)",
+    "url": "https://www.sec.gov/Archives/edgar/data/0000885725/000088572526000059/bsx-20260907.htm"
+   },
+   {
+    "title": "Boston Scientific, Q3 2026 earnings release (SEC exhibit)",
+    "url": "https://www.sec.gov/Archives/edgar/data/0000885725/000088572526000066/earningsrelease_live.htm"
+   },
+   {
+    "title": "SEC Form 10-Q, Boston Scientific, Q3 2026",
+    "url": "https://www.sec.gov/Archives/edgar/data/0000885725/000088572526000070/bsx-20260930.htm"
+   }
+  ],
+  "body_html": "<p><em>A production stop can come from IT, not from a hacked machine. The company's filings do not say which it was, and that is the lesson.<\/em><\/p>\n<p>Picture a line running at full speed on a Monday, with customer orders queued at the dispatch door. Then the systems that tell the line what to make, and where the product should go, stop responding. The machines may be perfectly healthy. The line still cannot run properly, because nobody knows what the product is meant to be.<\/p>\n<p>That is the sequence I keep coming back to when I read the filings from Boston Scientific this autumn. The company has been open about the outcome. It has been much less specific about the mechanism, and that gap is worth understanding before your own plant has the same week.<\/p>\n<h2>What happened<\/h2>\n<p>The company's <a href=\"https://www.sec.gov/Archives/edgar/data/0000885725/000088572526000059/bsx-20260907.htm\">8-K filing from early September<\/a> says that \"on August 25, 2026, Boston Scientific Corporation identified a cybersecurity incident\". It says the incident \"impacted the Company's ability to manufacture as well as process and ship customer orders\". It also says the incident \"is likely to have a material impact on the Company's results of operations\".<\/p>\n<p>The same filing gives the recovery picture in the company's own words. \"The Company's sterilization facilities are now operational and manufacturing has resumed across most facilities globally.\" It adds that \"the timeline for a full operational recovery is uncertain\", and that the company \"continues to work diligently to fully restore all affected systems\".<\/p>\n<p>Dates matter here, so I checked them. The 8-K gives 25 August as the day the incident was identified. The <a href=\"https://www.sec.gov/Archives/edgar/data/0000885725/000088572526000066/earningsrelease_live.htm\">Q3 results release<\/a> says the incident was \"first reported on August 26, 2026\". Both dates come from the company, and they differ by one day, which is the kind of detail a plant's incident log has to get right.<\/p>\n<p>The chief executive's quote in the release is about the response. The company is \"working with urgency and resilience to restore operations\". That is a statement of effort, not of cause.<\/p>\n<h2>What the filings do not say<\/h2>\n<p>I want to be straight about the limits. The passages I could read in the filings do not name an attacker, do not say ransomware was involved, and do not explain which systems failed or how. They also do not put a figure on the financial effect. I looked for a cost in the Q3 release and in the part of the 10-Q I could read, and the incident appears there only as a risk and a reference to its impact. If you have seen a number for the cost, check the filing it comes from before you repeat it.<\/p>\n<p>That matters because the lesson does not depend on the details. A plant can stop for a week because the system that releases a batch cannot be reached, even when every controller on the floor is untouched.<\/p>\n<h2>Why this matters in a real plant<\/h2>\n<p>I have spent more than 25 years around industrial control systems, and in my view the most common surprise is not a hacked controller. It is a dependency nobody drew. A line that looks like OT can depend on recipes, batch records, scheduling, quality release and labels, and most of those live on the business network. When that network is down, the machines can be fine and the line still stops, because the instructions and the paperwork are gone.<\/p>\n<p>That is why I ask three questions in every site review. Can the line run in a manual or degraded mode, and has someone practised it? Is the manufacturing network separated from the corporate domain, and which connections cross the boundary? And how long does a validated restore really take, measured from a backup nobody has tested this year, not from the figure in the plan?<\/p>\n<p>The historian is part of this too. It is the record of what the plant was doing, and when the business network is down, it is often the only place to see the state of the line. If the historian depends on the same domain as the email system, the same incident can blind the operators and the engineers at the same time.<\/p>\n<h2>What to do now<\/h2>\n<ul>\n<li>Map every dependency your line has on the business network, including recipes, batch records, scheduling, quality release, labelling and dispatch. Write the list down before an incident does it for you.<\/li>\n<li>Test a manual or degraded mode for each critical line, with the operators who would run it, and time how long it takes to switch.<\/li>\n<li>Check which connections cross from the corporate domain into the manufacturing network, and remove the ones nobody can explain.<\/li>\n<li>Restore a backup of a critical system into a test environment this quarter, and record how long it took and what was missing.<\/li>\n<li>Keep a printed or offline copy of the information needed to run and release a batch for each critical product.<\/li>\n<li>Make sure the historian keeps recording when the business network is unavailable, and that operators can see it.<\/li>\n<li>Agree who can declare a plant-level stop, and what they do first, before the week it happens.<\/li>\n<\/ul>\n<h2>What to take from the timeline<\/h2>\n<p>The timeline is short, and that is the point. The identification date and the first report date are both in the company's own filings, and they are one day apart. A plant that cannot produce a similar timeline for its own incidents, with the time each system went down and the time each decision was made, will struggle to answer its customers, its regulator and its own board.<\/p>\n<p>In my view, the most useful exercise is to write your own version of this timeline now, for a hypothetical incident on your busiest line. Put the times in. Then ask who would know each one, and whether the answer would still be true on a bad night.<\/p>\n<h2>Shared responsibility<\/h2>\n<p>A production stop is rarely one department's problem. IT owns the systems, operations owns the line, quality owns the release, and the plant manager owns the decision to stop. The incidents I would worry about are the ones where each of those people assumes another has the plan.<\/p>\n<p>At CyberForte we help OT operators map those dependencies and test whether the plant can run and recover without the systems it has come to rely on. If you are not sure what your line depends on outside the plant, start there.<\/p>",
+  "author": "Arun Rajagopal",
+  "image": "img/img-1.jpg",
+  "word_count": 1064,
+  "title": "Boston Scientific's factories stopped, and its filings don't say how"
+ },
+ {
+  "id": 2,
+  "category": "Technical",
+  "headline_a": "Through a supplier, a cyberattack reached France's plasma cold rooms",
+  "headline_b": "Your cold-room alarms should reach a person, not just a screen",
+  "hook": "EFS says no blood products were lost. The attackers went after its refrigeration supplier, not the blood service.",
+  "standfirst": "This is the follow-up to my freezer article. The same supply chain, this time holding blood plasma.",
+  "excerpt": "A refrigeration supplier was attacked, and the cold rooms it managed for the French blood service were manipulated. Alarms and staff on call kept the plasma safe. Here is what was confirmed, and what your own suppliers should be able to show you.",
+  "sources": [
+   {
+    "title": "The Next Web, French blood service hit by cyberattack on refrigeration supplier (4 November 2026)",
+    "url": "https://thenextweb.com/news/efs-french-blood-service-cyberattack"
+   },
+   {
+    "title": "CyberForte, The Forgotten Equipment That Nobody Is Watching (9 November 2026)",
+    "url": "https://cyberforte.co.uk/the-forgotten-equipment-that-nobody-is-watching/"
+   }
+  ],
+  "body_html": "<p><em>This is the follow-up to my freezer article. The same kind of supplier, this time holding blood plasma.<\/em><\/p>\n<p>Imagine the night shift at a cold store, with a set of alarm screens showing temperatures that are rising in rooms full of product that must stay cold. Somebody is on call. Somebody answers the phone. The next hour decides whether a batch of plasma is saved or lost.<\/p>\n<p>In early November, that is roughly what happened to the French national blood service, EFS. The attack did not hit EFS directly. It hit one of its refrigeration suppliers, and the cold rooms that supplier monitored and controlled were manipulated. Our <a href=\"https://cyberforte.co.uk/the-forgotten-equipment-that-nobody-is-watching/\">freezer article<\/a> described the same supply chain pattern in a supermarket setting. This is what it looks like when the product is blood plasma.<\/p>\n<h2>What happened<\/h2>\n<p>According to <a href=\"https://thenextweb.com/news/efs-french-blood-service-cyberattack\">The Next Web's report<\/a>, which quotes EFS, the attack began on the night of Monday 2 November. It reached \"the systems that monitor and control that supplier's cold rooms\", and \"attackers raised temperature and defrost thresholds to very high levels\". The article says three sites of the national blood service were affected, though it does not name them.<\/p>\n<p>The product in those rooms, according to the same report, was transfusion plasma, plasma for medicine manufacturing, and biobank samples. The report is the reporter's description, not an EFS list, so I would check it against any official EFS statement before quoting it.<\/p>\n<p>The response is the part I would study. The alarms caught the change. Depending on the site, equipment was brought back under control or shut down, and plasma was moved as a precaution. EFS is quoted as saying: \"No health impact has been identified and no blood products have been lost.\" The report also says that collections and hospital deliveries continue as normal, and that the French national cybersecurity agency ANSSI and the Health Ministry are working with EFS. Those last two points are stated by the article, not quoted from EFS.<\/p>\n<h2>What is claimed, and what is not confirmed<\/h2>\n<p>Some outlets have reported much higher temperatures than the ones described above, citing unnamed sources. EFS has not confirmed those figures, so I have left them out. The article also says that no group has claimed the attack, and that it is not clear how the attackers got in or how many devices were affected. I would keep all three of those points in your head as you read anything else about this.<\/p>\n<h2>What EFS has said, and what it has not<\/h2>\n<p>EFS has said that no health impact has been identified and that no blood products have been lost. Those are the statements to repeat. The article I read also says that collections and hospital deliveries continue as normal, which is a statement about continuity rather than a figure.<\/p>\n<p>What the article does not give is a full account of how the attackers reached the supplier, how many devices were involved, or how the rooms were brought back under control. Those gaps are normal this early. They are the things I would want to see in a later report from any supplier in this position.<\/p>\n<h2>Why this matters in a real plant<\/h2>\n<p>The way in is still unclear, but the path the attack took is worth noticing. The product was safe because of the monitoring. The attackers went after the monitoring. In a plant, the monitoring is often the first thing a supplier controls, because a remote support contract is the easiest way to keep equipment running. That is convenient, and it is also a route in.<\/p>\n<p>I would put it this way. You can run a clean estate and still be exposed through whoever manages your cold rooms, your compressors, your building systems or your remote alarms. Your supplier's network is part of your attack surface, whether or not it appears on your diagram.<\/p>\n<p>The alarms are the other half of the lesson. A remote system that changes a temperature is only half of the story. The part that saved the plasma was the alarm reaching a person who could act, and who was on call. An alarm that rings in an empty room is not a control.<\/p>\n<h2>What to do now<\/h2>\n<ul>\n<li>List every supplier that has remote access to your cold rooms, freezers, compressors, building systems or alarm platforms, and write down how each one connects.<\/li>\n<li>Check whether any of those remote routes can be turned off, restricted to a gateway, or protected by multi-factor authentication.<\/li>\n<li>Set temperature and defrost alarms that you own, separate from the supplier's monitoring, so that a change made remotely still reaches your team.<\/li>\n<li>Name the person on call for each critical cold room, with a backup, and test that the alarm reaches them out of hours.<\/li>\n<li>Agree in writing what a supplier must tell you, and how quickly, if their systems or access are affected.<\/li>\n<li>Decide in advance where critical product can be moved, and how long that takes, so that a precaution is a practised action rather than an improvisation.<\/li>\n<li>Ask every supplier for their own incident route, and check that it reaches someone who can answer on the same day.<\/li>\n<\/ul>\n<p>In my view, the cheapest control in this story is one the operator already owns: a local temperature alarm that does not depend on the supplier's platform, tested on a schedule. A monthly test takes a few minutes, and it tells you whether the phone rota works before a bad night does.<\/p>\n<h2>Shared responsibility<\/h2>\n<p>The blood service did not own the supplier's systems, and most plants will not own their suppliers' systems either. That is why responsibility has to be written down, not assumed. The supplier runs the system, the operator owns the product and the decision, and the alarm connects the two. If the alarm is not owned, the product is not really protected.<\/p>\n<p>At CyberForte we help operators map what their suppliers can reach, and test whether the alarms and the people behind them would work on a bad night. If you are not sure who can change your cold room settings from outside your site, start there.<\/p>",
+  "author": "Arun Rajagopal",
+  "image": "img/img-2.jpg",
+  "word_count": 1018,
+  "title": "Through a supplier, a cyberattack reached France's plasma cold rooms"
+ },
+ {
+  "id": 3,
+  "category": "Technical",
+  "headline_a": "Ships stood still at a tunnel site after a cyber incident",
+  "headline_b": "Before your megaproject starts, ask who owns its cyber risk",
+  "hook": "Several ships were left standing still at a tunnel project, and staff were told to stay off their computers.",
+  "standfirst": "A megaproject is built fast, by a consortium, with OT that few people audit. Here is what one confirmed incident tells us about who owns the risk.",
+  "excerpt": "A cyber incident at the main contractor of the Fehmarnbelt tunnel project left ships at a standstill and staff off their computers. The confirmed facts are short. The question they raise for any large construction project is much longer.",
+  "sources": [
+   {
+    "title": "Ingeniøren, Tunnel project between Denmark and Germany hit by cyber attack (13 October 2026)",
+    "url": "https://ing.dk/artikel/fehmarnbelt-tunnel-project-hit-cyber-attack"
+   }
+  ],
+  "body_html": "<p><em>Several ships were left standing still at a tunnel construction site after a cyber incident at its main contractor.<\/em><\/p>\n<p>Picture a construction site on the edge of the Baltic, with tunnel elements waiting on the quayside, vessels moored to the jetty, and a gate that people walk through without looking up. The work runs on a schedule measured in months, and on a network that was put in place quickly, by several companies, for a job that will not last forever.<\/p>\n<p>In October, that kind of site was hit. The Fehmarnbelt tunnel project, between Denmark and Germany, was disrupted by a cyber incident at its main contractor. I want to walk through the facts that are confirmed, because the lesson is in the gaps between them.<\/p>\n<h2>What happened<\/h2>\n<p>The Danish newspaper Ingeniøren reported on 13 October that the main contractor, Femern Link Contractors, \"reported a cyber incident\". The report says the project's IT systems \"were hit in the early hours of Monday morning\". It adds that \"several ships are at a standstill\", and that employees \"have been told to stay away from their computers\" at the construction site in Rødbyhavn.<\/p>\n<p>Those are the confirmed details I could open. The Ingeniøren page does not quote the project owner, Femern A/S, and I did not open its own press release, so I cannot quote it. Other reports describe the owner confirming an incident at its main contractor, but I have not verified that wording against a primary source, so I have not used it.<\/p>\n<h2>What is claimed and what is not confirmed<\/h2>\n<p>One aggregator I found reports that a group called Barracuda claimed responsibility, and that it claimed access to confidential files. I could not confirm that claim from a primary source, so I am presenting it only as a claim. The article I opened does not name an attacker or describe the extent of any data theft.<\/p>\n<p>I also did not find, in the pages I read, a statement about the effect on cranes or access control at the site. If you read that they were hit, check it against an official source first. The same goes for any claim about how long the work stopped.<\/p>\n<h2>What we do not know yet<\/h2>\n<p>The reports I could open leave four questions open. How long the work was disrupted, and whether the schedule moved. Which systems were hit beyond the IT systems the report names, and whether any site equipment was affected. Who was behind the incident, if anyone, and what they took. And what the project owner has said in its own words. Until those answers come from an official source, I would not fill the gaps with a headline.<\/p>\n<p>The report says the project's IT systems were hit \"in the early hours of Monday morning\". It does not say how the attackers got in. That is worth noting, because the way in is the part a site can change.<\/p>\n<h2>Why this matters on a construction site<\/h2>\n<p>Large construction projects are full of OT that is built quickly and used hard. Cranes, batching plants, vessels, gate systems and temporary networks are often installed by different firms, and each one brings its own remote access, its own support contract and its own idea of who is responsible for security.<\/p>\n<p>In my view, that is where the risk falls between the gaps. The client writes a security requirement, the main contractor passes it to its subcontractors, and the subcontractor installs a remote route for support. Each party believes the others have the job covered. That is the same pattern I described in the freezer story, with a construction site in place of the supermarket.<\/p>\n<p>The same question applies to other large UK projects, including HS2 and Sizewell C. I have not checked their security arrangements, so I am only raising the question. It is worth asking any project in your area who owns the OT security on site, in writing, and whether the answer covers the subcontractors.<\/p>\n<h2>Why a consortium makes this harder<\/h2>\n<p>A consortium is built to share a project, not a security programme. Each member brings its own IT, its own suppliers and its own idea of a critical incident, and the contract may only say who pays for a delay. In my view, that is why the first useful question is not about the attacker. It is about the contract: who must be told, who decides, and who pays for the stop.<\/p>\n<p>I would also ask how the site's temporary networks were built. Projects like this often add connectivity quickly, for cranes, vessels and site offices, and that connectivity can outlive the work that needed it. I have not checked the arrangements at Fehmarnbelt, so I am raising the question rather than answering it.<\/p>\n<h2>What to do now<\/h2>\n<ul>\n<li>Ask the client or main contractor to name who owns OT security on site, in writing, including the subcontractors and temporary networks.<\/li>\n<li>Build an asset list for the site that includes cranes, batching plants, vessels, gate systems and temporary connectivity, not only the permanent systems.<\/li>\n<li>Check every remote support route into site equipment, and record who can use it and under what authentication.<\/li>\n<li>Agree how a cyber incident is reported between the client, the main contractor and each subcontractor, and how quickly.<\/li>\n<li>Test a manual fallback for site-critical operations, such as scheduling, gates and vessel movements, before the day it is needed.<\/li>\n<li>Check that backups of the project's IT and OT configuration exist, are tested, and are stored where an incident cannot reach them.<\/li>\n<li>Make the subcontractors' security obligations part of their contracts, not only the main contract.<\/li>\n<\/ul>\n<h2>Shared responsibility<\/h2>\n<p>A megaproject has a client, a main contractor and many subcontractors. Each one has a security programme, and none of them is the whole picture. The incidents that cause the most trouble are the ones that fall between two programmes, where a subcontractor's remote route reaches a system that the client assumed was protected.<\/p>\n<p>At CyberForte we help site and project teams map the OT on their site, including the temporary parts, and agree who owns each risk. If you cannot say who owns the OT security on your own site, start there.<\/p>",
+  "author": "Arun Rajagopal",
+  "image": "img/img-3.jpg",
+  "word_count": 1030,
+  "title": "Ships stood still at a tunnel site after a cyber incident"
+ },
+ {
+  "id": 4,
+  "category": "Technical",
+  "headline_a": "Attackers disabled shutdown and alarm logic, and changed what operators saw",
+  "headline_b": "Check your PLC logic against a known-good copy this week",
+  "hook": "In one case, attackers changed controller logic to disable critical shutdown and alarm functions, according to CISA.",
+  "standfirst": "Exposed PLCs were the entry point, the engineering software was the tool, and the HMI was the lie. Here is the lesson for logic integrity and backups.",
+  "excerpt": "CISA's PLC advisory describes attackers changing controller logic, overriding safety functions and altering operator screens. Minnesota's water attacks show what exposure looks like. Here is what is confirmed, what is disputed, and how to check your own logic.",
+  "sources": [
+   {
+    "title": "CISA, Advisory AA26-097A on exploitation of programmable logic controllers (first published 7 April 2026, last revised 22 July 2026)",
+    "url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-097a"
+   },
+   {
+    "title": "CBS News Detroit, US investigating Iran-linked cyberattack on Minnesota water systems (late July 2026)",
+    "url": "https://www.cbsnews.com/detroit/news/us-investigating-iran-cyberattack-minnesota-water-systems/"
+   },
+   {
+    "title": "NCSC, Disruptive cyber activity highlights risk from internet-exposed systems and edge devices (27 August 2026)",
+    "url": "https://www.ncsc.gov.uk/news/disruptive-cyber-activity-highlights-risk-from-internet-exposed-systems-and-edge-devices"
+   }
+  ],
+  "body_html": "<p><em>In one case, attackers changed a controller's program so that critical shutdown and alarm logic was disabled.<\/em><\/p>\n<p>Imagine an operator on a water pumping station, looking at a screen that says everything is normal. The pumps run, the levels look right, and the alarms are quiet. Meanwhile the controller underneath has been changed by someone who is not on the site, and the screen is only showing what they want the operator to see.<\/p>\n<p>That is the scenario CISA describes in its advisory on programmable logic controllers, and it is not hypothetical. The advisory is clear that it is about what happened, not what might happen. I want to walk through what it says, because the lessons apply to any plant with an internet-facing PLC.<\/p>\n<h2>What the advisory says<\/h2>\n<p>The advisory, <a href=\"https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-097a\">AA26-097A<\/a>, describes attacks on internet-exposed controllers. Its findings are specific. The FBI and CISA identified \"the modification and deletion of project file logic, to include Add-On Instructions (AOIs)\". It adds: \"Additionally, the changes disabled critical shutdown and alarm logic.\"<\/p>\n<p>In one victim, the attackers went further. The advisory says that \"added logic that overrode specific instruction sets responsible for maintaining safe operating parameters\". On the operator side, the actors \"altered data displayed on HMI and SCADA displays\". The screen the operator relied on was no longer a reliable picture of the process.<\/p>\n<p>The advisory also describes how the attackers worked. They used \"configuration software, such as Rockwell Automation's Studio 5000 Logix Designer\", and they used \"manufacturers' PLC programming software to connect to misconfigured victim PLCs\". The vendors it names are \"Rockwell Automation/Allen-Bradley, Schneider Electric, Siemens, and potentially other manufactured PLCs\".<\/p>\n<p>The advisory describes the actors as Iranian-affiliated. That is CISA's attribution, and I have quoted it as CISA's. It is separate from the Minnesota incidents below, which have not been attributed publicly.<\/p>\n<h2>The Minnesota water attacks<\/h2>\n<p>In late July, <a href=\"https://www.cbsnews.com/detroit/news/us-investigating-iran-cyberattack-minnesota-water-systems/\">CBS reported<\/a> that more than 30 community water systems in Minnesota were affected. Minnesota IT Services said most confirmed cases involved remote monitoring and control equipment, including programmable logic controllers. The state's Department of Public Safety said \"None of Minnesota's water supply has been reported compromised as a result of the attack.\"<\/p>\n<p>The federal agencies warned on 30 July that attackers were targeting internet-exposed industrial controllers at water utilities, and the FBI cited incidents in at least seven states. Those are the confirmed facts.<\/p>\n<p>The attribution is disputed, and I want to be clear about that. Minnesota has not publicly attributed the activity to any actor. Officials are investigating whether Iranian hackers were responsible, and are also examining whether an actor tried to look Iran-based. No attribution has been made, and the assessment could change as the technical evidence comes in. If you read a firm attribution in a headline, check the official source before repeating it.<\/p>\n<p>Whatever the answer on attribution turns out to be, the exposed equipment is the common factor in the confirmed facts. That is the part a plant can act on this week, whoever is responsible.<\/p>\n<h2>What the NCSC said in August<\/h2>\n<p>The UK's National Cyber Security Centre made the same point from a UK perspective. On 27 August it described \"increased targeting of operational technology (OT) systems across multiple sectors globally\", and said the activity had so far caused limited real-world disruption. Its warning is the one to keep in mind: \"Organisations should not assume that their OT is inaccessible from the internet without verifying it.\"<\/p>\n<h2>Why this matters in a real plant<\/h2>\n<p>Three things in the advisory matter for any plant, not only a water utility.<\/p>\n<p>The first is that the controller logic can be changed. If the logic in a PLC is not checked against a known good copy, an unexpected change can go unnoticed for as long as the operators trust the screen. The second is that the HMI is not a neutral window. If the attackers can change what the operator sees, the operator can be working from a false picture. The third is that the engineering software is the tool. The same software your engineers use to maintain the controller can be the way an attacker reaches it.<\/p>\n<p>In my view, the most important question for a plant is simple: if a safety or alarm function in a controller were changed tomorrow, how would you know? If the honest answer is that nobody would notice until something went wrong, that is the gap to close first.<\/p>\n<h2>What to do now<\/h2>\n<ul>\n<li>Disconnect each PLC from the public-facing internet, and where remote access is needed, route it through a gateway or jump host, so the OT system is never directly exposed.<\/li>\n<li>Compare the running logic of each controller with a known good copy, including add-on instructions, and record who approved any difference.<\/li>\n<li>Create and test strong backups of the logic and configuration of each PLC, and store a copy offline.<\/li>\n<li>Verify each backup contains no unexpected logic before you rely on it to restore.<\/li>\n<li>Check the HMI and SCADA displays against the controller values, so that an operator can see when the screen and the process disagree.<\/li>\n<li>Protect the engineering software and its workstations, restrict who can connect to controllers with it, and log every connection.<\/li>\n<li>Change default passwords, turn off unused services on controllers and gateways, and enable logs for any connected cellular modem.<\/li>\n<li>Agree who will be called when logic or screen values do not match, out of hours included, and test that the call is answered.<\/li>\n<\/ul>\n<h2>Shared responsibility<\/h2>\n<p>A controller change is not an IT problem or an OT problem. It is a plant problem. The engineer who maintains the logic, the operator who watches the screen, the vendor who supports the software and the manager who signs off a change all own a piece of the answer.<\/p>\n<p>At CyberForte we help OT operators check their logic, their screens and their backups, and test whether the plant would notice a change in time. If you are not sure whether your controller logic matches the copy you would restore from, start there.<\/p>",
+  "author": "Arun Rajagopal",
+  "image": "img/img-4.jpg",
+  "word_count": 1003,
+  "title": "Attackers disabled shutdown and alarm logic, and changed what operators saw"
+ },
+ {
+  "id": 5,
+  "category": "Service",
+  "headline_a": "Your UK plant could be in NIS2 scope through one phrase",
+  "headline_b": "If NIS2 applies, top management is accountable, not just IT",
+  "hook": "Article 2 covers entities that provide services within the EU, and that phrase can reach UK companies.",
+  "standfirst": "NIS2 is an EU Directive, but it can reach UK companies. Here is what the official text says, what it does not say, and how we help with NIS2 readiness.",
+  "excerpt": "NIS2 applies by sector, size and where a company provides services in the EU. Here is what the official text says, where the UK position sits, and how CyberForte helps operators prepare for NIS2 readiness.",
+  "sources": [
+   {
+    "title": "European Commission, NIS2 Directive: securing network and information systems (page updated 2 July 2026)",
+    "url": "https://digital-strategy.ec.europa.eu/en/policies/nis2-directive"
+   },
+   {
+    "title": "Directive (EU) 2022/2555 (NIS2), Articles 2 and 3, EUR-Lex",
+    "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj/eng"
+   },
+   {
+    "title": "legislation.gov.uk, The Network and Information Systems Regulations 2018 (SI 2018/506), contents and Schedule 2",
+    "url": "https://www.legislation.gov.uk/uksi/2018/506/contents"
+   },
+   {
+    "title": "GOV.UK, Cyber Security and Resilience Bill policy statement (1 April 2025)",
+    "url": "https://www.gov.uk/government/publications/cyber-security-and-resilience-bill-policy-statement"
+   },
+   {
+    "title": "CyberForte, NIS2 Directive Compliance Service brochure (PDF, October 2025)",
+    "url": "https://cyberforte.co.uk/wp-content/uploads/2025/10/NIS2-Directive-Compliance-Service.pdf"
+   },
+   {
+    "title": "CyberForte, NIS2 Directives",
+    "url": "https://cyberforte.co.uk/nis2-directive-compliance/"
+   }
+  ],
+  "body_html": "<p><em>NIS2 is an EU Directive, but one phrase in its scope can reach a UK company. Here is what the official text says.<\/em><\/p>\n<p>Imagine a UK plant manager reading an email from a customer in Germany that asks, in one line, whether the company is subject to NIS2. The plant has a control room, a water treatment process and a team that has never been asked about EU law. The question sounds like a legal one. In practice, it is an operations question, and it is worth answering properly.<\/p>\n<p>NIS2 is the EU's updated cybersecurity Directive for critical and important sectors. This article sets out what the official sources say, where they stop, and how CyberForte helps operators prepare for NIS2 readiness. It is not legal advice, and where the sources do not settle a point, I say so.<\/p>\n<h2>What the Directive covers<\/h2>\n<p>The European Commission's <a href=\"https://digital-strategy.ec.europa.eu/en/policies/nis2-directive\">NIS2 page<\/a> says the Directive covers \"18 critical sectors across the EU\". The sectors named include energy, transport, healthcare, finance, water management and digital infrastructure. The page also lists public electronic communications, waste and wastewater management, critical product manufacturing, postal and courier services, public administration and space.<\/p>\n<p>The Commission says that \"as a rule, medium-sized and large entities in these critical sectors\" are covered. That size test is the first of the three questions.<\/p>\n<h2>What the legal text says<\/h2>\n<p>The Directive itself is in <a href=\"https://eur-lex.europa.eu/eli/dir/2022/2555/oj/eng\">Articles 2 and 3 of Directive (EU) 2022/2555<\/a>. Article 2, paragraph 1, applies to \"public or private entities of a type referred to in Annex I or II\", which are medium-sized enterprises or above, \"and which provide their services or carry out their activities within the Union\".<\/p>\n<p>That last phrase is the one that matters for a UK company. The Directive is not written by reference to where a company is registered. It is written by reference to where the company provides services or carries out its activities. Whether a particular UK company is caught by that wording is a legal question for the company and its advisers.<\/p>\n<p>Article 2, paragraph 2, says that regardless of size, the Directive also applies to entities of those types in several specific cases, and I have only read the opening of that list. Article 3 splits covered entities into essential and important ones. For essential entities, the first category is \"entities of a type referred to in Annex I which exceed the ceilings for medium-sized enterprises\". Important entities are those of a type in Annex I or II that \"do not qualify as essential entities\".<\/p>\n<h2>What the sources do not settle<\/h2>\n<p>One point I expected to find in the text, I did not. In my view, obligations under NIS2 attach to the entity that runs the service, not to whichever company owns the asset. In the text I read, the Directive applies by type, size and where services are provided, and it does not use the word \"operators\" in that sense. The Commission page does refer to \"operators of essential services\", which is a list Member States must establish. So I can say that the owner-versus-operator question is not settled by the sources I read. I cannot say it is settled in favour of the operator. Check that with your advisers before you rely on it.<\/p>\n<p>The Commission page also says that medium and large entities must \"take appropriate cybersecurity risk-management measures\" and notify national authorities of significant incidents, meaning incidents that \"could cause significant disruption or damage\". It says the Directive makes top management accountable for \"non-compliance with cybersecurity risk management measures\". Those are the parts of the Directive that land on boards, so they are the first thing to explain to a leadership team.<\/p>\n<h2>The UK position<\/h2>\n<p>NIS2 is EU law. The UK has its own rules. The Network and Information Systems Regulations 2018 are on <a href=\"https://www.legislation.gov.uk/uksi/2018/506/contents\">legislation.gov.uk<\/a>. The current revised version lists ten subsectors in Schedule 2, including electricity, oil, gas, air transport, water transport, rail transport, road transport, healthcare, drinking water supply and distribution, and digital infrastructure. The page itself does not say who qualifies as an operator of essential services, so that test sits in the regulations themselves.<\/p>\n<p>For new UK rules, the government's <a href=\"https://www.gov.uk/government/publications/cyber-security-and-resilience-bill-policy-statement\">policy statement on the Cyber Security and Resilience Bill<\/a>, published on 1 April 2025, sets out what it calls \"confirmed and proposed measures\" for a forthcoming Bill. I have not checked the current status of that Bill, so check gov.uk before you publish anything about it.<\/p>\n<h2>How CyberForte helps<\/h2>\n<p>Our <a href=\"https://cyberforte.co.uk/wp-content/uploads/2025/10/NIS2-Directive-Compliance-Service.pdf\">NIS2 brochure<\/a> describes a service for asset operators in sectors such as energy, manufacturing, water, transport and utilities. It is aimed at operators who want a route to NIS2 readiness without hiring an in-house OT security team.<\/p>\n<p>The brochure lists what the work includes. Strategy and governance covers an OT security policy set, standards and procedures, rules and responsibilities with a RACI, and a board-ready briefing and evidence pack. The site assessment covers an OT asset inventory, network diagrams, threat modelling and vulnerability findings, with a NIS2 and IEC 62443 gap report and prioritised recommendations. The incident response work covers an OT-specific response plan, security playbooks, and a tabletop exercise with attack simulations. The brochure describes six phases, from kick-off to the evidence pack. The <a href=\"https://cyberforte.co.uk/nis2-directive-compliance/\">NIS2 page on our site<\/a> carries the same service.<\/p>\n<h2>What to do now<\/h2>\n<ul>\n<li>Check whether your company provides services or carries out activities in the EU, and who your EU customers are, before you assume you are out of scope.<\/li>\n<li>Establish your size against the medium-sized and large thresholds, and your sector against the Directive's lists.<\/li>\n<li>Ask your advisers, in writing, whether the entity that runs your service is the one in scope, and what that means for each site.<\/li>\n<li>Name a board-level owner for cybersecurity risk management measures, and brief them on their accountability.<\/li>\n<li>Build an OT asset inventory and network diagram for each site, so that you can say what is connected and how.<\/li>\n<li>Write the incident notification process, and test it with a tabletop exercise before you need it.<\/li>\n<li>If you are in the UK, check the NIS Regulations 2018 and the current Bill status on gov.uk, and treat the two as separate questions.<\/li>\n<\/ul>\n<h2>Shared responsibility<\/h2>\n<p>NIS2 is not a single department's job. The board carries the accountability, the operations team holds the process knowledge, IT and OT hold the systems, and the legal team holds the scope question. The Directive makes the board accountable, and that is the reason to bring the others into the same room.<\/p>\n<p>At CyberForte we help operators build the policies, the asset picture, the incident plan and the evidence pack, and test them in practice. If you do not yet know whether NIS2 applies to your site, start there, with the scope questions above and a conversation with your advisers.<\/p>",
+  "author": "Arun Rajagopal",
+  "image": "img/img-5.jpg",
+  "word_count": 1129,
+  "title": "Your UK plant could be in NIS2 scope through one phrase"
+ }
+];
+
+(function(){
+  const $ = s => document.querySelector(s);
+  const grid = $('#grid'), view = $('#article'), toast = $('#toast');
+  const ICON = {
+    user:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg>',
+    cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+    tag:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+    img:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>',
+    back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
+    copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
+    code:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>',
+    dl:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>'
+  };
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const domain = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch(e){ return ''; } };
+  const srcOf = s => Array.isArray(s) ? {title:s[0], url:s[1]} : {title:s.title, url:s.url};
+  const catKey = c => String(c || '').toLowerCase() === 'service' ? 'service' : 'technical';
+  const catName = c => catKey(c) === 'service' ? 'Service' : 'Technical';
+
+  // per-article headline choice, remembered in localStorage when available
+  const KEY = n => 'cf-articles-11nov-headline-' + n;
+  const getChoice = n => { try { const v = localStorage.getItem(KEY(n)); return v === 'b' ? 'b' : 'a'; } catch(e){ return 'a'; } };
+  const setChoice = (n, v) => { try { localStorage.setItem(KEY(n), v); } catch(e){} };
+  const headline = a => (a.choice === 'b' && a.headline_b) ? a.headline_b : (a.headline_a || a.title);
+
+  ARTICLES.forEach((a, i) => {
+    const m = /(\d+)/.exec(String(a.id));
+    a.n = m ? +m[1] : i + 1;
+    a.img = a.image || ('img/img-' + a.n + '.jpg');
+    a.choice = getChoice(a.n);
+    let body = sanitize(a.body_html || '');
+    // the body opens with an italic lede that restates the standfirst; the standfirst is shown under the title instead
+    if (a.standfirst) body = body.replace(/^\s*<p><em>[\s\S]*?<\/em><\/p>\s*/, '');
+    a.clean = body;
+  });
+
+  // allowlist: h2 h3 p ul ol li strong em a(href http/https/mailto)
+  function sanitize(html){
+    const ok = new Set(['H2','H3','P','UL','OL','LI','STRONG','EM','A','BR']);
+    const t = document.createElement('template'); t.innerHTML = html;
+    (function walk(node){
+      [...node.childNodes].forEach(ch => {
+        if (ch.nodeType === 1){
+          walk(ch);
+          if (!ok.has(ch.tagName)){ ch.replaceWith(...ch.childNodes); return; }
+          [...ch.attributes].forEach(at => { if (!(ch.tagName === 'A' && at.name === 'href')) ch.removeAttribute(at.name); });
+          if (ch.tagName === 'A'){
+            const h = ch.getAttribute('href') || '';
+            if (!/^(https?:|mailto:)/i.test(h)) ch.removeAttribute('href');
+          }
+        } else if (ch.nodeType !== 3) ch.remove();
+      });
+    })(t.content);
+    return t.innerHTML.trim();
+  }
+
+  const info = a =>
+    '<ul class="info"><li>' + ICON.user + '<span>' + esc(a.author || 'Arun Rajagopal') + '</span></li>' +
+    '<li>' + ICON.cal + '<span class="draft">Draft</span></li>' +
+    '<li>' + ICON.tag + '<span>Blog</span></li></ul>';
+  const media = (a, cls, eager) =>
+    '<div class="media ' + (cls || '') + '"><div class="ph">' + ICON.img + '<span>Image coming</span></div>' +
+    '<img src="' + esc(a.img) + '" alt="' + esc('Illustration for article ' + a.n) + '"' + (eager ? '' : ' loading="lazy"') + '></div>';
+  const abSwitch = (a, extra) => (a.headline_b ?
+    '<div class="ab ' + (extra || '') + '" role="group" aria-label="Headline option for article ' + a.n + '"><span class="ab-label" aria-hidden="true">Headline</span><span class="ab-seg">' +
+    ['a','b'].map(k => '<button type="button" data-n="' + a.n + '" data-v="' + k + '" aria-pressed="' + (a.choice === k) + '" aria-label="Headline ' + k.toUpperCase() + '">' + k.toUpperCase() + '</button>').join('') +
+    '</span></div>' : '');
+
+  function wireImages(root){
+    root.querySelectorAll('.media img').forEach(img => {
+      const box = img.parentElement;
+      const ok = () => { img.hidden = false; box.classList.add('has-img'); box.dispatchEvent(new CustomEvent('imgready', {bubbles:true})); };
+      if (img.complete && img.naturalWidth) ok();
+      else { img.addEventListener('load', ok, {once:true}); img.addEventListener('error', () => img.remove(), {once:true}); }
+    });
+  }
+
+  grid.innerHTML = ARTICLES.map(a =>
+    '<li class="card">' + media(a, '', a.n <= 3) +
+    '<div class="pad">' + info(a) +
+      '<div><span class="chip ' + catKey(a.category) + '">' + catName(a.category) + '</span></div>' +
+      '<h3><a href="#article-' + a.n + '" data-title="' + a.n + '">' + esc(headline(a)) + '</a></h3>' +
+      abSwitch(a) +
+      '<p class="excerpt">' + esc(a.excerpt) + '</p>' +
+      '<span class="more" aria-hidden="true">Read more</span>' +
+    '</div></li>').join('');
+  wireImages(grid);
+
+  // one click handler for every A/B switch on the page
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.ab-seg button'); if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    const a = ARTICLES.find(x => x.n === +b.dataset.n); if (!a) return;
+    a.choice = b.dataset.v; setChoice(a.n, a.choice);
+    document.querySelectorAll('.ab-seg button[data-n="' + a.n + '"]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === a.choice)));
+    document.querySelectorAll('[data-title="' + a.n + '"]').forEach(x => { x.textContent = headline(a); });
+    if (document.body.classList.contains('reading')) document.title = headline(a) + ' | CyberForte draft';
+  });
+
+  // plain text with headings, lists as dashes, sources at the end
+  function plainText(a){
+    const t = document.createElement('template'); t.innerHTML = a.clean;
+    const out = [headline(a), ''];
+    if (a.standfirst) out.push(a.standfirst, '');
+    const inline = el => el.textContent.replace(/\s+/g, ' ').trim();
+    [...t.content.children].forEach(el => {
+      const tag = el.tagName;
+      if (tag === 'UL' || tag === 'OL'){
+        [...el.children].forEach((li, i) => out.push((tag === 'OL' ? (i + 1) + '. ' : '- ') + inline(li)));
+        out.push('');
+      } else out.push(inline(el), '');
+    });
+    const src = (a.sources || []).map(srcOf);
+    if (src.length){ out.push('Sources', ''); src.forEach(s => out.push('- ' + s.title + ': ' + s.url)); }
+    return out.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+  }
+  function htmlText(a){
+    const src = (a.sources || []).map(srcOf);
+    let h = '<h1>' + esc(headline(a)) + '</h1>\n';
+    if (a.standfirst) h += '<p><em>' + esc(a.standfirst) + '</em></p>\n';
+    h += a.clean;
+    if (src.length) h += '\n<h3>Sources</h3>\n<ul>\n' + src.map(s => '<li><a href="' + esc(s.url) + '">' + esc(s.title) + '</a></li>').join('\n') + '\n</ul>';
+    return h + '\n';
+  }
+
+  function render(a){
+    const src = (a.sources || []).map(srcOf);
+    const idx = ARTICLES.indexOf(a), next = ARTICLES[(idx + 1) % ARTICLES.length];
+    view.innerHTML =
+      '<nav class="topnav" aria-label="Article navigation"><div class="wrap"><a class="back" href="#" id="back">' + ICON.back + 'All articles</a></div></nav>' +
+      media(a, 'hero', true) +
+      '<div class="measure">' +
+        '<header class="a-head"><span class="cat">' + catName(a.category) + '</span>' +
+          '<h1 id="a-title" data-title="' + a.n + '">' + esc(headline(a)) + '</h1>' +
+          abSwitch(a, 'a-switch') +
+          (a.standfirst ? '<p class="standfirst" style="margin-top:16px">' + esc(a.standfirst) + '</p>' : '') +
+          info(a) +
+          (a.hook ? '<section class="hookbox" aria-labelledby="hook-h"><h2 id="hook-h">LinkedIn hook</h2><p>' + esc(a.hook) + '</p>' +
+            '<button class="btn sm" type="button" id="cp-hook">' + ICON.copy + 'Copy hook</button></section>' : '') +
+          '<div class="tools">' +
+            '<button class="btn primary" type="button" id="cp-text">' + ICON.copy + 'Copy article text</button>' +
+            '<button class="btn" type="button" id="cp-html">' + ICON.code + 'Copy as HTML</button>' +
+            '<a class="btn" id="dl" href="' + esc(a.img) + '" download="cyberforte-article-' + a.n + '.jpg" aria-disabled="true">' + ICON.dl + 'Download image</a>' +
+            (a.word_count ? '<span class="wc">' + esc(a.word_count) + ' words</span>' : '') +
+          '</div></header>' +
+        '<div class="prose">' + a.clean + '</div>' +
+        (src.length ? '<section class="sources" aria-labelledby="src-h"><h2 id="src-h">Sources</h2><ol>' +
+          src.map(s => '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.title) + '</a><small>' + esc(domain(s.url)) + '</small></li>').join('') +
+        '</ol></section>' : '') +
+        '<div class="endnav"><a class="btn" href="#">' + ICON.back + 'All articles</a>' +
+          (next !== a ? '<a class="btn" href="#article-' + next.n + '">Next: article ' + next.n + '</a>' : '') + '</div>' +
+      '</div>';
+    view.querySelectorAll('.prose a').forEach(l => { l.target = '_blank'; l.rel = 'noopener noreferrer'; });
+    const hk = $('#cp-hook'); if (hk) hk.addEventListener('click', () => copyText(a.hook, 'Hook copied'));
+    $('#cp-text').addEventListener('click', () => copyText(plainText(a), 'Article text copied'));
+    $('#cp-html').addEventListener('click', () => copyText(htmlText(a), 'HTML copied'));
+    view.addEventListener('imgready', () => { const d = $('#dl'); if (d) d.removeAttribute('aria-disabled'); }, {once:true});
+    wireImages(view);
+  }
+
+  function copyText(text, msg){
+    const done = () => showToast(msg);
+    const fallback = () => {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px';
+      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+      let ok = false; try { ok = document.execCommand('copy'); } catch(e){}
+      document.body.removeChild(ta);
+      ok ? done() : showToast('Copy failed, please select the text manually');
+    };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  }
+  let tId;
+  function showToast(m){ toast.textContent = m; toast.classList.add('show'); clearTimeout(tId); tId = setTimeout(() => toast.classList.remove('show'), 1800); }
+
+  let lastN = null, first = true;
+  function route(){
+    const m = /^#article-(\d+)$/.exec(location.hash);
+    const a = m && ARTICLES.find(x => x.n === +m[1]);
+    if (a){
+      document.body.classList.add('reading'); render(a); lastN = a.n;
+      window.scrollTo(0, 0);
+      if (!first) $('#back').focus({preventScroll:true});
+      document.title = headline(a) + ' | CyberForte draft';
+    } else {
+      document.body.classList.remove('reading'); view.innerHTML = '';
+      document.title = 'CyberForte Suggested Articles';
+      if (lastN){ const c = grid.querySelector('a[href="#article-' + lastN + '"]'); if (c) c.focus(); lastN = null; }
+      if (location.hash === '#') history.replaceState(null, '', location.pathname + location.search);
+    }
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('reading')) location.hash = ''; });
+  window.addEventListener('hashchange', route);
+  route(); first = false;
+})();
+</script>
+</body>
+</html>
