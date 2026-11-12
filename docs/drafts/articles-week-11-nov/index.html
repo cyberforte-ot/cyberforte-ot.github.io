@@ -145,6 +145,7 @@ body.reading .list,body.reading .band{display:none}
 footer{background:var(--ink);color:#aeb6c6;padding:22px 0;font-size:13px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<link rel="stylesheet" href="review.css">
 </head>
 <body>
 <header class="bar">
@@ -514,5 +515,15 @@ const ARTICLES = [
   route(); first = false;
 })();
 </script>
+<script>
+/* Review layer config. endpoint = the Google Apps Script web app URL that receives "Send my changes".
+   batch = this drafts folder; batchLabel = the Sheet tab the rows go into. */
+window.CF_REVIEW = {
+  endpoint: "https://script.google.com/macros/s/AKfycbxIQrMRQU2gbLoSehN41-LbjC7Qao9wiYuJA_oYVSElQoxA9dz4G3Wm7JciKhBQcgWg/exec",
+  batch: "articles-week-11-nov",
+  batchLabel: "Week of 11 Nov"
+};
+</script>
+<script src="review.js"></script>
 </body>
 </html>
