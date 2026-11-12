@@ -5,6 +5,12 @@
   if (typeof ARTICLES === 'undefined') return;
   const CFG = window.CF_REVIEW || {};
   const ENDPOINT = String(CFG.endpoint || '').trim();
+  // batch = the drafts folder name (for example articles-week-11-nov); label = the Sheet tab name
+  const BATCH = String(CFG.batch || (location.pathname.split('/').filter(Boolean).pop() || 'drafts')).trim();
+  const BATCH_LABEL = String(CFG.batchLabel || (() => {
+    const m = /week-(\d{1,2})-([a-z]{3})/i.exec(BATCH);
+    return m ? 'Week of ' + (+m[1]) + ' ' + m[2].charAt(0).toUpperCase() + m[2].slice(1).toLowerCase() : BATCH;
+  })()).trim();
   const STORE = 'cf-review-articles-11nov-v1';
   const SLUGS = {1:'boston-scientific', 2:'french-blood-service', 3:'fehmarnbelt-tunnel', 4:'plc-logic-attacks', 5:'nis2-service'};
   const NAMES = {1:'Boston Scientific', 2:'French blood service', 3:'Fehmarnbelt tunnel', 4:'PLC logic attacks', 5:'NIS2 service'};
@@ -486,6 +492,7 @@
       const slug = slugOf(a.n), ar = S.articles[slug]; if (!ar) return;
       const sent = new Set(ar.sent || []), sigs = [];
       const p = {
+        batch: BATCH, batch_label: BATCH_LABEL,
         article_id: slug, article_number: a.n, article_name: NAMES[a.n] || slug, article_headline: a.headline_a,
         title_choice: null, status: null, edits: [], comments: [], timestamp: now, page: location.href.split('#')[0]
       };
