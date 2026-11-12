@@ -145,6 +145,7 @@ body.reading .list,body.reading .band{display:none}
 footer{background:var(--ink);color:#aeb6c6;padding:22px 0;font-size:13px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<link rel="stylesheet" href="review.css">
 </head>
 <body>
 <header class="bar">
@@ -514,5 +515,10 @@ const ARTICLES = [
   route(); first = false;
 })();
 </script>
+<script>
+/* Review layer config. endpoint = the Google Apps Script web app URL that receives "Send my changes". */
+window.CF_REVIEW = { endpoint: "https://script.google.com/macros/s/AKfycbxIQrMRQU2gbLoSehN41-LbjC7Qao9wiYuJA_oYVSElQoxA9dz4G3Wm7JciKhBQcgWg/exec" };
+</script>
+<script src="review.js"></script>
 </body>
 </html>
