@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>CyberForte LinkedIn Page Review</title>
+<style>
+
+@font-face{font-family:"Montserrat";src:url("montserrat-latin.woff2") format("woff2");font-weight:100 900;font-display:swap}
+:root{
+  --red:#c8102e;--red-dark:#a00d25;--ink:#1a2233;--head:#333333;--text:#3a3f4a;--muted:#606060;
+  --line:#e4e6eb;--bg:#f5f6f8;--card:#ffffff;--radius:6px;
+  --shadow:0 1px 2px rgba(26,34,51,.05),0 6px 20px rgba(26,34,51,.06);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--red)}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:16px;padding-right:16px}
+
+/* site bar */
+.bar{background:#fff;border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:68px}
+.bar img{height:34px;width:auto}
+.draft-flag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);border:1.5px solid var(--red);padding:5px 10px;border-radius:999px;white-space:nowrap}
+
+/* page title band (like the CyberForte page-title) */
+.band{background:
+   radial-gradient(90% 140% at 100% 0%,rgba(200,16,46,.30),transparent 60%),
+   linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/32px 32px,
+   linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/32px 32px,
+   var(--ink);
+  color:#fff;text-align:center;padding:48px 0 44px;border-bottom:3px solid var(--red)}
+.band h1{font-size:clamp(26px,5.6vw,40px);line-height:1.18;font-weight:700;margin:0 0 10px;letter-spacing:-.01em}
+.band p{margin:0 auto;color:#c9cfdb;font-size:15px;max-width:52ch}
+
+/* article view */
+.article{display:none;background:#fff;padding-bottom:72px}
+body.reading .article{display:block}
+body.reading .list,body.reading .band{display:none}
+.topnav{border-bottom:1px solid var(--line)}
+.topnav .wrap{display:flex;align-items:center;min-height:52px}
+.back{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;color:var(--head);text-decoration:none;padding:8px 4px;margin-left:-4px}
+.back:hover{color:var(--red)}
+.back svg{width:18px;height:18px}
+.measure{max-width:760px;margin:0 auto;padding:0 16px}
+.a-head{padding:36px 0 8px}
+.a-head h1{font-size:clamp(28px,5.2vw,42px);line-height:1.18;font-weight:700;color:var(--head);margin:14px 0 16px;letter-spacing:-.01em}
+.cat{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--red);padding:5px 10px;border-radius:3px;text-decoration:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:6px;font:inherit;font-weight:700;font-size:14.5px;cursor:pointer;text-decoration:none;border:1.5px solid var(--ink);background:#fff;color:var(--ink);transition:background .15s,color .15s,border-color .15s}
+.btn:hover{background:var(--ink);color:#fff}
+.btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+.btn.primary:hover{background:var(--red-dark);border-color:var(--red-dark)}
+.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.btn svg{width:17px;height:17px;flex:none}
+
+/* article typography */
+
+.endnav{margin-top:40px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--ink);color:#fff;font-weight:700;padding:12px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:10;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+footer{background:var(--ink);color:#aeb6c6;padding:22px 0;font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+
+/* LinkedIn field review */
+.lead-note{margin:18px auto 0;max-width:62ch;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-left:3px solid var(--red);border-radius:6px;padding:10px 14px;color:#fff;font-size:14.5px;text-align:left}
+.lead-note b{color:#fff}
+.list{padding-top:36px;padding-bottom:72px}
+.list h2.sec{font-size:clamp(20px,3.6vw,26px);font-weight:700;color:var(--head);margin:36px 0 16px}
+.list h2.sec:first-of-type{margin-top:0}
+.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:680px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1040px){.grid{grid-template-columns:repeat(3,1fr);gap:20px}}
+.card{position:relative;display:flex;flex-direction:column;height:100%;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border-top:3px solid var(--line);transition:transform .18s ease,box-shadow .18s ease,border-color .18s}
+.card:hover{transform:translateY(-2px);border-top-color:var(--red);box-shadow:0 2px 4px rgba(26,34,51,.07),0 14px 32px rgba(26,34,51,.10)}
+.card:focus-within{outline:3px solid var(--red);outline-offset:3px}
+.card .pad{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h3{font-size:19px;line-height:1.3;font-weight:700;color:var(--head);margin:0}
+.card h3 a{color:inherit;text-decoration:none}
+.card h3 a::after{content:"";position:absolute;inset:0}
+.card h3 a:hover{color:var(--red)}
+.card h3 a:focus-visible{outline:none}
+.excerpt{color:var(--muted);font-size:14.5px;line-height:1.55;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.more{margin-top:auto;font-weight:700;font-size:15px;color:var(--red)}
+.num{flex:none;background:var(--red);color:#fff;font-weight:700;font-size:12.5px;border-radius:4px;padding:2px 8px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.tag-new{background:#e5f3ea;color:#135c2e}
+.tag-rewrite{background:#fdecef;color:var(--red-dark)}
+.tag-fix{background:#fff2dc;color:#7a4a00}
+.tag-skip{background:#eceef1;color:#4a505c}
+.tag-arun{background:var(--ink);color:#fff}
+.qbox{margin-top:40px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:6px;padding:22px 24px;box-shadow:var(--shadow)}
+.qbox h2{margin:0 0 6px;font-size:clamp(20px,3.6vw,26px);color:var(--head)}
+.qbox .pad{display:flex;flex-direction:column;gap:12px}
+.qbox p.sub{margin:0;color:var(--muted);font-size:15px}
+.qs{margin:0;padding-left:1.4em;display:grid;gap:8px;font-size:15.5px;line-height:1.55;color:var(--head)}
+.qs li::marker{color:var(--red);font-weight:700}
+.qbox .btn{align-self:flex-start}
+
+/* field view */
+.article{display:none;background:#fff;padding-bottom:72px}
+body.reading .article{display:block}
+body.reading .list,body.reading .band{display:none}
+.measure{max-width:860px}
+.a-head{padding:32px 0 4px}
+.a-head h1{font-size:clamp(26px,4.6vw,38px);line-height:1.18;font-weight:700;color:var(--head);margin:12px 0 12px;letter-spacing:-.01em}
+.a-head .tags{margin:0 0 4px}
+.cat{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--red);padding:5px 10px;border-radius:3px}
+.fbody{padding-top:22px}
+.cols{display:grid;grid-template-columns:1fr 1.35fr;gap:16px;align-items:start}
+.cols.wide{grid-template-columns:1fr}
+.col{border-radius:6px;padding:14px 16px;min-width:0}
+.cur{background:#f2f3f5;color:#4a4f59}
+.prop{background:#fff;border:1.5px solid var(--red)}
+.lbl{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.prop > .lbl{color:var(--red)}
+.ro-note{font-weight:600;letter-spacing:0;text-transform:none;font-size:11.5px;color:var(--muted)}
+.val{font-size:15px;line-height:1.6}
+.pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.empty{color:#7d8491;font-style:italic}
+.ln{margin:0 0 10px;font-size:16px;line-height:1.6;color:var(--head);overflow-wrap:anywhere}
+.ln:last-child{margin-bottom:0}
+.ln b{color:var(--head)}
+.ln.big{font-size:20px;font-weight:700}
+.src{margin:8px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted);overflow-wrap:anywhere}
+.lines .ovl{margin:0;font-size:16px;line-height:1.6;color:var(--head);white-space:pre-wrap;overflow-wrap:anywhere}
+.lines .gap{height:12px}
+.spec{margin:0;padding-left:1.7em;font-size:16px;line-height:1.5;color:var(--head)}
+.spec li{margin:0 0 6px}
+.spec li::marker{color:var(--red);font-weight:700}
+.sc{color:#8a909b;font-size:12px;font-weight:600;margin-left:4px}
+.qs .v{font-size:16px}
+.meta{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.count{align-self:flex-start;font-weight:700;font-size:13.5px;color:var(--red-dark);background:#fdecef;padding:4px 10px;border-radius:5px}
+.reason{margin:0;font-size:15px;line-height:1.6;color:var(--head);background:#fafbfc;border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:6px;padding:12px 14px}
+.reason b{color:var(--ink)}
+.note{margin:12px 0 0;font-size:14px;line-height:1.55;color:var(--muted)}
+.note b{color:var(--head)}
+.tw{overflow-x:auto}
+.t{width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.5}
+.t th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1.5px solid var(--line);padding:6px 8px}
+.t td{border-bottom:1px solid var(--line);padding:9px 8px;vertical-align:top;color:var(--text)}
+.t td .v{color:var(--head);font-weight:600}
+.mini{font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;display:inline-block;margin:1px 0}
+.mini.ok{background:#e5f3ea;color:#135c2e}
+.mini.no{background:#fdecef;color:var(--red-dark)}
+.mini.warn{background:#fff2dc;color:#7a4a00}
+.endnav{margin-top:36px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:760px){
+  .cols{grid-template-columns:1fr}
+  .t thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  .t,.t tbody,.t tr,.t td{display:block;width:100%}
+  .t tr{border-bottom:1px solid var(--line);padding:8px 0}
+  .t td{border:0;padding:3px 0}
+  .t td::before{content:attr(data-label);display:block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+}
+/* editable spans inside lines and table cells */
+body.rv-on .ln .v[data-rv-id]{display:inline-block;min-width:2ch}
+body.rv-on .t .v[data-rv-id]{display:block}
+body.rv-on .lines .v[data-rv-id],body.rv-on p.v[data-rv-id]{display:block}
+
+</style>
+<link rel="stylesheet" href="review.css">
+<style>
+/* this page uses a wider column, so the margin notes need more room before they show */
+@media (min-width:1280px) and (max-width:1439px){.rv-item{width:auto;flex-wrap:nowrap}.rv-balloon{display:none}}
+@media (min-width:920px) and (max-width:1199px){
+  .measure.rv-has-rail{padding-right:58px}
+  .rv-rail{left:calc(100% - 50px)}
+  .rv-item{left:0;flex-direction:column;align-items:center;gap:6px}
+  .rv-undo{width:36px;height:36px;padding:0;justify-content:center;border-radius:50%}
+  .rv-undo span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <img src="logo.png" alt="CyberForte" width="164" height="34">
+    <span class="draft-flag">Draft</span>
+  </div>
+</header>
+
+<section class="band">
+  <div class="wrap">
+    <h1>CyberForte LinkedIn page: proposed changes for review</h1>
+    <p>The CyberForte company page on LinkedIn, field by field. Each field shows what is there now, what we propose and why.</p>
+    <p class="lead-note"><b>Nothing has been changed on LinkedIn yet.</b> This is a draft of 16 November 2026 for Arun to review. Fields marked NEEDS ARUN or CONFIRM WITH ARUN wait for his answer before they go in.</p>
+  </div>
+</section>
+
+<main id="main">
+  <section class="list wrap" aria-label="LinkedIn page fields" id="grid">
+    <h2 class="sec">Empty fields</h2>
+    <ul class="grid"><li class="card"><div class="pad"><div class="top"><span class="num">01</span><div class="tags"><span class="tag tag-new">NEW</span></div></div><h3><a href="#field-1" data-title="1">Location</a></h3><p class="excerpt">Reading, Berkshire, United Kingdom. Head office, primary location, no street address.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">02</span><div class="tags"><span class="tag tag-new">NEW</span><span class="tag tag-arun">NEEDS ARUN</span></div></div><h3><a href="#field-2" data-title="2">Phone</a></h3><p class="excerpt">+44 7912 342828, from the website contact page.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">03</span><div class="tags"><span class="tag tag-new">NEW</span></div></div><h3><a href="#field-3" data-title="3">Featured (pin 2 to 3 posts)</a></h3><p class="excerpt">Pin 3 posts: partner video, the Forgotten Equipment article, the CRA explainer film.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">04</span><div class="tags"><span class="tag tag-skip">SKIPPED</span></div></div><h3><a href="#field-4" data-title="4">Credibility highlights (up to 4)</a></h3><p class="excerpt">Skipped for now. Needs real facts or awards from Arun.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">05</span><div class="tags"><span class="tag tag-skip">SKIPPED</span></div></div><h3><a href="#field-5" data-title="5">Custom testimonial</a></h3><p class="excerpt">Skipped for now. Needs a real client quote.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">06</span><div class="tags"><span class="tag tag-new">NEW</span><span class="tag tag-arun">CONFIRM WITH ARUN</span></div></div><h3><a href="#field-6" data-title="6">Workplace policy</a></h3><p class="excerpt">Hybrid. Our consultants work remotely and on client sites, including plant and field visits for assessments, testing and training.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">07</span><div class="tags"><span class="tag tag-new">NEW</span><span class="tag tag-arun">CONFIRM WITH ARUN</span></div></div><h3><a href="#field-7" data-title="7">Commitments</a></h3><p class="excerpt">Career growth and learning; Diversity, equity and inclusion.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">08</span><div class="tags"><span class="tag tag-new">NEW</span></div></div><h3><a href="#field-8" data-title="8">Services page work samples (up to 8)</a></h3><p class="excerpt">7 real items (films, NIS2 and CRA PDFs, images) plus 1 to create.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">09</span><div class="tags"><span class="tag tag-new">NEW</span></div></div><h3><a href="#field-9" data-title="9">Show custom button on posts and in search</a></h3><p class="excerpt">Turn on, keeping the “Request services” button.</p><span class="more" aria-hidden="true">Review this field</span></div></li></ul>
+    <h2 class="sec">Filled fields to fix</h2>
+    <ul class="grid"><li class="card"><div class="pad"><div class="top"><span class="num">10</span><div class="tags"><span class="tag tag-rewrite">REWRITE</span></div></div><h3><a href="#field-10" data-title="10">Overview</a></h3><p class="excerpt">CyberForte is an OT and industrial cyber security consultancy based in Reading, UK. We help manufacturers, asset owners and operators of critical infrastructure protect their operational technology (OT) and industrial control systems (ICS), from risk and maturity assessments to testing, compliance and training.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">11</span><div class="tags"><span class="tag tag-rewrite">REWRITE</span></div></div><h3><a href="#field-11" data-title="11">Tagline</a></h3><p class="excerpt">OT and industrial cyber security consultancy, Reading UK: IEC 62443, NIS2, risk assessments, OT testing and training</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">12</span><div class="tags"><span class="tag tag-fix">FIX</span></div></div><h3><a href="#field-12" data-title="12">Industry</a></h3><p class="excerpt">Computer and Network Security</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">13</span><div class="tags"><span class="tag tag-fix">FIX</span></div></div><h3><a href="#field-13" data-title="13">Specialties</a></h3><p class="excerpt">21 down to 20, typo fixed, reordered by search value.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">14</span><div class="tags"><span class="tag tag-rewrite">REWRITE</span></div></div><h3><a href="#field-14" data-title="14">Services page overview</a></h3><p class="excerpt">CyberForte is an OT and industrial cyber security consultancy in Reading, UK. We help manufacturers and critical infrastructure operators with IEC 62443 risk and maturity assessments, OT cyber FAT/SAT testing, ICS/OT penetration testing, NIS2 assessments, railway cyber security (IEC 63452, TS 50701), Cyber Resilience Act (CRA) readiness and training on IEC 62443, NIS2 and the CRA.</p><span class="more" aria-hidden="true">Review this field</span></div></li><li class="card"><div class="pad"><div class="top"><span class="num">15</span><div class="tags"><span class="tag tag-fix">FIX</span></div></div><h3><a href="#field-15" data-title="15">Services provided</a></h3><p class="excerpt">Keep 4, remove 3, add up to 5.</p><span class="more" aria-hidden="true">Review this field</span></div></li></ul>
+    <section class="qbox" aria-labelledby="q-h">
+      <div class="pad">
+        <h2 id="q-h"><a href="#field-16" data-title="16" style="color:inherit;text-decoration:none">Questions for Arun</a></h2>
+        <p class="sub">A few fields need your answer before they go in.</p>
+        <ol class="qs"><li>Phone: can the mobile number +44 7912 342828 from the website contact page show publicly on LinkedIn?</li><li>Location: if LinkedIn will not save Reading without a postcode, which postcode should we use, or should we leave it?</li><li>Workplace policy: is Hybrid right, or would you prefer Remote or On-site?</li><li>Commitments: happy with Career growth and learning, and Diversity, equity and inclusion, and the two short descriptions?</li><li>Featured: has the CRA explainer film been posted on the page? If not, can we post it so it can be pinned? Can we post the Forgotten Equipment article as a page post?</li><li>Work samples: are you happy to use the Industrial Cyber Days panel quote card? Would you like a one-page IEC 62443 risk assessment sheet made for the Services page?</li><li>Overview: are the sectors right (oil and gas, power and utilities, renewable energy, manufacturing, pharmaceuticals, transport and rail)? Should healthcare be added, as on the Assessments page?</li><li>Credibility highlights and testimonial: when you have real facts, awards or a client quote you are happy to share, send them and we will add them.</li></ol>
+        <a class="btn primary" href="#field-16">Answer the questions</a>
+        <span class="more" hidden></span>
+      </div>
+    </section>
+  </section>
+  <article class="article" id="article" tabindex="-1"></article>
+</main>
+
+<footer><div class="wrap">CyberForte. LinkedIn page draft, not yet applied to LinkedIn.</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const ARTICLES = [
+ {
+  "id": 1,
+  "n": 1,
+  "slug": "location",
+  "name": "Location",
+  "section": "Empty fields",
+  "tags": [
+   "NEW"
+  ],
+  "current_html": "<div class=\"val empty\">Empty<\/div>",
+  "proposed_html": "<p class=\"ln\"><b>Country:<\/b> <span class=\"v\" data-rv-block=\"country\" data-rv-kind=\"country\">United Kingdom<\/span><\/p><p class=\"ln\"><b>City:<\/b> <span class=\"v\" data-rv-block=\"city\" data-rv-kind=\"city\">Reading<\/span><\/p><p class=\"ln\"><b>County or region:<\/b> <span class=\"v\" data-rv-block=\"region\" data-rv-kind=\"county or region\">Berkshire (or England, whichever the form offers)<\/span><\/p><p class=\"ln\"><b>Street address and postcode:<\/b> <span class=\"v\" data-rv-block=\"address\" data-rv-kind=\"street address\">leave blank<\/span><\/p><p class=\"ln\"><b>Location name:<\/b> <span class=\"v\" data-rv-block=\"name\" data-rv-kind=\"location name\">Head office<\/span><\/p><p class=\"ln\"><b>Primary location:<\/b> <span class=\"v\" data-rv-block=\"primary\" data-rv-kind=\"primary location\">ticked<\/span><\/p>",
+  "reason": "Reading, UK is the agreed base; a set location puts the page into “near me” and Reading searches. If the form will not save without a postcode, that part needs Arun.",
+  "count": "",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "Reading, Berkshire, United Kingdom. Head office, primary location, no street address."
+ },
+ {
+  "id": 2,
+  "n": 2,
+  "slug": "phone",
+  "name": "Phone",
+  "section": "Empty fields",
+  "tags": [
+   "NEW",
+   "NEEDS ARUN"
+  ],
+  "current_html": "<div class=\"val empty\">Empty<\/div>",
+  "proposed_html": "<p class=\"ln big\"><span class=\"v\" data-rv-block=\"number\" data-rv-kind=\"phone number\">+44 7912 342828<\/span><\/p><p class=\"src\">Source: <a href=\"https://cyberforte.co.uk/contact-us/\" target=\"_blank\" rel=\"noopener noreferrer\">https://cyberforte.co.uk/contact-us/<\/a> (shown as “+44 (0)7912342828” and as a tel: link). Not on the home page or footer. cyberforte.co.uk/contact redirects to this page.<\/p>",
+  "reason": "It is the only number CyberForte publishes. It is a mobile, so Arun should confirm he is happy for it to show on LinkedIn before it goes in.",
+  "count": "15 characters",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "+44 7912 342828, from the website contact page."
+ },
+ {
+  "id": 3,
+  "n": 3,
+  "slug": "featured",
+  "name": "Featured (pin 2 to 3 posts)",
+  "section": "Empty fields",
+  "tags": [
+   "NEW"
+  ],
+  "current_html": "<div class=\"val empty\">Empty<\/div>",
+  "proposed_html": "<div class=\"tw\"><table class=\"t\"><thead><tr><th scope=\"col\">Pin<\/th><th scope=\"col\">Item<\/th><th scope=\"col\">Where it is<\/th><th scope=\"col\">Status<\/th><\/tr><\/thead><tbody><tr><td data-label=\"Pin\">1<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"pin1\" data-rv-kind=\"featured post\">Partner video post (70 s, 4:5), posted on the page 3 Nov 2026<\/span><\/td><td data-label=\"Where it is\">Live page post<\/td><td data-label=\"Status\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"Pin\">2<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"pin2\" data-rv-kind=\"featured post\">Article post linking to “The Forgotten Equipment That Nobody Is Watching” (cyberforte.co.uk, 9 Nov 2026)<\/span><\/td><td data-label=\"Where it is\">The article exists on the website. A page post sharing it was not found in the logs.<\/td><td data-label=\"Status\"><span class=\"mini no\">Does not exist yet<\/span><\/td><\/tr><tr><td data-label=\"Pin\">3<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"pin3\" data-rv-kind=\"featured post\">CRA explainer film (121 s, “voice led CRA explainer”, approved by Arun on 7 Oct 2026)<\/span><\/td><td data-label=\"Where it is\">Video file exists in the CyberForte library. Not confirmed whether it has been posted on the page yet.<\/td><td data-label=\"Status\"><span class=\"mini warn\">Not confirmed<\/span><\/td><\/tr><\/tbody><\/table><\/div>",
+  "reason": "Leads with OT partnerships and a real OT article, with the CRA explainer third, so the top of the page shows the core OT work first.",
+  "count": "Up to 3 pinned posts",
+  "notes_html": "<p class=\"note\">Featured only accepts posts already on the page, so any item marked “not confirmed” or “does not exist yet” has to be posted first. Avoid pinning the SECURE grant post (10 Nov), because it expires on 11 December 2026. The CRA readiness tool is not public, so it cannot be featured yet.<\/p>",
+  "wide": true,
+  "excerpt": "Pin 3 posts: partner video, the Forgotten Equipment article, the CRA explainer film."
+ },
+ {
+  "id": 4,
+  "n": 4,
+  "slug": "credibility-highlights",
+  "name": "Credibility highlights (up to 4)",
+  "section": "Empty fields",
+  "tags": [
+   "SKIPPED"
+  ],
+  "current_html": "<div class=\"val empty\">Empty<\/div>",
+  "proposed_html": "<p class=\"ln\"><span class=\"v\" data-rv-block=\"proposed\" data-rv-kind=\"credibility highlights\">Skipped for now (needs Arun). No highlights drafted, so nothing is invented.<\/span><\/p>",
+  "reason": "Highlights should be real, checkable facts or awards, which only Arun can supply.",
+  "count": "",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "Skipped for now. Needs real facts or awards from Arun."
+ },
+ {
+  "id": 5,
+  "n": 5,
+  "slug": "custom-testimonial",
+  "name": "Custom testimonial",
+  "section": "Empty fields",
+  "tags": [
+   "SKIPPED"
+  ],
+  "current_html": "<div class=\"val\">Off<\/div>",
+  "proposed_html": "<p class=\"ln\"><span class=\"v\" data-rv-block=\"proposed\" data-rv-kind=\"testimonial\">Skipped for now (needs Arun). No testimonial drafted. It is also a Premium feature on this page.<\/span><\/p>",
+  "reason": "A testimonial must be a real quote from a named client who has agreed to it.",
+  "count": "",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "Skipped for now. Needs a real client quote."
+ },
+ {
+  "id": 6,
+  "n": 6,
+  "slug": "workplace-policy",
+  "name": "Workplace policy",
+  "section": "Empty fields",
+  "tags": [
+   "NEW",
+   "CONFIRM WITH ARUN"
+  ],
+  "current_html": "<div class=\"val\">Off, no option chosen<\/div>",
+  "proposed_html": "<p class=\"ln\"><b>Primary workplace policy:<\/b> <span class=\"v\" data-rv-block=\"policy\" data-rv-kind=\"workplace policy\">Hybrid<\/span><\/p><p class=\"ln\"><b>Description (if the form offers one):<\/b> <span class=\"v\" data-rv-block=\"description\" data-rv-kind=\"workplace description\">Our consultants work remotely and on client sites, including plant and field visits for assessments, testing and training.<\/span><\/p>",
+  "reason": "Hybrid matches how the work is delivered: remote advice plus site visits, FAT/SAT testing and on-site training described on the website.",
+  "count": "Description 122 characters; limit not shown in the audit",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "Hybrid. Our consultants work remotely and on client sites, including plant and field visits for assessments, testing and training."
+ },
+ {
+  "id": 7,
+  "n": 7,
+  "slug": "commitments",
+  "name": "Commitments",
+  "section": "Empty fields",
+  "tags": [
+   "NEW",
+   "CONFIRM WITH ARUN"
+  ],
+  "current_html": "<div class=\"val\">Off, none selected<\/div>",
+  "proposed_html": "<p class=\"ln\"><b>Turn on:<\/b> <span class=\"v\" data-rv-block=\"turn-on\" data-rv-kind=\"commitments switch\">Commitments<\/span><\/p><p class=\"ln\"><b>1. Career growth and learning:<\/b> <span class=\"v\" data-rv-block=\"career\" data-rv-kind=\"career growth commitment\">We train engineers and IT and OT professionals in IEC 62443, NIS2 and the CRA, and we invest in the same learning for our own team.<\/span><\/p><p class=\"ln\"><b>2. Diversity, equity and inclusion:<\/b> <span class=\"v\" data-rv-block=\"dei\" data-rv-kind=\"diversity commitment\">We value our people and work to build an inclusive and collaborative team where talent thrives.<\/span><\/p><p class=\"ln\"><b>Leave off:<\/b> <span class=\"v\" data-rv-block=\"leave-off\" data-rv-kind=\"commitments left off\">Environmental sustainability, Social impact, Work-life balance (no CyberForte source to support them).<\/span><\/p>",
+  "reason": "Training is a core service and the website values say CyberForte invests in its people and an inclusive, collaborative team. Only claims the website already makes are used.",
+  "count": "131 and 95 characters; limit not shown in the audit",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "Career growth and learning; Diversity, equity and inclusion."
+ },
+ {
+  "id": 8,
+  "n": 8,
+  "slug": "work-samples",
+  "name": "Services page work samples (up to 8)",
+  "section": "Empty fields",
+  "tags": [
+   "NEW"
+  ],
+  "current_html": "<div class=\"val empty\">Empty<\/div>",
+  "proposed_html": "<div class=\"tw\"><table class=\"t\"><thead><tr><th scope=\"col\">#<\/th><th scope=\"col\">Item<\/th><th scope=\"col\">Type<\/th><th scope=\"col\">Status<\/th><\/tr><\/thead><tbody><tr><td data-label=\"#\">1<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"item1\" data-rv-kind=\"work sample\">CyberForte brand film, “Built in. Not bolted on.” (90 s, approved by Arun 5 Oct 2026)<\/span><\/td><td data-label=\"Type\">Video<\/td><td data-label=\"Status\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"#\">2<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"item2\" data-rv-kind=\"work sample\">CRA explainer film (121 s, approved 7 Oct 2026)<\/span><\/td><td data-label=\"Type\">Video<\/td><td data-label=\"Status\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"#\">3<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"item3\" data-rv-kind=\"work sample\">Partner video v3.2 (70 s, approved 2 Nov 2026)<\/span><\/td><td data-label=\"Type\">Video<\/td><td data-label=\"Status\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"#\">4<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"item4\" data-rv-kind=\"work sample\">NIS2 Directive Compliance Service brochure (cyberforte.co.uk/wp-content/uploads/2025/10/NIS2-Directive-Compliance-Service.pdf)<\/span><\/td><td data-label=\"Type\">PDF<\/td><td data-label=\"Status\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"#\">5<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"item5\" data-rv-kind=\"work sample\">CRA carousel (cyberforte.co.uk/wp-content/uploads/2025/09/CRA-Carousel-V3.pdf)<\/span><\/td><td data-label=\"Type\">PDF<\/td><td data-label=\"Status\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"#\">6<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"item6\" data-rv-kind=\"work sample\">CRA infographic v2 (used with the 30 Oct partner post)<\/span><\/td><td data-label=\"Type\">Image<\/td><td data-label=\"Status\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"#\">7<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"item7\" data-rv-kind=\"work sample\">Industrial Cyber Days panel quote card (square)<\/span><\/td><td data-label=\"Type\">Image<\/td><td data-label=\"Status\"><span class=\"mini ok\">Exists<\/span> <span class=\"mini warn\">Confirm with Arun<\/span><\/td><\/tr><tr><td data-label=\"#\">8<\/td><td data-label=\"Item\"><span class=\"v\" data-rv-block=\"item8\" data-rv-kind=\"work sample\">IEC 62443-3-2 risk assessment one-page service sheet, or an anonymised sample report extract<\/span><\/td><td data-label=\"Type\">PDF or image<\/td><td data-label=\"Status\"><span class=\"mini no\">Does not exist yet<\/span><\/td><\/tr><\/tbody><\/table><\/div>",
+  "reason": "The Services page prompts “Upload work samples”; filling it completes the checklist and shows buyers real output for CRA, NIS2 and OT work.",
+  "count": "Up to 8 items",
+  "notes_html": "<p class=\"note\">Items 1 to 7 are real CyberForte material. Item 7 shows a speaker from the panel, so check Arun is happy with it. Item 8 would cover IEC 62443 assessments, the one main service with no visual yet. If the media picker does not take PDFs, upload the cover page of items 4 and 5 as images instead (not confirmed which file types it accepts).<\/p>",
+  "wide": true,
+  "excerpt": "7 real items (films, NIS2 and CRA PDFs, images) plus 1 to create."
+ },
+ {
+  "id": 9,
+  "n": 9,
+  "slug": "custom-button",
+  "name": "Show custom button on posts and in search",
+  "section": "Empty fields",
+  "tags": [
+   "NEW"
+  ],
+  "current_html": "<div class=\"val\">Off<\/div>",
+  "proposed_html": "<p class=\"ln\"><b>On.<\/b> <span class=\"v\" data-rv-block=\"proposed\" data-rv-kind=\"custom button\">Keep the button as it is: “Request services”, linking to the page’s request-proposal form.<\/span><\/p>",
+  "reason": "Puts the “Request services” button next to every post and in search results, so buyers can ask for a proposal without opening the page.",
+  "count": "",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "Turn on, keeping the “Request services” button."
+ },
+ {
+  "id": 10,
+  "n": 10,
+  "slug": "overview",
+  "name": "Overview",
+  "section": "Filled fields to fix",
+  "tags": [
+   "REWRITE"
+  ],
+  "current_html": "<div class=\"val pre\">CyberForte is a forward-thinking cybersecurity company committed to securing the critical infrastructure, data, and operations of businesses across industries. With a focus on tailored and innovative solutions, we help organizations mitigate risks, ensure compliance, and stay resilient in the face of evolving cyber threats. Our expertise spans IT and OT environments, enabling us to deliver comprehensive services that address the complexities of today&#x27;s digital landscape.<\/div>",
+  "proposed_html": "<div class=\"lines\"><p class=\"v ovl\" data-rv-block=\"l01\" data-rv-kind=\"overview line\">CyberForte is an OT and industrial cyber security consultancy based in Reading, UK. We help manufacturers, asset owners and operators of critical infrastructure protect their operational technology (OT) and industrial control systems (ICS), from risk and maturity assessments to testing, compliance and training.<\/p><div class=\"gap\" aria-hidden=\"true\"><\/div><p class=\"v ovl\" data-rv-block=\"l02\" data-rv-kind=\"overview line\">What we do<\/p><p class=\"v ovl\" data-rv-block=\"l03\" data-rv-kind=\"overview line\">• IEC 62443 cyber security risk assessments (IEC 62443-3-2) for new and existing industrial systems, including zones and conduits<\/p><p class=\"v ovl\" data-rv-block=\"l04\" data-rv-kind=\"overview line\">• OT and IT cyber maturity assessments against IEC 62443-2-1 and the NIST Cybersecurity Framework, with site visits<\/p><p class=\"v ovl\" data-rv-block=\"l05\" data-rv-kind=\"overview line\">• OT cyber Factory and Site Acceptance Testing (FAT/SAT) and ICS/OT penetration testing<\/p><p class=\"v ovl\" data-rv-block=\"l06\" data-rv-kind=\"overview line\">• NIS and NIS2 compliance assessments and audits<\/p><p class=\"v ovl\" data-rv-block=\"l07\" data-rv-kind=\"overview line\">• Railway cyber security aligned with IEC 63452 and TS 50701<\/p><p class=\"v ovl\" data-rv-block=\"l08\" data-rv-kind=\"overview line\">• OT asset discovery, supply chain assurance, incident response and business continuity planning<\/p><p class=\"v ovl\" data-rv-block=\"l09\" data-rv-kind=\"overview line\">• EU Cyber Resilience Act (CRA) readiness for manufacturers of connected products<\/p><p class=\"v ovl\" data-rv-block=\"l10\" data-rv-kind=\"overview line\">• Training on IEC 62443, NIS2, the NIST Cybersecurity Framework and the CRA<\/p><div class=\"gap\" aria-hidden=\"true\"><\/div><p class=\"v ovl\" data-rv-block=\"l11\" data-rv-kind=\"overview line\">Sectors<\/p><p class=\"v ovl\" data-rv-block=\"l12\" data-rv-kind=\"overview line\">Oil and gas, power and utilities, renewable energy, manufacturing, pharmaceuticals, transport and rail.<\/p><div class=\"gap\" aria-hidden=\"true\"><\/div><p class=\"v ovl\" data-rv-block=\"l13\" data-rv-kind=\"overview line\">How we work<\/p><p class=\"v ovl\" data-rv-block=\"l14\" data-rv-kind=\"overview line\">Our consultants come from automation and control systems engineering. We take a risk-based, secure by design approach that protects operations without stopping production.<\/p><div class=\"gap\" aria-hidden=\"true\"><\/div><p class=\"v ovl\" data-rv-block=\"l15\" data-rv-kind=\"overview line\">CyberForte is the trading name of Elite Technical Consulting Ltd, founded in 2015.<\/p><div class=\"gap\" aria-hidden=\"true\"><\/div><p class=\"v ovl\" data-rv-block=\"l16\" data-rv-kind=\"overview line\">Talk to us about OT risk assessments, IEC 62443 or NIS2: cyberforte.co.uk<\/p><\/div>",
+  "reason": "Opens with what CyberForte is (an OT and industrial cyber security consultancy in Reading, UK) and leads with the core OT services: IEC 62443 risk and maturity assessments, testing, NIS2 and training. The CRA is listed as one service, not the headline. Every service, standard and sector is taken from cyberforte.co.uk. Removes “forward-thinking”.",
+  "count": "1,480 / 2,000 characters (target 1,200 to 1,800; line breaks counted)",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "CyberForte is an OT and industrial cyber security consultancy based in Reading, UK. We help manufacturers, asset owners and operators of critical infrastructure protect their operational technology (OT) and industrial control systems (ICS), from risk and maturity assessments to testing, compliance and training."
+ },
+ {
+  "id": 11,
+  "n": 11,
+  "slug": "tagline",
+  "name": "Tagline",
+  "section": "Filled fields to fix",
+  "tags": [
+   "REWRITE"
+  ],
+  "current_html": "<div class=\"val pre\">OT Cybersecurity Consulting Partner<\/div>",
+  "proposed_html": "<p class=\"ln\"><span class=\"v\" data-rv-block=\"proposed\" data-rv-kind=\"tagline\">OT and industrial cyber security consultancy, Reading UK: IEC 62443, NIS2, risk assessments, OT testing and training<\/span><\/p>",
+  "reason": "The tagline shows under the page name in search results. This one carries the core search terms: OT and industrial cyber security, consultancy, Reading UK, IEC 62443, NIS2, risk assessments, OT testing and training. The CRA sits in the Overview and Specialties instead.",
+  "count": "116 / 120 characters",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "OT and industrial cyber security consultancy, Reading UK: IEC 62443, NIS2, risk assessments, OT testing and training"
+ },
+ {
+  "id": 12,
+  "n": 12,
+  "slug": "industry",
+  "name": "Industry",
+  "section": "Filled fields to fix",
+  "tags": [
+   "FIX"
+  ],
+  "current_html": "<div class=\"val pre\">Technology, Information and Internet<\/div>",
+  "proposed_html": "<p class=\"ln\"><span class=\"v\" data-rv-block=\"proposed\" data-rv-kind=\"industry\">Computer and Network Security<\/span><\/p>",
+  "reason": "This is LinkedIn’s own security category, so the page appears when buyers filter company search by security. The current category groups CyberForte with web and media companies.",
+  "count": "",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "Computer and Network Security"
+ },
+ {
+  "id": 13,
+  "n": 13,
+  "slug": "specialties",
+  "name": "Specialties",
+  "section": "Filled fields to fix",
+  "tags": [
+   "FIX"
+  ],
+  "current_html": "<div class=\"val pre\">Cybersecurity Consulting; NIS/NIS2 Compliance; IEC 62443 Standards Training; OT Cybersecurity Training; NIST Cybersecurity Framework Maturity Assessment; Gap Assessments; OT Pentesting; VAPT; Incident Response Plan; Business Continuity Planning; Security Controls Deployment; Policies and Procedures; IEC 63452 Railway Cybersecurity; Information Security; Cybertooling; Asset Discovery; System Hardening; Vulnerability Management; Cyber Maturity Assessment; Cybersecurity Risk Assessment; Cyber Resillience Act<\/div><p class=\"note\">21 listed, one over LinkedIn’s limit of 20.<\/p>",
+  "proposed_html": "<ol class=\"spec\"><li><span class=\"v\" data-rv-block=\"item01\" data-rv-kind=\"specialty\">OT Cybersecurity<\/span> <span class=\"sc\" aria-label=\"16 characters\">16<\/span><\/li><li><span class=\"v\" data-rv-block=\"item02\" data-rv-kind=\"specialty\">Industrial Cybersecurity<\/span> <span class=\"sc\" aria-label=\"24 characters\">24<\/span><\/li><li><span class=\"v\" data-rv-block=\"item03\" data-rv-kind=\"specialty\">IEC 62443<\/span> <span class=\"sc\" aria-label=\"9 characters\">9<\/span><\/li><li><span class=\"v\" data-rv-block=\"item04\" data-rv-kind=\"specialty\">OT Risk Assessment<\/span> <span class=\"sc\" aria-label=\"18 characters\">18<\/span><\/li><li><span class=\"v\" data-rv-block=\"item05\" data-rv-kind=\"specialty\">ICS and SCADA Security<\/span> <span class=\"sc\" aria-label=\"22 characters\">22<\/span><\/li><li><span class=\"v\" data-rv-block=\"item06\" data-rv-kind=\"specialty\">NIS2 Compliance<\/span> <span class=\"sc\" aria-label=\"15 characters\">15<\/span><\/li><li><span class=\"v\" data-rv-block=\"item07\" data-rv-kind=\"specialty\">Cyber Maturity Assessment<\/span> <span class=\"sc\" aria-label=\"25 characters\">25<\/span><\/li><li><span class=\"v\" data-rv-block=\"item08\" data-rv-kind=\"specialty\">Cybersecurity Consulting<\/span> <span class=\"sc\" aria-label=\"24 characters\">24<\/span><\/li><li><span class=\"v\" data-rv-block=\"item09\" data-rv-kind=\"specialty\">OT Penetration Testing<\/span> <span class=\"sc\" aria-label=\"22 characters\">22<\/span><\/li><li><span class=\"v\" data-rv-block=\"item10\" data-rv-kind=\"specialty\">OT Cyber FAT/SAT Testing<\/span> <span class=\"sc\" aria-label=\"24 characters\">24<\/span><\/li><li><span class=\"v\" data-rv-block=\"item11\" data-rv-kind=\"specialty\">IEC 62443 Training<\/span> <span class=\"sc\" aria-label=\"18 characters\">18<\/span><\/li><li><span class=\"v\" data-rv-block=\"item12\" data-rv-kind=\"specialty\">OT Cybersecurity Training<\/span> <span class=\"sc\" aria-label=\"25 characters\">25<\/span><\/li><li><span class=\"v\" data-rv-block=\"item13\" data-rv-kind=\"specialty\">Critical Infrastructure Security<\/span> <span class=\"sc\" aria-label=\"32 characters\">32<\/span><\/li><li><span class=\"v\" data-rv-block=\"item14\" data-rv-kind=\"specialty\">Railway Cybersecurity (IEC 63452)<\/span> <span class=\"sc\" aria-label=\"33 characters\">33<\/span><\/li><li><span class=\"v\" data-rv-block=\"item15\" data-rv-kind=\"specialty\">Cybersecurity Gap Assessment<\/span> <span class=\"sc\" aria-label=\"28 characters\">28<\/span><\/li><li><span class=\"v\" data-rv-block=\"item16\" data-rv-kind=\"specialty\">NIST Cybersecurity Framework<\/span> <span class=\"sc\" aria-label=\"28 characters\">28<\/span><\/li><li><span class=\"v\" data-rv-block=\"item17\" data-rv-kind=\"specialty\">Cyber Resilience Act (CRA) Compliance<\/span> <span class=\"sc\" aria-label=\"37 characters\">37<\/span><\/li><li><span class=\"v\" data-rv-block=\"item18\" data-rv-kind=\"specialty\">Supply Chain Assurance<\/span> <span class=\"sc\" aria-label=\"22 characters\">22<\/span><\/li><li><span class=\"v\" data-rv-block=\"item19\" data-rv-kind=\"specialty\">OT Asset Discovery<\/span> <span class=\"sc\" aria-label=\"18 characters\">18<\/span><\/li><li><span class=\"v\" data-rv-block=\"item20\" data-rv-kind=\"specialty\">Incident Response and Business Continuity<\/span> <span class=\"sc\" aria-label=\"41 characters\">41<\/span><\/li><\/ol>",
+  "reason": "Brings the list within the limit, fixes the typo and leads with the core OT terms. The CRA stays in, lower down, as one service.",
+  "count": "20 of 20 specialties, in order of search value (number after each = characters)",
+  "notes_html": "<p class=\"note\"><b>Dropped or merged:<\/b> VAPT (merged into OT Penetration Testing); Information Security and Cybertooling (too vague, low search value); System Hardening, Vulnerability Management and Security Controls Deployment (covered by the assessment and testing entries); Policies and Procedures (covered by Incident Response and Business Continuity). <b>Fixed:<\/b> “Cyber Resillience Act” is now “Cyber Resilience Act (CRA) Compliance”. <b>Renamed:<\/b> OT Pentesting to OT Penetration Testing, NIS/NIS2 Compliance to NIS2 Compliance. Added from the website: OT Cyber FAT/SAT Testing, ICS and SCADA Security, Supply Chain Assurance.<\/p>",
+  "wide": false,
+  "excerpt": "21 down to 20, typo fixed, reordered by search value."
+ },
+ {
+  "id": 14,
+  "n": 14,
+  "slug": "services-overview",
+  "name": "Services page overview",
+  "section": "Filled fields to fix",
+  "tags": [
+   "REWRITE"
+  ],
+  "current_html": "<div class=\"val pre\">CyberForte is a specialist cybersecurity consultancy dedicated to securing IT and OT environments through tailored solutions, strategic guidance, and compliance support. We partner with leading cybersecurity vendors to deliver cutting-edge tools and services that align with operational and regulatory requirements. We specialise in OT/IT Risk Assessments, Training, OT Maturity Assessments and advisory solutions around EU Cyber Resilience Act and NIS/NIS2 Directive.<\/div>",
+  "proposed_html": "<p class=\"ln\"><span class=\"v\" data-rv-block=\"proposed\" data-rv-kind=\"services overview\">CyberForte is an OT and industrial cyber security consultancy in Reading, UK. We help manufacturers and critical infrastructure operators with IEC 62443 risk and maturity assessments, OT cyber FAT/SAT testing, ICS/OT penetration testing, NIS2 assessments, railway cyber security (IEC 63452, TS 50701), Cyber Resilience Act (CRA) readiness and training on IEC 62443, NIS2 and the CRA.<\/span><\/p>",
+  "reason": "Matches the new Overview, adds Reading, UK and the main search terms, and removes “cutting-edge” and the vague vendor line.",
+  "count": "383 / 500 characters (limit believed to be 500; check the form)",
+  "notes_html": "",
+  "wide": false,
+  "excerpt": "CyberForte is an OT and industrial cyber security consultancy in Reading, UK. We help manufacturers and critical infrastructure operators with IEC 62443 risk and maturity assessments, OT cyber FAT/SAT testing, ICS/OT penetration testing, NIS2 assessments, railway cyber security (IEC 63452, TS 50701), Cyber Resilience Act (CRA) readiness and training on IEC 62443, NIS2 and the CRA."
+ },
+ {
+  "id": 15,
+  "n": 15,
+  "slug": "services-provided",
+  "name": "Services provided",
+  "section": "Filled fields to fix",
+  "tags": [
+   "FIX"
+  ],
+  "current_html": "<div class=\"val pre\">IT Consulting, Project Management, Cybersecurity, Engineering Design, Information Security, Computer Networking, Training<\/div>",
+  "proposed_html": "<div class=\"tw\"><table class=\"t\"><thead><tr><th scope=\"col\">Service<\/th><th scope=\"col\">Action<\/th><th scope=\"col\">Reason<\/th><th scope=\"col\">On LinkedIn’s list?<\/th><\/tr><\/thead><tbody><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service1\" data-rv-kind=\"service\">Cybersecurity<\/span><\/td><td data-label=\"Action\">Keep<\/td><td data-label=\"Reason\">Core category<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service2\" data-rv-kind=\"service\">Information Security<\/span><\/td><td data-label=\"Action\">Keep<\/td><td data-label=\"Reason\">Matches ISO 27001, policies and NIS2 work<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service3\" data-rv-kind=\"service\">Training<\/span><\/td><td data-label=\"Action\">Keep<\/td><td data-label=\"Reason\">IEC 62443, NIS2 and CRA training is a core service<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service4\" data-rv-kind=\"service\">IT Consulting<\/span><\/td><td data-label=\"Action\">Keep<\/td><td data-label=\"Reason\">Covers the IT side of OT/IT assessments<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service5\" data-rv-kind=\"service\">Project Management<\/span><\/td><td data-label=\"Action\">Remove<\/td><td data-label=\"Reason\">Not a CyberForte service on the website<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service6\" data-rv-kind=\"service\">Engineering Design<\/span><\/td><td data-label=\"Action\">Remove<\/td><td data-label=\"Reason\">Not offered as a service; the engineering background is better told in the Overview<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service7\" data-rv-kind=\"service\">Computer Networking<\/span><\/td><td data-label=\"Action\">Remove<\/td><td data-label=\"Reason\">Suggests network installation, which CyberForte does not sell<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini ok\">Exists<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service8\" data-rv-kind=\"service\">Risk Management<\/span><\/td><td data-label=\"Action\">Add<\/td><td data-label=\"Reason\">Risk and maturity assessments are the main service<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini warn\">Not confirmed<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service9\" data-rv-kind=\"service\">Compliance (or Regulatory Compliance)<\/span><\/td><td data-label=\"Action\">Add<\/td><td data-label=\"Reason\">CRA and NIS2 compliance work<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini warn\">Not confirmed<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service10\" data-rv-kind=\"service\">Penetration Testing<\/span><\/td><td data-label=\"Action\">Add<\/td><td data-label=\"Reason\">ICS/OT penetration testing<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini warn\">Not confirmed<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service11\" data-rv-kind=\"service\">Security Consulting / Cybersecurity Consulting<\/span><\/td><td data-label=\"Action\">Add<\/td><td data-label=\"Reason\">Exact buyer search term<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini warn\">Not confirmed<\/span><\/td><\/tr><tr><td data-label=\"Service\"><span class=\"v\" data-rv-block=\"service12\" data-rv-kind=\"service\">Corporate Training or Technical Training<\/span><\/td><td data-label=\"Action\">Add if Training alone is too broad<\/td><td data-label=\"Reason\">Training for engineers and security teams<\/td><td data-label=\"On LinkedIn’s list?\"><span class=\"mini warn\">Not confirmed<\/span><\/td><\/tr><\/tbody><\/table><\/div>",
+  "reason": "Services tags drive the LinkedIn Services marketplace search, so they should match what CyberForte actually sells.",
+  "count": "Proposed: 4 kept, 3 removed, up to 5 added",
+  "notes_html": "<p class=\"note\">“Not confirmed” means the service name could not be checked against LinkedIn’s picker without opening LinkedIn. Pick the closest option the picker offers. The number of services allowed was not shown in the audit.<\/p>",
+  "wide": true,
+  "excerpt": "Keep 4, remove 3, add up to 5."
+ },
+ {
+  "id": 16,
+  "n": 16,
+  "slug": "questions",
+  "name": "Questions for Arun",
+  "section": "Questions",
+  "tags": [],
+  "current_html": "",
+  "proposed_html": "<ol class=\"qs\"><li><span class=\"v\" data-rv-block=\"q1\" data-rv-kind=\"question\">Phone: can the mobile number +44 7912 342828 from the website contact page show publicly on LinkedIn?<\/span><\/li><li><span class=\"v\" data-rv-block=\"q2\" data-rv-kind=\"question\">Location: if LinkedIn will not save Reading without a postcode, which postcode should we use, or should we leave it?<\/span><\/li><li><span class=\"v\" data-rv-block=\"q3\" data-rv-kind=\"question\">Workplace policy: is Hybrid right, or would you prefer Remote or On-site?<\/span><\/li><li><span class=\"v\" data-rv-block=\"q4\" data-rv-kind=\"question\">Commitments: happy with Career growth and learning, and Diversity, equity and inclusion, and the two short descriptions?<\/span><\/li><li><span class=\"v\" data-rv-block=\"q5\" data-rv-kind=\"question\">Featured: has the CRA explainer film been posted on the page? If not, can we post it so it can be pinned? Can we post the Forgotten Equipment article as a page post?<\/span><\/li><li><span class=\"v\" data-rv-block=\"q6\" data-rv-kind=\"question\">Work samples: are you happy to use the Industrial Cyber Days panel quote card? Would you like a one-page IEC 62443 risk assessment sheet made for the Services page?<\/span><\/li><li><span class=\"v\" data-rv-block=\"q7\" data-rv-kind=\"question\">Overview: are the sectors right (oil and gas, power and utilities, renewable energy, manufacturing, pharmaceuticals, transport and rail)? Should healthcare be added, as on the Assessments page?<\/span><\/li><li><span class=\"v\" data-rv-block=\"q8\" data-rv-kind=\"question\">Credibility highlights and testimonial: when you have real facts, awards or a client quote you are happy to share, send them and we will add them.<\/span><\/li><\/ol>",
+  "reason": "",
+  "count": "",
+  "notes_html": "",
+  "wide": true,
+  "excerpt": "",
+  "questions": true
+ }
+];
+
+(function(){
+  const $ = s => document.querySelector(s);
+  const view = $('#article');
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const TAGS = {"NEW": "tag-new", "REWRITE": "tag-rewrite", "FIX": "tag-fix", "SKIPPED": "tag-skip", "NEEDS ARUN": "tag-arun", "CONFIRM WITH ARUN": "tag-arun"};
+  const back = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
+  const FIELDS = ARTICLES.filter(a => !a.questions).length;
+
+  function render(a){
+    const idx = ARTICLES.indexOf(a), next = ARTICLES[idx + 1];
+    const tags = a.tags.map(t => '<span class="tag ' + TAGS[t] + '">' + esc(t) + '</span>').join('');
+    const prop = '<div class="col prop"><p class="lbl">' + (a.questions ? 'Questions' : 'Proposed') + '</p>' + a.proposed_html + '</div>';
+    const cur = a.questions ? '' : '<div class="col cur"><p class="lbl">Current <span class="ro-note">(read only)</span></p>' + a.current_html + '</div>';
+    view.innerHTML =
+      '<nav class="topnav" aria-label="Field navigation"><div class="wrap"><a class="back" href="#" id="back">' + back + 'All fields</a></div></nav>' +
+      '<div class="measure">' +
+        '<header class="a-head"><span class="cat">' + (a.questions ? 'Questions' : 'Field ' + a.n + ' of ' + FIELDS + ': ' + esc(a.section)) + '</span>' +
+          '<h1 id="a-title" data-title="' + a.n + '">' + esc(a.name) + '</h1>' +
+          (tags ? '<div class="tags">' + tags + '</div>' : '') +
+        '</header>' +
+        '<div class="fbody">' +
+          '<div class="cols' + (a.wide ? ' wide' : '') + '">' + cur + prop + '</div>' +
+          a.notes_html +
+          ((a.count || a.reason) ? '<div class="meta">' + (a.count ? '<span class="count">' + esc(a.count) + '</span>' : '') +
+            (a.reason ? '<p class="reason"><b>Why:</b> ' + esc(a.reason) + '</p>' : '') + '</div>' : '') +
+        '</div>' +
+        '<div class="endnav"><a class="btn" href="#">' + back + 'All fields</a>' +
+          (next ? '<a class="btn" href="#field-' + next.n + '">Next: ' + esc(next.name) + '</a>' : '') + '</div>' +
+      '</div>';
+    view.querySelectorAll('.prop a, .cur a').forEach(l => { l.target = '_blank'; l.rel = 'noopener noreferrer'; });
+  }
+
+  let lastN = null, first = true;
+  function route(){
+    const m = /^#field-(\d+)$/.exec(location.hash);
+    const a = m && ARTICLES.find(x => x.n === +m[1]);
+    if (a){
+      document.body.classList.add('reading'); render(a); lastN = a.n;
+      window.scrollTo(0, 0);
+      if (!first) $('#back').focus({preventScroll:true});
+      document.title = a.name + ' | CyberForte LinkedIn draft';
+    } else {
+      document.body.classList.remove('reading'); view.innerHTML = '';
+      document.title = 'CyberForte LinkedIn Page Review';
+      if (lastN){ const c = document.querySelector('#grid a[href="#field-' + lastN + '"]'); if (c) c.focus(); lastN = null; }
+      if (location.hash === '#') history.replaceState(null, '', location.pathname + location.search);
+    }
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('reading')) location.hash = ''; });
+  window.addEventListener('hashchange', route);
+  route(); first = false;
+})();
+</script>
+<script>
+/* Review layer config. endpoint = the Google Apps Script web app URL that receives "Send my changes".
+   batch = this drafts folder; batchLabel = the Sheet tab the rows go into. */
+window.CF_REVIEW = {
+  endpoint: "https://script.google.com/macros/s/AKfycbxIQrMRQU2gbLoSehN41-LbjC7Qao9wiYuJA_oYVSElQoxA9dz4G3Wm7JciKhBQcgWg/exec",
+  batch: "linkedin-page-16-nov",
+  batchLabel: "LinkedIn page 16 Nov"
+};
+</script>
+<script src="review.js"></script>
+</body>
+</html>
